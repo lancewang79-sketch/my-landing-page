@@ -60,6 +60,7 @@ const copy = {
     startCamera: "Start Camera",
     stopCamera: "Stop Camera",
     takePhoto: "Take Overview Photo",
+    takeMagnifiedPhoto: "Take Magnified Photo",
     retake: "Retake",
     clearPhoto: "Clear Photo",
     runAnalysis: "Analyse Overview",
@@ -99,6 +100,10 @@ const copy = {
     compareZones: "Zone comparison",
     algorithmNote:
       "The algorithm estimates visual tendencies from brightness, colour-channel balance, local contrast, highlights and texture variation. It is not a clinical measurement.",
+    cameraQuality: "Camera quality",
+    resolution: "Resolution",
+    hdTip: "For real skin detail, move the camera closer and use bright, even light. Digital zoom alone can look blurry.",
+    lowResWarning: "The current camera stream is low resolution. Try a phone camera, rear camera, brighter light, or the live GitHub Pages site on mobile for sharper detail.",
     metrics: {
       lighting: "Lighting quality",
       acne: "Blemish / acne-like visibility",
@@ -160,6 +165,7 @@ const copy = {
     startCamera: "打开相机",
     stopCamera: "关闭相机",
     takePhoto: "拍摄整体照片",
+    takeMagnifiedPhoto: "拍摄放大区域",
     retake: "重新拍摄",
     clearPhoto: "清除照片",
     runAnalysis: "分析整体照片",
@@ -199,6 +205,10 @@ const copy = {
     compareZones: "区域对比",
     algorithmNote:
       "算法会从亮度、颜色通道、局部对比度、反光和纹理变化估算视觉倾向。这不是临床检测。",
+    cameraQuality: "相机质量",
+    resolution: "分辨率",
+    hdTip: "想看到真正皮肤细节，请把相机靠近皮肤，并使用明亮均匀光线。单纯数码放大会变模糊。",
+    lowResWarning: "当前相机流分辨率偏低。建议使用手机摄像头、后置摄像头、更亮光线，或在手机上打开 GitHub Pages 网页获得更清晰细节。",
     metrics: {
       lighting: "光线质量",
       acne: "痘痘 / 瑕疵可见度",
@@ -730,6 +740,8 @@ function App() {
   const [zoneComparisons, setZoneComparisons] = useState(null);
   const [zoom, setZoom] = useState(2);
   const [selectedZone, setSelectedZone] = useState("customCentre");
+  const [analysisMode, setAnalysisMode] = useState("overview");
+  const [cameraInfo, setCameraInfo] = useState(null);
   const videoRef = useRef(null);
   const streamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -744,15 +756,57 @@ function App() {
       setCameraError(t.consentRequired);
       return;
     }
+
     try {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+      }
+
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } },
+        video: {
+          facingMode: "user",
+          width: { ideal: 3840, min: 1280 },
+          height: { ideal: 2160, min: 720 },
+          frameRate: { ideal: 30 },
+        },
         audio: false,
       });
+
       streamRef.current = stream;
+
+      const videoTrack = stream.getVideoTracks()[0];
+      const settings = videoTrack ? videoTrack.getSettings() : {};
+      setCameraInfo({
+        width: settings.width || 0,
+        height: settings.height || 0,
+        label: videoTrack?.label || "",
+      });
+
       if (videoRef.current) videoRef.current.srcObject = stream;
     } catch {
-      setCameraError(t.cameraUnavailable);
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "user",
+            width: { ideal: 1920 },
+            height: { ideal: 1080 },
+          },
+          audio: false,
+        });
+
+        streamRef.current = stream;
+        const videoTrack = stream.getVideoTracks()[0];
+        const settings = videoTrack ? videoTrack.getSettings() : {};
+        setCameraInfo({
+          width: settings.width || 0,
+          height: settings.height || 0,
+          label: videoTrack?.label || "",
+        });
+
+        if (videoRef.current) videoRef.current.srcObject = stream;
+      } catch {
+        setCameraError(t.cameraUnavailable);
+      }
     }
   };
 
@@ -768,9 +822,30 @@ function App() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
-    canvas.width = video.videoWidth || 1280;
-    canvas.height = video.videoHeight || 720;
+
+    const videoWidth = video.videoWidth || 1280;
+    const videoHeight = video.videoHeight || 720;
     const ctx = canvas.getContext("2d");
+
+    if (analysisMode === "magnifier") {
+      const selectedCrop = zoneDefs[selectedZone];
+      const sx = Math.floor(videoWidth * selectedCrop.x);
+      const sy = Math.floor(videoHeight * selectedCrop.y);
+      const sw = Math.floor(videoWidth * selectedCrop.w);
+      const sh = Math.floor(videoHeight * selectedCrop.h);
+
+      canvas.width = Math.max(sw, 1);
+      canvas.height = Math.max(sh, 1);
+      ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+      setPhoto(canvas.toDataURL("image/png"));
+      setOverallAnalysis(null);
+      setLocalAnalysis(null);
+      setZoneComparisons(null);
+      return;
+    }
+
+    canvas.width = videoWidth;
+    canvas.height = videoHeight;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     setPhoto(canvas.toDataURL("image/png"));
     setOverallAnalysis(null);
@@ -810,7 +885,9 @@ function App() {
 
   const runLocalAnalysis = () => {
     loadPhotoToCanvas((canvas) => {
-      const result = analyseCanvas(canvas, zoneDefs[selectedZone]);
+      const result = analysisMode === "magnifier"
+        ? analyseCanvas(canvas)
+        : analyseCanvas(canvas, zoneDefs[selectedZone]);
       setLocalAnalysis({ result, zone: selectedZone, zoneLabel: t[selectedZone] });
       setCameraError("");
     });
@@ -904,8 +981,33 @@ function App() {
               </div>
 
               <div className="modeTabs">
-                <span>{t.overviewMode}</span>
-                <span>{t.magnifierMode}</span>
+                <button
+                  type="button"
+                  className={analysisMode === "overview" ? "active" : ""}
+                  onClick={() => setAnalysisMode("overview")}
+                >
+                  {t.overviewMode}
+                </button>
+                <button
+                  type="button"
+                  className={analysisMode === "magnifier" ? "active" : ""}
+                  onClick={() => setAnalysisMode("magnifier")}
+                >
+                  {t.magnifierMode}
+                </button>
+              </div>
+
+              <div className="cameraQualityBox">
+                <strong>{t.cameraQuality}</strong>
+                <span>
+                  {cameraInfo?.width
+                    ? `${t.resolution}: ${cameraInfo.width} × ${cameraInfo.height}`
+                    : `${t.resolution}: —`}
+                </span>
+                <p>{t.hdTip}</p>
+                {cameraInfo?.width > 0 && cameraInfo.width < 1280 && (
+                  <p className="qualityWarning">{t.lowResWarning}</p>
+                )}
               </div>
 
               <div className="cameraFrame magnifierFrame">
@@ -914,7 +1016,28 @@ function App() {
                     <img
                       src={photo}
                       alt={lang === "en" ? "Captured skin visual analysis" : "已拍摄的皮肤视觉分析照片"}
-                      style={{ transform: `scale(${zoom})`, transformOrigin: `${(crop.x + crop.w / 2) * 100}% ${(crop.y + crop.h / 2) * 100}%` }}
+                      style={
+                        analysisMode === "magnifier"
+                          ? {
+                              transform: `scale(${zoom})`,
+                              transformOrigin: "50% 50%",
+                            }
+                          : undefined
+                      }
+                    />
+                    {analysisMode === "magnifier" && <div className="magnifiedBadge">{t.magnifierMode}</div>}
+                  </div>
+                ) : analysisMode === "magnifier" ? (
+                  <div className="photoMagnifier liveMagnifier">
+                    <video
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                      muted
+                      style={{
+                        transform: `scale(${zoom})`,
+                        transformOrigin: `${(crop.x + crop.w / 2) * 100}% ${(crop.y + crop.h / 2) * 100}%`,
+                      }}
                     />
                     <div
                       className="cropBox"
@@ -952,7 +1075,7 @@ function App() {
 
               <div className="cameraButtons">
                 <button className="button dark" type="button" onClick={startCamera}>{t.startCamera}</button>
-                <button className="button light" type="button" onClick={takePhoto}>{t.takePhoto}</button>
+                <button className="button light" type="button" onClick={takePhoto}>{analysisMode === "magnifier" ? t.takeMagnifiedPhoto : t.takePhoto}</button>
                 <button className="button light" type="button" onClick={clearPhoto}>{photo ? t.retake : t.clearPhoto}</button>
                 <button className="button light" type="button" onClick={stopCamera}>{t.stopCamera}</button>
               </div>
