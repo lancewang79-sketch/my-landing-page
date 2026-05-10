@@ -1863,7 +1863,7 @@ function App() {
           frameRate: { ideal: 30 },
         },
         audio: false,
-      });  
+      });
 
       streamRef.current = stream;
 
@@ -1881,8 +1881,8 @@ function App() {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
             facingMode: "user",
-            width: { ideal: 1280 },
-            height: { ideal: 1700 },
+            width: { ideal: 1920 },
+            height: { ideal: 1080 },
           },
           audio: false,
         });
@@ -1937,6 +1937,7 @@ function App() {
   const takePhoto = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
+
     if (!video || !canvas) return;
 
     const videoWidth = video.videoWidth || 1920;
@@ -1945,6 +1946,7 @@ function App() {
 
     canvas.width = videoWidth;
     canvas.height = videoHeight;
+
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     const capturedDataUrl = canvas.toDataURL("image/png");
@@ -2218,23 +2220,7 @@ function App() {
                 <p>{t.privacyNote}</p>
                 <p>{t.medicalDisclaimer}</p>
               </div>
-
-              <div className="currentCaptureGuide">
-                <div>
-                  <p className="kicker">{t.currentStepGuide}</p>
-                  <h4>{lang === "en" ? currentCaptureStep.en : currentCaptureStep.zh}</h4>
-                  <p>{lang === "en" ? currentCaptureStep.enInstruction : currentCaptureStep.zhInstruction}</p>
-                  <p className="subtleGuide">{t.noAreaSelectionNeeded}</p>
-                </div>
-                <div className={`poseExample pose-${selectedCaptureStep}`}>
-                  <span>{t.poseExample}</span>
-                  <div className="faceOval">
-                    <i />
-                  </div>
-                </div>
-              </div>
-
-              <div className="cameraQualityBox">
+<div className="cameraQualityBox">
                 <strong>{t.cameraQuality}</strong>
                 <span>
                   {cameraInfo?.width
@@ -2246,7 +2232,7 @@ function App() {
                   <p className="qualityWarning">{t.lowResWarning}</p>
                 )}
               </div>
-              
+
               <div className="cameraFrame">
                 {photo ? (
                   <img
@@ -2255,24 +2241,16 @@ function App() {
                     alt={lang === "en" ? "Captured skin visual analysis" : "已拍摄的皮肤视觉分析照片"}
                   />
                 ) : (
-                  <video
-                    ref={videoRef}
-                    autoPlay
-                    playsInline
-                    muted
-                    className="cameraVideo"
-                  />
+                  <video ref={videoRef} autoPlay playsInline muted className="cameraVideo" />
                 )}
 
                 <div className="cameraOverlayGuide compact">
                   <div className="cameraOverlayEyebrow">
                     {lang === "en" ? "Photo guide" : "拍摄提示"}
                   </div>
-
                   <h3 className="cameraOverlayTitle">
                     {lang === "en" ? currentCaptureStep.en : currentCaptureStep.zh}
                   </h3>
-
                   <p className="cameraOverlayDesc">
                     {lang === "en"
                       ? currentCaptureStep.enInstruction
@@ -2282,7 +2260,6 @@ function App() {
 
                 <canvas ref={canvasRef} className="hiddenCanvas" />
               </div>
-
 
               <div className="cameraButtons simpleCameraButtons">
                 <button className="button dark primaryShootButton" type="button" onClick={handleShootButton}>
