@@ -1,250 +1,239 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-const App = () => {
+const products = [
+  {
+    label: "Best Seller",
+    name: "Gentle Daily Cleanser",
+    line: "A soft-start cleansing pick for simple morning and evening routines.",
+    category: "Cleanser",
+    bestFor: "New skincare routines",
+  },
+  {
+    label: "Daily Essential",
+    name: "Lightweight Moisturiser",
+    line: "A comfortable daily moisturiser category for a smoother routine.",
+    category: "Moisturiser",
+    bestFor: "Everyday hydration",
+  },
+  {
+    label: "Routine Hero",
+    name: "Everyday Sunscreen",
+    line: "A daily protection step for readers building a consistent routine.",
+    category: "Sunscreen",
+    bestFor: "Morning skincare",
+  },
+  {
+    label: "Beauty Tool",
+    name: "Makeup Sponge",
+    line: "A practical tool pick for softer blending and everyday makeup.",
+    category: "Beauty Tool",
+    bestFor: "Beginner makeup",
+  },
+];
+
+const categories = [
+  "Skincare",
+  "Makeup",
+  "Beauty Tools",
+  "Body Care",
+  "Hair Care",
+  "Travel Beauty",
+];
+
+const guides = [
+  "Best Skincare Basics for Beginners",
+  "Simple Morning Skincare Routine",
+  "Everyday Sunscreen Guide",
+  "Beauty Tools That Are Actually Useful",
+  "Affordable Makeup Essentials",
+  "Beauty Gift Ideas for Her",
+];
+
+function App() {
   return (
-    <div>
-      <Navbar />
-      <HeroSection />
-      <Disclosure />
-      <ProductCategories />
-      <ProductRecommendations />
-      <Articles />
-      <TrustSection />
-      <Footer />
+    <div className="site">
+      <div className="announcement">
+        As an Amazon Associate, I earn from qualifying purchases.
+      </div>
+
+      <header className="header">
+        <a className="brand" href="#home" aria-label="Glow Skin Picks home">
+          <span>Glow Skin</span>
+          <em>Picks</em>
+        </a>
+        <nav className="nav" aria-label="Main navigation">
+          <a href="#products">Product Picks</a>
+          <a href="#guides">Beauty Guides</a>
+          <a href="#routine">Routine</a>
+          <a href="#disclosure">Disclosure</a>
+        </nav>
+      </header>
+
+      <main>
+        <section id="home" className="hero">
+          <div className="heroCopy">
+            <p className="kicker">Beauty edits for everyday routines</p>
+            <h1>Curated skincare, beauty tools and self-care finds.</h1>
+            <p>
+              Glow Skin Picks helps readers discover thoughtful beauty products,
+              compare everyday essentials and build simple routines with clear,
+              transparent affiliate disclosures.
+            </p>
+            <div className="actions">
+              <a href="#products" className="button dark">
+                Shop the Edit
+              </a>
+              <a href="#guides" className="button light">
+                Read the Guides
+              </a>
+            </div>
+          </div>
+
+          <div className="heroVisual" aria-label="Beauty editorial visual">
+            <div className="portraitCard large">
+              <span>SKINCARE</span>
+            </div>
+            <div className="portraitCard small top">
+              <span>GLOW</span>
+            </div>
+            <div className="portraitCard small bottom">
+              <span>CARE</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="editorialNote">
+          <p>
+            This page may contain affiliate links. If you buy through these
+            links, I may earn a commission at no extra cost to you.
+          </p>
+        </section>
+
+        <section className="section split">
+          <div>
+            <p className="kicker">The beauty counter</p>
+            <h2>Browse by category</h2>
+          </div>
+          <div className="categoryList">
+            {categories.map((category) => (
+              <a href="#products" key={category}>
+                {category}
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section id="products" className="section productSection">
+          <div className="sectionIntro">
+            <p className="kicker">Featured recommendations</p>
+            <h2>Everyday picks worth considering</h2>
+            <p>
+              Replace the placeholder buttons with your real Amazon affiliate
+              links after your Associates account is fully ready.
+            </p>
+          </div>
+
+          <div className="productGrid">
+            {products.map((product, index) => (
+              <article className="productCard" key={product.name}>
+                <div className={`productImage tone${index + 1}`}>
+                  <span>{product.label}</span>
+                </div>
+                <div className="productDetails">
+                  <p className="productMeta">{product.category}</p>
+                  <h3>{product.name}</h3>
+                  <p>{product.line}</p>
+                  <p className="bestFor">
+                    <strong>Best for:</strong> {product.bestFor}
+                  </p>
+                  <a href="https://www.amazon.com/" className="textButton" target="_blank" rel="noreferrer">
+                    Check on Amazon
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="routine" className="routine">
+          <div className="routinePanel">
+            <p className="kicker">Simple routine framework</p>
+            <h2>Cleanse. Hydrate. Protect. Refine.</h2>
+            <p>
+              A professional affiliate site should help readers understand how a
+              product fits into a routine, not only push a product link.
+            </p>
+          </div>
+          <div className="routineSteps">
+            <div>
+              <span>01</span>
+              <h3>Cleanse</h3>
+              <p>Start with a comfortable everyday cleanser category.</p>
+            </div>
+            <div>
+              <span>02</span>
+              <h3>Hydrate</h3>
+              <p>Introduce moisturiser and simple self-care essentials.</p>
+            </div>
+            <div>
+              <span>03</span>
+              <h3>Protect</h3>
+              <p>Guide readers toward daily sunscreen education.</p>
+            </div>
+            <div>
+              <span>04</span>
+              <h3>Refine</h3>
+              <p>Add tools, makeup basics and routine-friendly extras.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="guides" className="section guides">
+          <div className="sectionIntro">
+            <p className="kicker">Beauty journal</p>
+            <h2>Guides that build trust</h2>
+          </div>
+          <div className="guideGrid">
+            {guides.map((guide) => (
+              <article className="guideCard" key={guide}>
+                <p>Guide</p>
+                <h3>{guide}</h3>
+                <a href="#guides" className="guideLink">
+                  Read more
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="disclosure" className="disclosure">
+          <div>
+            <p className="kicker">Transparency</p>
+            <h2>Affiliate disclosure</h2>
+          </div>
+          <p>
+            As an Amazon Associate, I earn from qualifying purchases. This means
+            I may earn a commission when readers purchase products through
+            affiliate links on this website, at no extra cost to them. Product
+            recommendations are for general informational purposes only.
+          </p>
+        </section>
+      </main>
+
+      <footer className="footer">
+        <div>
+          <strong>Glow Skin Picks</strong>
+          <p>Beauty, skincare and self-care recommendations.</p>
+        </div>
+        <div>
+          <a href="#disclosure">Disclosure</a>
+          <a href="#disclosure">Privacy Policy</a>
+          <a href="#disclosure">Contact</a>
+        </div>
+      </footer>
     </div>
   );
-};
-
-const Navbar = () => {
-  return (
-    <nav className="navbar">
-      <h1>Glow Skin Picks</h1>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#picks">Product Picks</a></li>
-        <li><a href="#guides">Beauty Guides</a></li>
-        <li><a href="#disclosure">Disclosure</a></li>
-        <li><button className="cta-button">View Product Picks</button></li>
-        <li><button className="cta-button secondary">Read Beauty Guides</button></li>
-      </ul>
-    </nav>
-  );
-};
-
-const HeroSection = () => {
-  return (
-    <section className="hero">
-      <h2>Glow Skin Picks: Beauty & Skincare Finds Worth Trying</h2>
-      <h3>Simple, helpful product recommendations for skincare, beauty tools, everyday makeup, and self-care routines.</h3>
-      <button className="cta-button">Explore Product Picks</button>
-      <button className="cta-button secondary">Read Beauty Guides</button>
-    </section>
-  );
-};
-
-const Disclosure = () => {
-  return (
-    <section id="disclosure" className="disclosure">
-      <p>As an Amazon Associate, I earn from qualifying purchases.</p>
-      <p>This page may contain affiliate links. If you buy through these links, I may earn a commission at no extra cost to you.</p>
-    </section>
-  );
-};
-
-const ProductCategories = () => {
-  return (
-    <section className="product-categories">
-      <h2>Product Categories</h2>
-      <div className="category-card">
-        <h3>Skincare Basics</h3>
-        <p>Essential products for your daily routine.</p>
-      </div>
-      <div className="category-card">
-        <h3>Sunscreen & Daily Protection</h3>
-        <p>Protect your skin from harmful UV rays.</p>
-      </div>
-      <div className="category-card">
-        <h3>Moisturisers</h3>
-        <p>Hydrate your skin effectively.</p>
-      </div>
-      <div className="category-card">
-        <h3>Cleansers</h3>
-        <p>Keep your skin clean and fresh.</p>
-      </div>
-      <div className="category-card">
-        <h3>Beauty Tools</h3>
-        <p>Enhance your beauty routine effortlessly.</p>
-      </div>
-      <div className="category-card">
-        <h3>Everyday Makeup</h3>
-        <p>Must-haves for a simple, natural look.</p>
-      </div>
-      <div className="category-card">
-        <h3>Body Care</h3>
-        <p>Everything you need for healthy skin all over.</p>
-      </div>
-      <div className="category-card">
-        <h3>Hair Care</h3>
-        <p>Keep your hair looking its best.</p>
-      </div>
-    </section>
-  );
-};
-
-const ProductRecommendations = () => {
-  return (
-    <section id="picks" className="product-recommendations">
-      <h2>Featured Product Recommendations</h2>
-      <div className="product-card">
-        <img src="https://via.placeholder.com/150" alt="Gentle Daily Cleanser" />
-        <h3>Gentle Daily Cleanser</h3>
-        <p>Brighten up your daily routine with this soothing cleanser.</p>
-        <p>Best for: All skin types</p>
-        <a className="cta-button" href="#">Check on Amazon</a>
-      </div>
-      <div className="product-card">
-        <img src="https://via.placeholder.com/150" alt="Lightweight Moisturiser" />
-        <h3>Lightweight Moisturiser</h3>
-        <p>Keep your skin hydrated without feeling heavy.</p>
-        <p>Best for: Dry skin</p>
-        <a className="cta-button" href="#">Check on Amazon</a>
-      </div>
-      <div className="product-card">
-        <img src="https://via.placeholder.com/150" alt="Everyday Sunscreen" />
-        <h3>Everyday Sunscreen</h3>
-        <p>Protect your skin from sun damage with ease.</p>
-        <p>Best for: Daily wear</p>
-        <a className="cta-button" href="#">Check on Amazon</a>
-      </div>
-      <div className="product-card">
-        <img src="https://via.placeholder.com/150" alt="Lip Balm" />
-        <h3>Lip Balm</h3>
-        <p>Keep your lips hydrated and protected.</p>
-        <p>Best for: Chapped lips</p>
-        <a className="cta-button" href="#">Check on Amazon</a>
-      </div>
-      <div className="product-card">
-        <img src="https://via.placeholder.com/150" alt="Makeup Sponge" />
-        <h3>Makeup Sponge</h3>
-        <p>Achieve a flawless finish with this must-have tool.</p>
-        <p>Best for: Makeup application</p>
-        <a className="cta-button" href="#">Check on Amazon</a>
-      </div>
-      <div className="product-card">
-        <img src="https://via.placeholder.com/150" alt="Beauty Organiser" />
-        <h3>Beauty Organiser</h3>
-        <p>Keep your products organized and easily accessible.</p>
-        <p>Best for: Storage solutions</p>
-        <a className="cta-button" href="#">Check on Amazon</a>
-      </div>
-      <div className="product-card">
-        <img src="https://via.placeholder.com/150" alt="Soft Face Towels" />
-        <h3>Soft Face Towels</h3>
-        <p>Gentle on your skin and perfect for daily use.</p>
-        <p>Best for: Daily skincare routine</p>
-        <a className="cta-button" href="#">Check on Amazon</a>
-      </div>
-      <div className="product-card">
-        <img src="https://via.placeholder.com/150" alt="Travel Toiletry Bag" />
-        <h3>Travel Toiletry Bag</h3>
-        <p>Your skincare essentials sorted for travel.</p>
-        <p>Best for: Convenient storage</p>
-        <a className="cta-button" href="#">Check on Amazon</a>
-      </div>
-    </section>
-  );
-};
-
-const TrustSection = () => {
-  return (
-    <section className="trust-section">
-      <h2>Why Trust Us</h2>
-      <p>Our recommendations are curated for everyday routines.</p>
-      <p>We keep our content simple and beginner-friendly.</p>
-      <p>All product descriptions are clear and avoid exaggerated claims.</p>
-      <p>Affiliate links are disclosed to maintain transparency.</p>
-    </section>
-  );
-};
-
-const Articles = () => {
-  return (
-    <section id="articles" className="articles">
-      <h2>Latest Articles</h2>
-      <div className="article-card">
-        <h3>Best Skincare Basics for Beginners</h3>
-        <p>Learn about essential skincare products to start your journey.</p>
-        <p>Category: Skincare Basics</p>
-        <a className="cta-button" href="#">Read Guide</a>
-      </div>
-      <div className="article-card">
-        <h3>Simple Morning Skincare Routine</h3>
-        <p>A quick guide to kickstart your day with healthy skin.</p>
-        <p>Category: Skincare Basics</p>
-        <a className="cta-button" href="#">Read Guide</a>
-      </div>
-      <div className="article-card">
-        <h3>Simple Night Skincare Routine</h3>
-        <p>How to maintain your glow overnight.</p>
-        <p>Category: Skincare Basics</p>
-        <a className="cta-button" href="#">Read Guide</a>
-      </div>
-      <div className="article-card">
-        <h3>How to Choose a Gentle Cleanser</h3>
-        <p>Tips for selecting a cleanser that suits your skin.</p>
-        <p>Category: Cleansers</p>
-        <a className="cta-button" href="#">Read Guide</a>
-      </div>
-      <div className="article-card">
-        <h3>Everyday Sunscreen Guide</h3>
-        <p>Your go-to guide for sunscreen selection and use.</p>
-        <p>Category: Sunscreens</p>
-        <a className="cta-button" href="#">Read Guide</a>
-      </div>
-      <div className="article-card">
-        <h3>Beauty Tools That Are Actually Useful</h3>
-        <p>Discover the tools that will enhance your beauty routine.</p>
-        <p>Category: Beauty Tools</p>
-        <a className="cta-button" href="#">Read Guide</a>
-      </div>
-      <div className="article-card">
-        <h3>Affordable Makeup Essentials</h3>
-        <p>Must-have makeup products that won’t break the bank.</p>
-        <p>Category: Makeup Essentials</p>
-        <a className="cta-button" href="#">Read Guide</a>
-      </div>
-      <div className="article-card">
-        <h3>Travel Beauty Products Checklist</h3>
-        <p>Your essential packing list for beautiful skin when traveling.</p>
-        <p>Category: Beauty Tools</p>
-        <a className="cta-button" href="#">Read Guide</a>
-      </div>
-      <div className="article-card">
-        <h3>Body Care Products for Daily Self-Care</h3>
-        <p>How to care for your body while balancing your skincare routine.</p>
-        <p>Category: Body Care</p>
-        <a className="cta-button" href="#">Read Guide</a>
-      </div>
-      <div className="article-card">
-        <h3>Beauty Gift Ideas for Her</h3>
-        <p>Perfect gift ideas for the beauty lover in your life.</p>
-        <p>Category: Gift Ideas</p>
-        <a className="cta-button" href="#">Read Guide</a>
-      </div>
-    </section>
-  );
-};
-
-const Footer = () => {
-  return (
-    <footer className="footer">
-      <p>© 2026 Glow Skin Picks</p>
-      <p>Beauty, skincare, and self-care recommendations are our focus.</p>
-      <p>As an Amazon Associate, I earn from qualifying purchases.</p>
-      <p><a href="#">Privacy Policy</a> | <a href="#">Contact</a> | <a href="#disclosure">Disclosure</a></p>
-    </footer>
-  );
-};
+}
 
 export default App;
