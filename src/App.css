@@ -293,3 +293,66 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Header spacing fix: prevent the logo and navigation text from overlapping */
+.header {
+  grid-template-columns: auto 1fr;
+  gap: clamp(28px, 6vw, 90px);
+}
+
+.brand {
+  grid-column: 1;
+  justify-self: start;
+  text-align: left;
+  max-width: 320px;
+  white-space: nowrap;
+}
+
+.nav {
+  grid-column: 2;
+  justify-self: end;
+  flex-wrap: wrap;
+  row-gap: 12px;
+  max-width: 760px;
+}
+
+@media (max-width: 1180px) {
+  .header {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .brand {
+    grid-column: auto;
+    justify-self: center;
+    text-align: center;
+    max-width: none;
+  }
+
+  .nav {
+    grid-column: auto;
+    justify-self: center;
+    max-width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 740px) {
+  .header {
+    padding: 20px;
+  }
+
+  .brand {
+    font-size: 2.15rem;
+    white-space: normal;
+  }
+
+  .nav {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    width: 100%;
+    padding-bottom: 6px;
+  }
+}
