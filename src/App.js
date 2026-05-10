@@ -116,7 +116,8 @@ const copy = {
     scoreHigh: "High",
     expertAdvice: "Beauty-care advice",
     recommendedProducts: "Recommended products",
-    targetedProductOptions: "Targeted product options",
+    targetedProductOptions: "Score-based product plan",
+    productReason: "Why selected",
     productLibrary: "Product Library",
     productLibraryTitle: "Shop by skin concern",
     productLibraryIntro: "Browse product options grouped by the concern detected by the visual analysis tool. Each group explains the routine purpose and shows relevant affiliate product options.",
@@ -128,7 +129,7 @@ const copy = {
     whatToAvoid: "What to avoid",
     searchKeywords: "Product search keywords",
     ingredientDirection: "Ingredient direction",
-    cameraUpgradeTip: "For sharper analysis, use your phone camera, preferably the rear camera, in bright even daylight. For close-up steps, move the camera closer instead of using digital zoom.",
+    cameraUpgradeTip: "For sharper analysis, use your phone camera, preferably the rear camera, in bright even daylight. Keep only the face or target skin area inside the camera frame. For close-up steps, move the camera closer instead of using digital zoom.",
     visiaKicker: "VISIA-inspired protocol",
     visiaTitle: "VISIA-style Skin Review",
     visiaIntro: "A more rigorous workflow: multi-angle capture, close-up evidence, photo-quality gate, user concern calibration and eight-dimension visual scoring.",
@@ -260,7 +261,8 @@ const copy = {
     scoreHigh: "较高",
     expertAdvice: "护肤顾问建议",
     recommendedProducts: "推荐产品",
-    targetedProductOptions: "针对性产品组合",
+    targetedProductOptions: "按评分生成的产品方案",
+    productReason: "推荐原因",
     productLibrary: "产品库",
     productLibraryTitle: "按皮肤问题浏览产品",
     productLibraryIntro: "根据视觉分析工具识别的皮肤关注点浏览产品组合。每个分组都会说明护理目的，并展示相关联盟产品选择。",
@@ -272,7 +274,7 @@ const copy = {
     whatToAvoid: "需要避免",
     searchKeywords: "产品搜索关键词",
     ingredientDirection: "成分方向",
-    cameraUpgradeTip: "为了获得更清晰的分析，建议使用手机摄像头，最好是后置摄像头，并在明亮均匀的自然光下拍摄。拍局部近照时，请靠近皮肤，而不是依赖数码放大。",
+    cameraUpgradeTip: "为了获得更清晰的分析，建议使用手机摄像头，最好是后置摄像头，并在明亮均匀的自然光下拍摄。请让画面里主要是脸部或目标皮肤区域，减少背景。拍局部近照时，请靠近皮肤，而不是依赖数码放大。",
     visiaKicker: "VISIA 风格流程",
     visiaTitle: "VISIA 式肤况复核",
     visiaIntro: "更严谨的流程：多角度采集、局部近拍证据、照片质量门槛、用户自述校准和八维视觉评分。",
@@ -1552,10 +1554,151 @@ function getAffiliateItems(main) {
   return affiliateLibrary[main] || affiliateLibrary.maintenance || [];
 }
 
-function ReportPanel({ title, result, report, t, lang, compact = false }) {
+
+function uniqueByHref(items) {
+  const seen = new Set();
+  return items.filter((item) => {
+    if (!item || !item.href || seen.has(item.href)) return false;
+    seen.add(item.href);
+    return true;
+  });
+}
+
+function withReason(item, reasonEn, reasonZh) {
+  return {
+    ...item,
+    reasonEn,
+    reasonZh,
+  };
+}
+
+function firstItems(group, indexes = []) {
+  const list = affiliateLibrary[group] || [];
+  return indexes.map((index) => list[index]).filter(Boolean);
+}
+
+function buildScoreBasedProductPlan(result, report, selfConcerns = []) {
+  if (!result) return getAffiliateItems(report?.main || "maintenance");
+
+  const concerns = [
+    { key: "dryness", score: result.dryness || 0 },
+    { key: "redness", score: result.redness || 0 },
+    { key: "acne", score: result.acne || 0 },
+    { key: "shine", score: result.shine || 0 },
+    { key: "pores", score: result.pores || 0 },
+    { key: "texture", score: result.texture || 0 },
+    { key: "pigmentation", score: result.pigmentation || 0 },
+  ].map((item) => ({
+    ...item,
+    adjusted: Math.min(100, item.score + (selfConcerns.includes(item.key) ? 18 : 0)),
+  })).sort((a, b) => b.adjusted - a.adjusted);
+
+  const primary = concerns[0]?.key || report?.main || "maintenance";
+  const selected = [];
+
+  // Universal foundation: most routines need a cleanser/moisturiser/sunscreen direction.
+  // Then add actives only when scores justify them.
+  if (primary === "dryness" || (result.dryness || 0) >= 62 || selfConcerns.includes("dryness")) {
+    selected.push(
+      ...firstItems("dryness", [4]).map((i) => withReason(i, "Gentle cleansing for dry or peeling-prone skin.", "干燥或脱皮倾向下，优先选择温和清洁。")),
+      ...firstItems("dryness", [0, 2]).map((i) => withReason(i, "Barrier-support moisturising is the priority.", "屏障保湿修护是优先级。"))
+    );
+    if ((result.dryness || 0) >= 72) {
+      selected.push(...firstItems("dryness", [3]).map((i) => withReason(i, "High dryness score: small amount on very dry patches.", "干燥评分较高，可少量用于局部很干区域。")));
+    }
+  }
+
+  if (primary === "redness" || (result.redness || 0) >= 58 || selfConcerns.includes("redness")) {
+    selected.push(
+      ...firstItems("redness", [0, 1]).map((i) => withReason(i, "Redness/barrier-stress signal: simplify and reduce irritation.", "泛红或屏障压力信号下，建议精简并降低刺激。")),
+      ...firstItems("redness", [2]).map((i) => withReason(i, "Gentler sunscreen direction for sensitivity-prone routines.", "敏感倾向下更适合温和防晒方向。"))
+    );
+    if ((result.redness || 0) >= 65 && (result.dryness || 0) < 70) {
+      selected.push(...firstItems("redness", [4]).map((i) => withReason(i, "Calming support for visible redness tendency.", "用于支持泛红倾向下的舒缓护理。")));
+    }
+  }
+
+  if (primary === "acne" || (result.acne || 0) >= 55 || selfConcerns.includes("acne")) {
+    selected.push(
+      ...firstItems("acne", [3, 4]).map((i) => withReason(i, "Blemish-prone routines still need moisturiser and sunscreen.", "瑕疵倾向也需要保湿和防晒作为基础。"))
+    );
+
+    if ((result.dryness || 0) >= 62 || (result.redness || 0) >= 62) {
+      selected.push(...firstItems("acne", [2]).map((i) => withReason(i, "Blemish + redness/dryness: azelaic acid direction may be gentler than stacking strong actives.", "瑕疵伴随泛红/干燥时，壬二酸方向比叠加强功效更温和。")));
+    } else if ((result.acne || 0) >= 72) {
+      selected.push(
+        ...firstItems("acne", [0]).map((i) => withReason(i, "Higher clogged-pore/blemish score: low-frequency BHA direction.", "闭口/瑕疵评分较高，可低频考虑 BHA 方向。")),
+        ...firstItems("acne", [1]).map((i) => withReason(i, "More visible blemish signal: optional benzoyl peroxide wash, introduced slowly.", "瑕疵信号较明显时，可选低频过氧化苯甲酰洁面。"))
+      );
+    } else {
+      selected.push(...firstItems("acne", [0]).map((i) => withReason(i, "Mild clogged-pore signal: start with low-frequency salicylic acid direction.", "轻中度闭口信号，可低频从水杨酸方向开始。")));
+    }
+  }
+
+  if (primary === "shine" || (result.shine || 0) >= 55 || selfConcerns.includes("shine")) {
+    selected.push(
+      ...firstItems("shine", [0, 2, 3]).map((i) => withReason(i, "Shine/T-zone signal: cleanse gently, hydrate lightly, protect daily.", "油光/T 区信号下，温和清洁、轻盈保湿和日常防晒更合适。"))
+    );
+    if ((result.pores || 0) >= 55 || selfConcerns.includes("pores")) {
+      selected.push(...firstItems("shine", [1]).map((i) => withReason(i, "Shine + pores: niacinamide direction for oil balance support.", "油光伴随毛孔时，可考虑烟酰胺方向支持油脂平衡。")));
+    }
+    if ((result.shine || 0) >= 72) {
+      selected.push(...firstItems("shine", [4]).map((i) => withReason(i, "High shine score: occasional clay mask, not daily.", "油光评分较高时，可低频使用泥膜，不建议每天用。")));
+    }
+  }
+
+  if (primary === "pores" || (result.pores || 0) >= 58 || selfConcerns.includes("pores")) {
+    selected.push(
+      ...firstItems("pores", [3]).map((i) => withReason(i, "Pore/detail visibility: start with gentle daily cleansing.", "毛孔/细节可见度下，先从温和日常清洁开始。")),
+      ...firstItems("pores", [2]).map((i) => withReason(i, "Pores + oil balance support.", "用于毛孔和油脂平衡支持。"))
+    );
+    if ((result.dryness || 0) < 58 && (result.redness || 0) < 58) {
+      selected.push(...firstItems("pores", [0]).map((i) => withReason(i, "Pore score without strong dryness/redness: low-frequency 2% BHA direction.", "毛孔评分较高且干燥/泛红不明显时，可低频考虑 2% BHA。")));
+    }
+    if ((result.shine || 0) >= 65) {
+      selected.push(...firstItems("pores", [4]).map((i) => withReason(i, "Pores + shine: occasional T-zone clay mask.", "毛孔伴随油光时，可低频 T 区泥膜。")));
+    }
+  }
+
+  if (primary === "texture" || (result.texture || 0) >= 58 || selfConcerns.includes("texture")) {
+    selected.push(
+      ...firstItems("texture", [3, 4]).map((i) => withReason(i, "Texture/fine-line visibility: hydration and sunscreen first.", "纹理/细纹可见度下，先保湿和防晒。"))
+    );
+    if ((result.dryness || 0) < 60 && (result.redness || 0) < 60) {
+      selected.push(...firstItems("texture", [0]).map((i) => withReason(i, "Stable skin + texture: beginner retinol direction, introduced slowly.", "皮肤较稳定且关注纹理时，可低频考虑新手视黄醇。")));
+    } else {
+      selected.push(...firstItems("dryness", [0]).map((i) => withReason(i, "Texture with dryness/redness: repair first before retinol.", "纹理伴随干燥/泛红时，先修护再考虑视黄醇。")));
+    }
+  }
+
+  if (primary === "pigmentation" || (result.pigmentation || 0) >= 55 || selfConcerns.includes("pigmentation")) {
+    selected.push(
+      ...firstItems("pigmentation", [0]).map((i) => withReason(i, "Uneven tone/dark-spot-like contrast: sunscreen is the first priority.", "肤色不均/色沉样色差下，防晒是第一优先级。"))
+    );
+    if ((result.redness || 0) >= 55) {
+      selected.push(...firstItems("pigmentation", [2]).map((i) => withReason(i, "Uneven tone + redness: azelaic acid direction may be suitable.", "肤色不均伴泛红时，可考虑壬二酸方向。")));
+    } else {
+      selected.push(
+        ...firstItems("pigmentation", [1]).map((i) => withReason(i, "Uneven tone support: niacinamide direction.", "肤色不均支持：烟酰胺方向。")),
+        ...firstItems("pigmentation", [3]).map((i) => withReason(i, "Brightening support option; patch test if sensitive.", "提亮辅助选择；敏感皮需先局部测试。"))
+      );
+    }
+  }
+
+  if (!selected.length) {
+    selected.push(
+      ...firstItems("maintenance", [0, 1, 2]).map((i) => withReason(i, "No single dominant concern: maintain a simple basic routine.", "没有单一明显问题时，保持基础护理即可。"))
+    );
+  }
+
+  // Keep results varied but not overwhelming.
+  return uniqueByHref(selected).slice(0, 7);
+}
+
+function ReportPanel({ title, result, report, t, lang, selfConcerns = [], compact = false }) {
   if (!result || !report) return null;
   const recommendedProducts = report.productIds.map(getProductById);
-  const affiliateItems = getAffiliateItems(report.main);
+  const affiliateItems = buildScoreBasedProductPlan(result, report, selfConcerns);
 
   return (
     <div className={compact ? "compactReport" : "fullReport"}>
@@ -1637,6 +1780,9 @@ function ReportPanel({ title, result, report, t, lang, compact = false }) {
                 )}
                 <strong>{lang === "en" ? item.en : item.zh}</strong>
                 <span>{lang === "en" ? item.roleEn : item.roleZh}</span>
+                {(item.reasonEn || item.reasonZh) && (
+                  <em><b>{t.productReason}:</b> {lang === "en" ? item.reasonEn : item.reasonZh}</em>
+                )}
               </a>
             ))}
           </div>
@@ -1712,12 +1858,12 @@ function App() {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: "user",
-          width: { ideal: 3840, min: 1280 },
-          height: { ideal: 2160, min: 720 },
+          width: { ideal: 1920 },
+          height: { ideal: 2560 },
           frameRate: { ideal: 30 },
         },
         audio: false,
-      });
+      });  
 
       streamRef.current = stream;
 
@@ -1735,8 +1881,8 @@ function App() {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
             facingMode: "user",
-            width: { ideal: 1920 },
-            height: { ideal: 1080 },
+            width: { ideal: 1280 },
+            height: { ideal: 1700 },
           },
           audio: false,
         });
@@ -1793,8 +1939,8 @@ function App() {
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
 
-    const videoWidth = video.videoWidth || 1280;
-    const videoHeight = video.videoHeight || 720;
+    const videoWidth = video.videoWidth || 1920;
+    const videoHeight = video.videoHeight || 2560;
     const ctx = canvas.getContext("2d");
 
     canvas.width = videoWidth;
@@ -2100,7 +2246,7 @@ function App() {
                   <p className="qualityWarning">{t.lowResWarning}</p>
                 )}
               </div>
-
+              
               <div className="cameraFrame">
                 {photo ? (
                   <img
@@ -2109,10 +2255,34 @@ function App() {
                     alt={lang === "en" ? "Captured skin visual analysis" : "已拍摄的皮肤视觉分析照片"}
                   />
                 ) : (
-                  <video ref={videoRef} autoPlay playsInline muted />
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="cameraVideo"
+                  />
                 )}
+
+                <div className="cameraOverlayGuide compact">
+                  <div className="cameraOverlayEyebrow">
+                    {lang === "en" ? "Photo guide" : "拍摄提示"}
+                  </div>
+
+                  <h3 className="cameraOverlayTitle">
+                    {lang === "en" ? currentCaptureStep.en : currentCaptureStep.zh}
+                  </h3>
+
+                  <p className="cameraOverlayDesc">
+                    {lang === "en"
+                      ? currentCaptureStep.enInstruction
+                      : currentCaptureStep.zhInstruction}
+                  </p>
+                </div>
+
                 <canvas ref={canvasRef} className="hiddenCanvas" />
               </div>
+
 
               <div className="cameraButtons simpleCameraButtons">
                 <button className="button dark primaryShootButton" type="button" onClick={handleShootButton}>
@@ -2154,6 +2324,7 @@ function App() {
                       report={overallReport}
                       t={t}
                       lang={lang}
+                      selfConcerns={selfConcerns}
                     />
                   )}
 
@@ -2164,6 +2335,7 @@ function App() {
                       report={localReport}
                       t={t}
                       lang={lang}
+                      selfConcerns={selfConcerns}
                       compact
                     />
                   )}

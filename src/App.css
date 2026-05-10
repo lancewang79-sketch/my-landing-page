@@ -1154,3 +1154,156 @@ html:lang(zh) .hero h1,
 .pose-problemArea::after {
   border-style: dashed;
 }
+
+
+/* Smaller camera preview */
+.cameraPanel {
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cameraFrame {
+  min-height: 0 !important;
+  width: min(100%, 370px) !important;
+  aspect-ratio: 3 / 4;
+  margin: 0 auto;
+  border: 1px solid rgba(248, 243, 237, 0.18);
+  position: relative;
+}
+
+.cameraFrame video,
+.cameraFrame .capturedPreview {
+  width: 100%;
+  height: 100%;
+  max-height: none !important;
+  object-fit: cover;
+}
+
+@media (max-width: 740px) {
+  .cameraFrame {
+    width: min(100%, 300px) !important;
+  }
+}
+/* Score-based recommendation cards */
+.solutionProductCard em {
+  display: block;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(24, 21, 19, 0.1);
+  color: #8b6a55;
+  font-style: normal;
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.solutionProductCard em b {
+  color: #181513;
+}
+
+.cameraFrame {
+  position: relative;
+  overflow: hidden;
+}
+
+.cameraVideo,
+.capturedPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cameraFrame {
+  position: relative;
+  overflow: hidden;
+}
+
+.cameraVideo,
+.capturedPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cameraOverlayGuide {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 520px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 252, 248, 0.18);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 5;
+  pointer-events: none;
+  text-align: center;
+}
+
+.cameraOverlayTitle {
+  margin: 0 0 4px;
+  font-size: 1.2rem;
+  line-height: 1.1;
+}
+
+.cameraOverlayDesc {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.35;
+}
+
+.cameraOverlayGuide.compact {
+  width: min(40%, 280px);
+  padding: 10px 12px;
+}
+
+.cameraOverlayEyebrow {
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(121, 92, 70, 0.92);
+}
+
+/* 这项如果你已经不用了，可以保留也可以删掉 */
+.cameraOverlayTip {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .cameraOverlayGuide,
+  .cameraOverlayGuide.compact {
+    width: calc(100% - 24px);
+    max-width: none;
+    top: 10px;
+    left: 10px;
+    padding: 9px 10px;
+  }
+
+  .cameraOverlayTitle {
+    font-size: 1.05rem;
+  }
+
+  .cameraOverlayDesc {
+    font-size: 0.8rem;
+    line-height: 1.35;
+  }
+
+  .cameraOverlayEyebrow {
+    font-size: 0.65rem;
+  }
+}
+  .cameraOverlayTitle {
+    font-size: 1.2rem;
+  }
+
+  .cameraOverlayDesc,
+  .cameraOverlayTip {
+    font-size: 0.9rem;
+  }
