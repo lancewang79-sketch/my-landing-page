@@ -2,16 +2,21 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #121212;
-  color: #ffffff;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1c1c1c;
+  background-color: #ff6f61;
   padding: 20px;
+  border-bottom: 2px solid #e35747;
+}
+
+.navbar h1 {
+  color: #ffffff;
 }
 
 .navbar ul {
@@ -48,9 +53,10 @@ body {
 }
 
 .hero {
-  background: linear-gradient(to right, #282c34, #1c1c1c);
+  background: linear-gradient(to right, #ff6f61, #f5af19);
   padding: 100px 20px;
   text-align: center;
+  color: #fff;
 }
 
 .hero h2 {
@@ -63,15 +69,31 @@ body {
   font-weight: 300;
 }
 
+.product-categories {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.category-card {
+  background-color: #fff;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  width: 200px;
+}
+
 .product-recommendations {
   padding: 50px 20px;
 }
 
 .product-card {
-  background-color: #1c1c1c;
+  background-color: #ffffff;
   margin: 20px;
   padding: 20px;
   border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s;
 }
@@ -85,11 +107,12 @@ body {
   height: auto;
   max-height: 200px;
   object-fit: cover;
+  border-radius: 8px;
 }
 
 .disclosure {
   padding: 50px 20px;
-  background-color: #282c34;
+  background-color: #f0f3f4;
   border-radius: 8px;
   margin: 20px;
   text-align: center;
@@ -109,10 +132,17 @@ disclosure p {
 }
 
 .article-card {
-  background-color: #1c1c1c;
+  background-color: #f0f3f4;
+  display: inline-block;
   margin: 20px;
   padding: 20px;
   border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.trust-section {
+  padding: 50px 20px;
   text-align: center;
 }
 
@@ -120,4 +150,5 @@ disclosure p {
   background-color: #1c1c1c;
   text-align: center;
   padding: 20px;
+  color: #ffffff;
 }
