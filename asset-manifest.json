@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/my-landing-page/static/css/main.eb9a8960.css",
-    "main.js": "/my-landing-page/static/js/main.e8f2db27.js",
+    "main.js": "/my-landing-page/static/js/main.b78de821.js",
     "static/js/453.51363e4d.chunk.js": "/my-landing-page/static/js/453.51363e4d.chunk.js",
     "static/media/travel-toiletry-bag.jpg": "/my-landing-page/static/media/travel-toiletry-bag.a41dfebfba38e8f4c5ca.jpg",
     "static/media/everyday-sunscreen.jpg": "/my-landing-page/static/media/everyday-sunscreen.7e8e62d25888f52a9d0a.jpg",
@@ -14,11 +14,11 @@
     "static/media/lightweight-moisturiser.jpg": "/my-landing-page/static/media/lightweight-moisturiser.97cc754804e997329fd4.jpg",
     "index.html": "/my-landing-page/index.html",
     "main.eb9a8960.css.map": "/my-landing-page/static/css/main.eb9a8960.css.map",
-    "main.e8f2db27.js.map": "/my-landing-page/static/js/main.e8f2db27.js.map",
+    "main.b78de821.js.map": "/my-landing-page/static/js/main.b78de821.js.map",
     "453.51363e4d.chunk.js.map": "/my-landing-page/static/js/453.51363e4d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.eb9a8960.css",
-    "static/js/main.e8f2db27.js"
+    "static/js/main.b78de821.js"
   ]
 }
