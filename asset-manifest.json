@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/my-landing-page/static/css/main.a507b6b8.css",
-    "main.js": "/my-landing-page/static/js/main.a60920a2.js",
+    "main.css": "/my-landing-page/static/css/main.7100f98d.css",
+    "main.js": "/my-landing-page/static/js/main.f7b34b90.js",
     "static/js/453.51363e4d.chunk.js": "/my-landing-page/static/js/453.51363e4d.chunk.js",
     "static/media/travel-toiletry-bag.jpg": "/my-landing-page/static/media/travel-toiletry-bag.a41dfebfba38e8f4c5ca.jpg",
     "static/media/everyday-sunscreen.jpg": "/my-landing-page/static/media/everyday-sunscreen.7e8e62d25888f52a9d0a.jpg",
@@ -13,12 +13,12 @@
     "static/media/gentle-cleanser.jpg": "/my-landing-page/static/media/gentle-cleanser.c3b35fc6cbb8605092a8.jpg",
     "static/media/lightweight-moisturiser.jpg": "/my-landing-page/static/media/lightweight-moisturiser.97cc754804e997329fd4.jpg",
     "index.html": "/my-landing-page/index.html",
-    "main.a507b6b8.css.map": "/my-landing-page/static/css/main.a507b6b8.css.map",
-    "main.a60920a2.js.map": "/my-landing-page/static/js/main.a60920a2.js.map",
+    "main.7100f98d.css.map": "/my-landing-page/static/css/main.7100f98d.css.map",
+    "main.f7b34b90.js.map": "/my-landing-page/static/js/main.f7b34b90.js.map",
     "453.51363e4d.chunk.js.map": "/my-landing-page/static/js/453.51363e4d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a507b6b8.css",
-    "static/js/main.a60920a2.js"
+    "static/css/main.7100f98d.css",
+    "static/js/main.f7b34b90.js"
   ]
 }
