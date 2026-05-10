@@ -30,6 +30,15 @@ const products = [
     category: "Beauty Tool",
     bestFor: "Beginner makeup",
   },
+
+  {
+  label: "Best Seller",
+  name: "Gentle Daily Cleanser",
+  line: "A soft-start cleansing pick for simple morning and evening routines.",
+  category: "Cleanser",
+  bestFor: "New skincare routines",
+  href: "https://amzn.to/4tuSwFY",
+  },
 ];
 
 const categories = [
@@ -147,7 +156,7 @@ function App() {
                   <p className="bestFor">
                     <strong>Best for:</strong> {product.bestFor}
                   </p>
-                  <a href="https://www.amazon.com/" className="textButton" target="_blank" rel="noreferrer">
+                  <a href={product.href} className="textButton" target="_blank" rel="noreferrer">
                     Check on Amazon
                   </a>
                 </div>
