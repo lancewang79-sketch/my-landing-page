@@ -47,10 +47,10 @@ const copy = {
     privacy: "Privacy Policy",
     contact: "Contact",
 
-    analysisKicker: "Camera-based beauty analysis",
-    analysisTitle: "Glow Skin Visual Analysis",
+    analysisKicker: "AI-style visual beauty analysis",
+    analysisTitle: "Glow Skin Visual Analysis + Magnifier",
     analysisIntro:
-      "Take a photo in good light and receive a visual beauty report covering acne-like blemish visibility, dryness/flaking tendency, shine, redness, texture/fine-line visibility and evenness.",
+      "Use the camera as a skin magnifier. Capture an overview photo, zoom into details, analyse local areas and receive a structured beauty-care report.",
     consent:
       "I understand this is a beauty routine helper, not a medical diagnosis tool.",
     privacyNote:
@@ -59,15 +59,16 @@ const copy = {
       "This tool is for general beauty and self-care guidance only. It does not diagnose or treat acne, eczema, rosacea, infection, allergy, pigmentation disease, skin cancer or any medical skin condition.",
     startCamera: "Start Camera",
     stopCamera: "Stop Camera",
-    takePhoto: "Take Photo",
+    takePhoto: "Take Overview Photo",
     retake: "Retake",
     clearPhoto: "Clear Photo",
-    runAnalysis: "Analyse My Photo",
+    runAnalysis: "Analyse Overview",
+    analyseArea: "Analyse Magnified Area",
     consentRequired: "Please confirm the consent note before starting the camera.",
     cameraUnavailable:
       "Camera access is not available. Please check browser permissions or try another browser.",
     noPhoto: "Please take a photo first.",
-    photoReady: "Photo captured. You can now run the visual analysis.",
+    photoReady: "Photo captured. You can analyse the full image or inspect details with Magnifier Mode.",
     noPhotoYet: "Start camera and take a clear front-facing photo in even light.",
     lightingTips:
       "For a better result, face a window or soft light, remove strong shadows, clean your lens and avoid heavy filters.",
@@ -77,7 +78,6 @@ const copy = {
     scoreMild: "Mild",
     scoreModerate: "Moderate",
     scoreHigh: "High",
-    productDirection: "Product direction",
     expertAdvice: "Beauty-care advice",
     recommendedProducts: "Recommended products",
     routineTitle: "Suggested routine",
@@ -85,6 +85,20 @@ const copy = {
     evening: "Evening",
     optional: "Optional",
     retakeAdvice: "Retake photo for better accuracy",
+    overviewMode: "Overview Mode",
+    magnifierMode: "Magnifier Mode",
+    zoom: "Zoom",
+    selectedArea: "Selected area",
+    forehead: "Forehead",
+    nose: "Nose / T-zone",
+    leftCheek: "Left cheek",
+    rightCheek: "Right cheek",
+    chin: "Chin",
+    customCentre: "Centre close-up",
+    localReport: "Magnified area report",
+    compareZones: "Zone comparison",
+    algorithmNote:
+      "The algorithm estimates visual tendencies from brightness, colour-channel balance, local contrast, highlights and texture variation. It is not a clinical measurement.",
     metrics: {
       lighting: "Lighting quality",
       acne: "Blemish / acne-like visibility",
@@ -92,7 +106,10 @@ const copy = {
       redness: "Redness tendency",
       shine: "Shine / oiliness tendency",
       texture: "Texture / fine-line visibility",
+      pores: "Pore / detail visibility",
+      pigmentation: "Dark-spot contrast",
       evenness: "Tone evenness",
+      blur: "Sharpness quality",
     },
   },
   zh: {
@@ -130,10 +147,10 @@ const copy = {
     privacy: "隐私政策",
     contact: "联系",
 
-    analysisKicker: "基于相机的美妆视觉分析",
-    analysisTitle: "Glow Skin 皮肤视觉分析",
+    analysisKicker: "AI 风格皮肤视觉分析",
+    analysisTitle: "Glow Skin 皮肤视觉分析 + 放大镜",
     analysisIntro:
-      "在光线良好的环境下拍照，获得一份视觉护肤报告，包括痘痘/瑕疵可见度、干燥/脱皮倾向、油光、泛红、纹理/细纹可见度和肤色均匀度。",
+      "把相机变成皮肤放大镜。先拍摄整体照片，再放大查看细节，分析局部区域，并生成结构化护肤报告。",
     consent:
       "我理解这是美妆护肤流程助手，不是医疗诊断工具。",
     privacyNote:
@@ -142,15 +159,16 @@ const copy = {
       "本工具仅用于一般美妆与自我护理建议，不用于诊断或治疗痘痘、湿疹、玫瑰痤疮、感染、过敏、色素疾病、皮肤癌或任何医学皮肤问题。",
     startCamera: "打开相机",
     stopCamera: "关闭相机",
-    takePhoto: "拍照",
+    takePhoto: "拍摄整体照片",
     retake: "重新拍摄",
     clearPhoto: "清除照片",
-    runAnalysis: "分析照片",
+    runAnalysis: "分析整体照片",
+    analyseArea: "分析放大区域",
     consentRequired: "请先勾选同意说明，再打开相机。",
     cameraUnavailable:
       "无法访问相机。请检查浏览器权限，或尝试使用其他浏览器。",
     noPhoto: "请先拍摄照片。",
-    photoReady: "照片已拍摄。现在可以运行视觉分析。",
+    photoReady: "照片已拍摄。你可以分析整体图像，也可以使用放大镜查看细节。",
     noPhotoYet: "请打开相机，在均匀光线下拍摄清晰的正面照片。",
     lightingTips:
       "为了提升结果稳定性，建议面对窗边或柔和光源，避免强阴影，擦净镜头，不使用重滤镜。",
@@ -160,7 +178,6 @@ const copy = {
     scoreMild: "轻微",
     scoreModerate: "中等",
     scoreHigh: "较高",
-    productDirection: "产品方向",
     expertAdvice: "护肤顾问建议",
     recommendedProducts: "推荐产品",
     routineTitle: "建议护肤流程",
@@ -168,6 +185,20 @@ const copy = {
     evening: "晚上",
     optional: "可选",
     retakeAdvice: "建议重新拍摄以提高准确度",
+    overviewMode: "整体模式",
+    magnifierMode: "放大镜模式",
+    zoom: "放大倍数",
+    selectedArea: "选择区域",
+    forehead: "额头",
+    nose: "鼻子 / T 区",
+    leftCheek: "左脸颊",
+    rightCheek: "右脸颊",
+    chin: "下巴",
+    customCentre: "中心近距离",
+    localReport: "放大区域报告",
+    compareZones: "区域对比",
+    algorithmNote:
+      "算法会从亮度、颜色通道、局部对比度、反光和纹理变化估算视觉倾向。这不是临床检测。",
     metrics: {
       lighting: "光线质量",
       acne: "痘痘 / 瑕疵可见度",
@@ -175,7 +206,10 @@ const copy = {
       redness: "泛红倾向",
       shine: "油光 / 反光倾向",
       texture: "纹理 / 细纹可见度",
+      pores: "毛孔 / 细节可见度",
+      pigmentation: "色沉 / 斑点样色差",
       evenness: "肤色均匀度",
+      blur: "清晰度质量",
     },
   },
 };
@@ -339,6 +373,15 @@ const guides = [
   },
 ];
 
+const zoneDefs = {
+  forehead: { x: 0.3, y: 0.08, w: 0.4, h: 0.22 },
+  nose: { x: 0.38, y: 0.28, w: 0.24, h: 0.32 },
+  leftCheek: { x: 0.14, y: 0.34, w: 0.28, h: 0.28 },
+  rightCheek: { x: 0.58, y: 0.34, w: 0.28, h: 0.28 },
+  chin: { x: 0.36, y: 0.66, w: 0.28, h: 0.22 },
+  customCentre: { x: 0.25, y: 0.22, w: 0.5, h: 0.5 },
+};
+
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
@@ -360,10 +403,21 @@ function levelText(t, score) {
   }[level];
 }
 
-function analyseSkinImage(canvas) {
+function analyseCanvas(canvas, crop = null) {
   const ctx = canvas.getContext("2d");
-  const { width, height } = canvas;
-  const image = ctx.getImageData(0, 0, width, height).data;
+  let sx = 0;
+  let sy = 0;
+  let sw = canvas.width;
+  let sh = canvas.height;
+
+  if (crop) {
+    sx = Math.floor(canvas.width * crop.x);
+    sy = Math.floor(canvas.height * crop.y);
+    sw = Math.floor(canvas.width * crop.w);
+    sh = Math.floor(canvas.height * crop.h);
+  }
+
+  const image = ctx.getImageData(sx, sy, sw, sh).data;
 
   let count = 0;
   let brightnessSum = 0;
@@ -374,41 +428,44 @@ function analyseSkinImage(canvas) {
   let veryDark = 0;
   let skinLikePixels = 0;
   let colorVarianceSum = 0;
+  let brownContrastSum = 0;
+  let luminances = [];
 
   const sampleStep = 4;
-  const luminances = [];
 
-  for (let y = Math.floor(height * 0.12); y < Math.floor(height * 0.9); y += sampleStep) {
-    for (let x = Math.floor(width * 0.12); x < Math.floor(width * 0.88); x += sampleStep) {
-      const idx = (y * width + x) * 4;
+  for (let y = 0; y < sh; y += sampleStep) {
+    for (let x = 0; x < sw; x += sampleStep) {
+      const idx = (y * sw + x) * 4;
       const r = image[idx];
       const g = image[idx + 1];
       const b = image[idx + 2];
 
       const max = Math.max(r, g, b);
       const min = Math.min(r, g, b);
-      const brightness = (0.299 * r + 0.587 * g + 0.114 * b);
+      const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
       const saturation = max === 0 ? 0 : (max - min) / max;
       const redness = r - (g + b) / 2;
+      const brownish = Math.max(0, r * 0.45 + g * 0.32 - b * 0.62 - 32);
 
       const skinLike =
-        r > 55 &&
-        g > 35 &&
-        b > 25 &&
-        r > b * 0.95 &&
-        r > g * 0.8 &&
-        saturation < 0.65 &&
-        brightness > 45;
+        r > 50 &&
+        g > 32 &&
+        b > 20 &&
+        r > b * 0.92 &&
+        r > g * 0.72 &&
+        saturation < 0.72 &&
+        brightness > 35;
 
       count++;
       brightnessSum += brightness;
       saturationSum += saturation;
       rednessSum += redness;
       colorVarianceSum += Math.abs(r - g) + Math.abs(g - b) + Math.abs(r - b);
+      brownContrastSum += brownish;
       luminances.push(brightness);
 
       if (skinLike) skinLikePixels++;
-      if (brightness > 218 && saturation < 0.22) shinePixels++;
+      if (brightness > 215 && saturation < 0.25) shinePixels++;
       if (brightness > 235) veryBright++;
       if (brightness < 35) veryDark++;
     }
@@ -418,14 +475,17 @@ function analyseSkinImage(canvas) {
   const avgSaturation = saturationSum / count;
   const avgRedness = rednessSum / count;
   const skinRatio = skinLikePixels / count;
+  const avgBrownContrast = brownContrastSum / count;
 
   let textureSum = 0;
   let edgeCount = 0;
-  for (let y = Math.floor(height * 0.18); y < Math.floor(height * 0.82); y += 8) {
-    for (let x = Math.floor(width * 0.18); x < Math.floor(width * 0.82); x += 8) {
-      const idx = (y * width + x) * 4;
-      const idxRight = (y * width + Math.min(width - 1, x + 4)) * 4;
-      const idxDown = (Math.min(height - 1, y + 4) * width + x) * 4;
+  let microEdges = 0;
+
+  for (let y = 4; y < sh - 4; y += 6) {
+    for (let x = 4; x < sw - 4; x += 6) {
+      const idx = (y * sw + x) * 4;
+      const idxRight = (y * sw + Math.min(sw - 1, x + 3)) * 4;
+      const idxDown = (Math.min(sh - 1, y + 3) * sw + x) * 4;
 
       const lum = 0.299 * image[idx] + 0.587 * image[idx + 1] + 0.114 * image[idx + 2];
       const lumR = 0.299 * image[idxRight] + 0.587 * image[idxRight + 1] + 0.114 * image[idxRight + 2];
@@ -434,6 +494,7 @@ function analyseSkinImage(canvas) {
       const localEdge = Math.abs(lum - lumR) + Math.abs(lum - lumD);
       textureSum += localEdge;
       edgeCount++;
+      if (localEdge > 32) microEdges++;
     }
   }
 
@@ -452,8 +513,10 @@ function analyseSkinImage(canvas) {
     100
   );
 
+  const sharpnessScore = clamp(avgTexture * 2.25 + (microEdges / Math.max(edgeCount, 1)) * 120, 0, 100);
+
   const acneScore = clamp(
-    Math.max(0, avgRedness - 8) * 1.4 +
+    Math.max(0, avgRedness - 8) * 1.45 +
       Math.max(0, avgTexture - 22) * 0.9 +
       avgSaturation * 24,
     0,
@@ -469,7 +532,6 @@ function analyseSkinImage(canvas) {
   );
 
   const rednessScore = clamp(Math.max(0, avgRedness - 4) * 2.4 + avgSaturation * 18, 0, 100);
-
   const shineScore = clamp(
     (shinePixels / count) * 900 +
       (veryBright / count) * 500 +
@@ -480,7 +542,8 @@ function analyseSkinImage(canvas) {
   );
 
   const textureScore = clamp(avgTexture * 1.6 + Math.max(0, brightnessSpread - 38) * 0.55, 0, 100);
-
+  const poreScore = clamp((microEdges / Math.max(edgeCount, 1)) * 240 + Math.max(0, avgTexture - 20) * 1.1, 0, 100);
+  const pigmentationScore = clamp(avgBrownContrast * 1.65 + Math.max(0, brightnessSpread - 44) * 0.55, 0, 100);
   const evennessScore = clamp(
     100 - (colorVarianceSum / count) * 0.55 - brightnessSpread * 0.55 - rednessScore * 0.12,
     0,
@@ -494,42 +557,63 @@ function analyseSkinImage(canvas) {
     redness: Math.round(rednessScore),
     shine: Math.round(shineScore),
     texture: Math.round(textureScore),
+    pores: Math.round(poreScore),
+    pigmentation: Math.round(pigmentationScore),
     evenness: Math.round(evennessScore),
-    confidence: Math.round(clamp((lightingScore * 0.75 + Math.min(skinRatio * 140, 100) * 0.25), 0, 100)),
+    blur: Math.round(sharpnessScore),
+    confidence: Math.round(clamp(lightingScore * 0.55 + Math.min(skinRatio * 150, 100) * 0.25 + sharpnessScore * 0.2, 0, 100)),
   };
 }
 
-function generateReport(lang, result) {
+function getDominantConcern(result) {
+  const concernScores = [
+    ["acne", result.acne],
+    ["dryness", result.dryness],
+    ["redness", result.redness],
+    ["shine", result.shine],
+    ["texture", result.texture],
+    ["pores", result.pores],
+    ["pigmentation", result.pigmentation],
+  ].sort((a, b) => b[1] - a[1]);
+
+  return concernScores[0][1] >= 48 ? concernScores[0][0] : "maintenance";
+}
+
+function generateReport(lang, result, zoneName = "") {
   const zh = lang === "zh";
-  const issues = [];
+  const main = getDominantConcern(result);
 
-  if (result.acne >= 52) issues.push("acne");
-  if (result.dryness >= 52) issues.push("dryness");
-  if (result.redness >= 52) issues.push("redness");
-  if (result.shine >= 52) issues.push("shine");
-  if (result.texture >= 52) issues.push("texture");
-
-  const main = issues[0] || "maintenance";
+  const areaPrefix = zoneName
+    ? zh
+      ? `在${zoneName}区域，`
+      : `In the ${zoneName} area, `
+    : "";
 
   const advice = {
     acne: zh
-      ? "照片中可见一定局部红色或点状不均匀区域，可能与瑕疵、刺激、光线或相机清晰度有关。护肤上建议先保持温和清洁，不要频繁叠加强功效产品；如果有明显疼痛、反复红肿或持续加重，建议咨询皮肤科医生。"
-      : "The image shows visible local red or uneven spot-like areas. This may be related to blemishes, irritation, lighting or camera clarity. For routine planning, start with gentle cleansing and avoid layering too many strong active products. If there is pain, recurring swelling or worsening symptoms, consider seeing a dermatologist.",
+      ? `${areaPrefix}图像中可见较多局部红色或点状不均匀信号，可能与瑕疵、刺激、光线或相机清晰度有关。建议先保持温和清洁，不要频繁叠加强功效产品；如果有疼痛、反复红肿、结节样变化或持续加重，请咨询皮肤科医生。`
+      : `${areaPrefix}the image shows stronger local red or spot-like uneven signals. This may relate to blemishes, irritation, lighting or camera clarity. Start with gentle cleansing and avoid layering too many strong active products. If there is pain, recurring swelling, nodular changes or worsening symptoms, consider a dermatologist.`,
     dryness: zh
-      ? "照片中有一定干燥、粗糙或脱皮样纹理信号。建议减少刺激性清洁和频繁去角质，优先选择温和洁面、保湿修护和简单稳定的晚间护理。"
-      : "The image suggests some dryness, roughness or flaking-like texture. Consider reducing harsh cleansing and frequent exfoliation, and prioritise gentle cleansing, moisturising support and a stable evening routine.",
+      ? `${areaPrefix}图像中干燥、粗糙或脱皮样纹理信号较明显。建议减少刺激性清洁、热水和频繁去角质，优先使用温和洁面与保湿修护。`
+      : `${areaPrefix}the image suggests stronger dryness, roughness or flaking-like texture. Reduce harsh cleansing, hot water and frequent exfoliation; prioritise gentle cleansing and moisturising support.`,
     redness: zh
-      ? "照片中红色调相对偏高，可能与光线、温度、刺激或皮肤状态有关。护肤建议是降低流程复杂度，避免同时使用多种刺激性产品，并优先选择温和基础护理。"
-      : "The image shows a relatively higher red-tone balance. This may be influenced by lighting, temperature, irritation or skin state. A simpler routine with fewer potentially irritating products may be more suitable.",
+      ? `${areaPrefix}红色调相对偏高，可能受光线、温度、刺激或皮肤状态影响。建议降低护肤流程复杂度，先用温和基础护理观察稳定性。`
+      : `${areaPrefix}the red-tone balance appears higher. This may be affected by lighting, temperature, irritation or skin state. Simplify the routine and focus on gentle basics first.`,
     shine: zh
-      ? "照片中有明显反光或油光倾向，尤其可能出现在面部中心区域。建议选择温和洁面、轻盈保湿和肤感舒适的防晒，避免因为出油而过度清洁。"
-      : "The image shows visible shine or reflective areas, possibly around the centre of the face. A gentle cleanser, lightweight moisturiser and comfortable sunscreen may fit better than over-cleansing.",
+      ? `${areaPrefix}反光或油光倾向较明显。建议选择温和洁面、轻盈保湿和肤感舒适的防晒，避免因为出油而过度清洁。`
+      : `${areaPrefix}shine or reflective signals are more visible. A gentle cleanser, lightweight moisturiser and comfortable sunscreen may fit better than over-cleansing.`,
     texture: zh
-      ? "照片中纹理和线状细节较明显，可能受到干燥、表情、光线和相机锐度影响。建议优先做好保湿和防晒；如果皮肤耐受，再循序渐进考虑温和的进阶护理。"
-      : "The image shows visible texture and line-like detail, which can be affected by dryness, expression, lighting and camera sharpness. Prioritise moisturising and sunscreen first; if tolerated, consider gentle advanced care gradually.",
+      ? `${areaPrefix}纹理和线状细节较明显，可能受干燥、表情、光线和镜头锐度影响。建议先做好保湿和防晒；如果皮肤耐受，再循序渐进考虑温和进阶护理。`
+      : `${areaPrefix}texture and line-like detail appear more visible, which can be affected by dryness, expression, lighting and camera sharpness. Prioritise moisturising and sunscreen first; consider advanced care gradually if tolerated.`,
+    pores: zh
+      ? `${areaPrefix}毛孔或细节可见度较高，常与光线、出油、近距离拍摄和局部纹理有关。建议温和清洁、轻盈保湿，并保持工具和毛巾清洁。`
+      : `${areaPrefix}pore or detail visibility appears higher, often influenced by lighting, shine, close-up distance and local texture. Use gentle cleansing, lightweight moisturising and clean tools/towels.`,
+    pigmentation: zh
+      ? `${areaPrefix}色沉或斑点样色差对比较明显。建议优先稳定日常防晒，避免承诺快速淡化；如果色斑快速变化、边界异常或伴随不适，应咨询医生。`
+      : `${areaPrefix}dark-spot or pigmentation-like contrast appears more visible. Prioritise daily sunscreen and avoid promises of rapid fading. If spots change rapidly, have irregular borders or symptoms, consult a clinician.`,
     maintenance: zh
-      ? "照片整体没有出现特别突出的单一问题。建议继续维持温和清洁、保湿和日间防晒这三个基础步骤，让皮肤状态保持稳定。"
-      : "The photo does not show one strongly dominant concern. Continue maintaining the basics: gentle cleansing, moisturising and daily sunscreen for a stable-looking routine.",
+      ? `${areaPrefix}整体没有出现特别突出的单一视觉问题。建议继续维持温和清洁、保湿和日间防晒，让皮肤状态保持稳定。`
+      : `${areaPrefix}the photo does not show one strongly dominant visual concern. Continue maintaining gentle cleansing, moisturising and daily sunscreen for a stable routine.`,
   }[main];
 
   const routine = {
@@ -540,8 +624,8 @@ function generateReport(lang, result) {
       ? "温和洁面 → 保湿修护 → 根据需要加入唇部护理或柔软洁面巾"
       : "Gentle cleanser → moisturising support → lip care or soft face towels if useful",
     optional: zh
-      ? "如果瑕疵明显，可考虑低频率、单一成分地尝试祛痘/控油类护理；不要一次叠加太多强功效产品。"
-      : "If blemishes are a concern, consider low-frequency, single-active blemish care; avoid adding many strong products at once.",
+      ? "如瑕疵或闭口明显，可低频率、单一成分地尝试控油/祛痘类护理；不要一次叠加太多强功效产品。"
+      : "If blemishes or clogged-pore-like texture are a concern, consider low-frequency, single-active care; avoid adding many strong products at once.",
   };
 
   let productIds = ["cerave", "moisturiser", "sunscreen"];
@@ -550,6 +634,8 @@ function generateReport(lang, result) {
   if (main === "redness") productIds = ["cerave", "moisturiser", "face-towels"];
   if (main === "shine") productIds = ["gentle-cleanser", "sunscreen", "face-towels"];
   if (main === "texture") productIds = ["moisturiser", "sunscreen", "makeup-sponge"];
+  if (main === "pores") productIds = ["gentle-cleanser", "face-towels", "makeup-sponge"];
+  if (main === "pigmentation") productIds = ["sunscreen", "moisturiser", "cerave"];
 
   return { advice, routine, productIds, main };
 }
@@ -574,19 +660,83 @@ function MetricCard({ label, score, t, inverse = false }) {
   );
 }
 
+function ProductMini({ product, lang }) {
+  return (
+    <a href={product.href} target="_blank" rel="noreferrer" className="miniRecommendation">
+      <img src={product.image} alt={product.name[lang]} />
+      <span>{product.name[lang]}</span>
+    </a>
+  );
+}
+
+function ReportPanel({ title, result, report, t, lang, compact = false }) {
+  if (!result || !report) return null;
+  const recommendedProducts = report.productIds.map(getProductById);
+
+  return (
+    <div className={compact ? "compactReport" : "fullReport"}>
+      <div className="reportHeader">
+        <p className="kicker">{title}</p>
+        <h3>{t.confidence}: {result.confidence}/100</h3>
+        {result.confidence < 55 && <span className="retakeBadge">{t.retakeAdvice}</span>}
+      </div>
+
+      <div className="metricGrid">
+        <MetricCard label={t.metrics.lighting} score={result.lighting} t={t} inverse />
+        <MetricCard label={t.metrics.blur} score={result.blur} t={t} inverse />
+        <MetricCard label={t.metrics.acne} score={result.acne} t={t} />
+        <MetricCard label={t.metrics.dryness} score={result.dryness} t={t} />
+        <MetricCard label={t.metrics.redness} score={result.redness} t={t} />
+        <MetricCard label={t.metrics.shine} score={result.shine} t={t} />
+        <MetricCard label={t.metrics.texture} score={result.texture} t={t} />
+        <MetricCard label={t.metrics.pores} score={result.pores} t={t} />
+        <MetricCard label={t.metrics.pigmentation} score={result.pigmentation} t={t} />
+        <MetricCard label={t.metrics.evenness} score={100 - result.evenness} t={t} inverse />
+      </div>
+
+      <div className="expertBox">
+        <p className="kicker">{t.expertAdvice}</p>
+        <p>{report.advice}</p>
+      </div>
+
+      {!compact && (
+        <div className="routineBox">
+          <p className="kicker">{t.routineTitle}</p>
+          <div><strong>{t.morning}:</strong> {report.routine.morning}</div>
+          <div><strong>{t.evening}:</strong> {report.routine.evening}</div>
+          <div><strong>{t.optional}:</strong> {report.routine.optional}</div>
+        </div>
+      )}
+
+      <div className="analysisProducts">
+        <p className="kicker">{t.recommendedProducts}</p>
+        <div className="miniRecommendationGrid">
+          {recommendedProducts.map((product) => (
+            <ProductMini product={product} lang={lang} key={product.id} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [lang, setLang] = useState("en");
   const [consent, setConsent] = useState(false);
   const [cameraError, setCameraError] = useState("");
   const [photo, setPhoto] = useState("");
-  const [analysis, setAnalysis] = useState(null);
+  const [overallAnalysis, setOverallAnalysis] = useState(null);
+  const [localAnalysis, setLocalAnalysis] = useState(null);
+  const [zoneComparisons, setZoneComparisons] = useState(null);
+  const [zoom, setZoom] = useState(2);
+  const [selectedZone, setSelectedZone] = useState("customCentre");
   const videoRef = useRef(null);
   const streamRef = useRef(null);
   const canvasRef = useRef(null);
   const t = copy[lang];
 
-  const report = analysis ? generateReport(lang, analysis) : null;
-  const recommendedProducts = report ? report.productIds.map(getProductById) : [];
+  const overallReport = overallAnalysis ? generateReport(lang, overallAnalysis) : null;
+  const localReport = localAnalysis ? generateReport(lang, localAnalysis.result, localAnalysis.zoneLabel) : null;
 
   const startCamera = async () => {
     setCameraError("");
@@ -594,10 +744,9 @@ function App() {
       setCameraError(t.consentRequired);
       return;
     }
-
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user" },
+        video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } },
         audio: false,
       });
       streamRef.current = stream;
@@ -619,20 +768,17 @@ function App() {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
+    canvas.width = video.videoWidth || 1280;
+    canvas.height = video.videoHeight || 720;
     const ctx = canvas.getContext("2d");
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     setPhoto(canvas.toDataURL("image/png"));
-    setAnalysis(null);
+    setOverallAnalysis(null);
+    setLocalAnalysis(null);
+    setZoneComparisons(null);
   };
 
-  const clearPhoto = () => {
-    setPhoto("");
-    setAnalysis(null);
-  };
-
-  const runAnalysis = () => {
+  const loadPhotoToCanvas = (callback) => {
     if (!photo) {
       setCameraError(t.noPhoto);
       return;
@@ -644,11 +790,40 @@ function App() {
       canvas.height = image.height;
       const ctx = canvas.getContext("2d");
       ctx.drawImage(image, 0, 0);
-      setAnalysis(analyseSkinImage(canvas));
-      setCameraError("");
+      callback(canvas);
     };
     image.src = photo;
   };
+
+  const runOverallAnalysis = () => {
+    loadPhotoToCanvas((canvas) => {
+      const result = analyseCanvas(canvas);
+      const comparisons = Object.entries(zoneDefs).reduce((acc, [zone, crop]) => {
+        acc[zone] = analyseCanvas(canvas, crop);
+        return acc;
+      }, {});
+      setOverallAnalysis(result);
+      setZoneComparisons(comparisons);
+      setCameraError("");
+    });
+  };
+
+  const runLocalAnalysis = () => {
+    loadPhotoToCanvas((canvas) => {
+      const result = analyseCanvas(canvas, zoneDefs[selectedZone]);
+      setLocalAnalysis({ result, zone: selectedZone, zoneLabel: t[selectedZone] });
+      setCameraError("");
+    });
+  };
+
+  const clearPhoto = () => {
+    setPhoto("");
+    setOverallAnalysis(null);
+    setLocalAnalysis(null);
+    setZoneComparisons(null);
+  };
+
+  const crop = zoneDefs[selectedZone];
 
   return (
     <div className="site">
@@ -710,16 +885,6 @@ function App() {
           <p>{t.note}</p>
         </section>
 
-        <section className="section split">
-          <div>
-            <p className="kicker">{t.categoryKicker}</p>
-            <h2>{t.categories}</h2>
-          </div>
-          <div className="categoryList">
-            {categories.map((category) => <a href="#products" key={category.en}>{category[lang]}</a>)}
-          </div>
-        </section>
-
         <section id="skin-analysis" className="section visualAnalysis">
           <div className="sectionIntro">
             <p className="kicker">{t.analysisKicker}</p>
@@ -738,13 +903,51 @@ function App() {
                 <p>{t.medicalDisclaimer}</p>
               </div>
 
-              <div className="cameraFrame">
+              <div className="modeTabs">
+                <span>{t.overviewMode}</span>
+                <span>{t.magnifierMode}</span>
+              </div>
+
+              <div className="cameraFrame magnifierFrame">
                 {photo ? (
-                  <img src={photo} alt={lang === "en" ? "Captured skin visual analysis" : "已拍摄的皮肤视觉分析照片"} />
+                  <div className="photoMagnifier">
+                    <img
+                      src={photo}
+                      alt={lang === "en" ? "Captured skin visual analysis" : "已拍摄的皮肤视觉分析照片"}
+                      style={{ transform: `scale(${zoom})`, transformOrigin: `${(crop.x + crop.w / 2) * 100}% ${(crop.y + crop.h / 2) * 100}%` }}
+                    />
+                    <div
+                      className="cropBox"
+                      style={{
+                        left: `${crop.x * 100}%`,
+                        top: `${crop.y * 100}%`,
+                        width: `${crop.w * 100}%`,
+                        height: `${crop.h * 100}%`,
+                      }}
+                    />
+                  </div>
                 ) : (
                   <video ref={videoRef} autoPlay playsInline muted />
                 )}
                 <canvas ref={canvasRef} className="hiddenCanvas" />
+              </div>
+
+              <div className="magnifierControls">
+                <div className="fieldGroup">
+                  <label>{t.selectedArea}</label>
+                  <select value={selectedZone} onChange={(event) => setSelectedZone(event.target.value)}>
+                    <option value="customCentre">{t.customCentre}</option>
+                    <option value="forehead">{t.forehead}</option>
+                    <option value="nose">{t.nose}</option>
+                    <option value="leftCheek">{t.leftCheek}</option>
+                    <option value="rightCheek">{t.rightCheek}</option>
+                    <option value="chin">{t.chin}</option>
+                  </select>
+                </div>
+                <div className="fieldGroup">
+                  <label>{t.zoom}: {zoom.toFixed(1)}x</label>
+                  <input min="1" max="4" step="0.25" value={zoom} onChange={(event) => setZoom(Number(event.target.value))} type="range" />
+                </div>
               </div>
 
               <div className="cameraButtons">
@@ -754,66 +957,79 @@ function App() {
                 <button className="button light" type="button" onClick={stopCamera}>{t.stopCamera}</button>
               </div>
 
-              <button className="button dark wideButton" type="button" onClick={runAnalysis}>
-                {t.runAnalysis}
-              </button>
+              <div className="cameraButtons">
+                <button className="button dark wideButton" type="button" onClick={runOverallAnalysis}>
+                  {t.runAnalysis}
+                </button>
+                <button className="button light wideButton" type="button" onClick={runLocalAnalysis}>
+                  {t.analyseArea}
+                </button>
+              </div>
 
               {cameraError && <div className="cameraError">{cameraError}</div>}
               <div className="cameraStatus">{photo ? t.photoReady : t.noPhotoYet}</div>
               <div className="lightingTip">{t.lightingTips}</div>
+              <div className="algorithmNote">{t.algorithmNote}</div>
             </div>
 
             <div className="reportPanel">
-              {!analysis ? (
+              {!overallAnalysis && !localAnalysis ? (
                 <div className="emptyReport">
                   <p className="kicker">{t.reportTitle}</p>
-                  <h3>{lang === "en" ? "Take a photo to unlock the report." : "拍照后即可生成报告。"}</h3>
+                  <h3>{lang === "en" ? "Capture, magnify and analyse." : "拍摄、放大并分析。"}</h3>
                   <p>{t.medicalDisclaimer}</p>
                 </div>
               ) : (
                 <>
-                  <div className="reportHeader">
-                    <p className="kicker">{t.reportTitle}</p>
-                    <h3>{t.confidence}: {analysis.confidence}/100</h3>
-                    {analysis.confidence < 55 && <span className="retakeBadge">{t.retakeAdvice}</span>}
-                  </div>
+                  {overallAnalysis && (
+                    <ReportPanel
+                      title={t.reportTitle}
+                      result={overallAnalysis}
+                      report={overallReport}
+                      t={t}
+                      lang={lang}
+                    />
+                  )}
 
-                  <div className="metricGrid">
-                    <MetricCard label={t.metrics.lighting} score={analysis.lighting} t={t} inverse />
-                    <MetricCard label={t.metrics.acne} score={analysis.acne} t={t} />
-                    <MetricCard label={t.metrics.dryness} score={analysis.dryness} t={t} />
-                    <MetricCard label={t.metrics.redness} score={analysis.redness} t={t} />
-                    <MetricCard label={t.metrics.shine} score={analysis.shine} t={t} />
-                    <MetricCard label={t.metrics.texture} score={analysis.texture} t={t} />
-                    <MetricCard label={t.metrics.evenness} score={100 - analysis.evenness} t={t} inverse />
-                  </div>
+                  {localAnalysis && (
+                    <ReportPanel
+                      title={`${t.localReport}: ${t[localAnalysis.zone]}`}
+                      result={localAnalysis.result}
+                      report={localReport}
+                      t={t}
+                      lang={lang}
+                      compact
+                    />
+                  )}
 
-                  <div className="expertBox">
-                    <p className="kicker">{t.expertAdvice}</p>
-                    <p>{report.advice}</p>
-                  </div>
-
-                  <div className="routineBox">
-                    <p className="kicker">{t.routineTitle}</p>
-                    <div><strong>{t.morning}:</strong> {report.routine.morning}</div>
-                    <div><strong>{t.evening}:</strong> {report.routine.evening}</div>
-                    <div><strong>{t.optional}:</strong> {report.routine.optional}</div>
-                  </div>
-
-                  <div className="analysisProducts">
-                    <p className="kicker">{t.recommendedProducts}</p>
-                    <div className="miniRecommendationGrid">
-                      {recommendedProducts.map((product) => (
-                        <a href={product.href} target="_blank" rel="noreferrer" className="miniRecommendation" key={product.id}>
-                          <img src={product.image} alt={product.name[lang]} />
-                          <span>{product.name[lang]}</span>
-                        </a>
-                      ))}
+                  {zoneComparisons && (
+                    <div className="zoneComparison">
+                      <p className="kicker">{t.compareZones}</p>
+                      <div className="zoneGrid">
+                        {Object.entries(zoneComparisons).map(([zone, result]) => (
+                          <button type="button" key={zone} onClick={() => { setSelectedZone(zone); setLocalAnalysis({ zone, zoneLabel: t[zone], result }); }}>
+                            <strong>{t[zone]}</strong>
+                            <span>{t.metrics.redness}: {levelText(t, result.redness)}</span>
+                            <span>{t.metrics.shine}: {levelText(t, result.shine)}</span>
+                            <span>{t.metrics.texture}: {levelText(t, result.texture)}</span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </>
               )}
             </div>
+          </div>
+        </section>
+
+        <section className="section split">
+          <div>
+            <p className="kicker">{t.categoryKicker}</p>
+            <h2>{t.categories}</h2>
+          </div>
+          <div className="categoryList">
+            {categories.map((category) => <a href="#products" key={category.en}>{category[lang]}</a>)}
           </div>
         </section>
 
