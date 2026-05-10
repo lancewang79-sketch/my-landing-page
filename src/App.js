@@ -94,7 +94,7 @@ const copy = {
       "This tool is for general beauty and self-care guidance only. It does not diagnose or treat acne, eczema, rosacea, infection, allergy, pigmentation disease, skin cancer or any medical skin condition.",
     startCamera: "Start Camera",
     stopCamera: "Stop Camera",
-    takePhoto: "Take Overview Photo",
+    takePhoto: "Take Photo",
     takeMagnifiedPhoto: "Take Magnified Photo",
     retake: "Retake",
     clearPhoto: "Clear Photo",
@@ -167,19 +167,19 @@ const copy = {
   },
   zh: {
     toggle: "English",
-    announcement: "作为 Amazon Associate，我会从符合条件的购买中获得佣金。",
+    announcement: "部分链接为 Amazon 联盟链接，购买不会增加你的额外费用。",
     navProducts: "好物推荐",
     navGuides: "美妆指南",
     navAnalysis: "皮肤分析",
-    navDisclosure: "联盟披露",
+    navDisclosure: "推荐说明",
     heroKicker: "日常护肤与美妆精选",
-    heroTitle: "精选护肤、美妆工具与自我护理好物。",
+    heroTitle: "精选护肤好物。",
     heroText:
-      "Glow Skin Picks 帮助读者发现值得关注的美妆护肤产品，比较日常实用好物，并用清晰透明的联盟披露建立信任。",
+      "用相机分析肤况，按皮肤问题推荐更合适的护肤组合。",
     shop: "浏览精选好物",
     analyse: "体验皮肤分析",
     note:
-      "本页面可能包含联盟链接。如果你通过这些链接购买产品，我可能会获得佣金，但不会增加你的额外费用。",
+      "本页可能包含联盟链接。通过链接购买不会增加你的费用，也能支持本站继续整理护肤内容。",
     categoryKicker: "美妆分类",
     categories: "按类别浏览",
     featured: "精选推荐",
@@ -192,10 +192,10 @@ const copy = {
     journal: "美妆护肤专栏",
     journalTitle: "用内容建立信任",
     readMore: "阅读更多",
-    disclosureKicker: "透明披露",
-    disclosureTitle: "联盟链接披露",
+    disclosureKicker: "安心说明",
+    disclosureTitle: "关于推荐与链接",
     disclosureText:
-      "作为 Amazon Associate，我会从符合条件的购买中获得佣金。这意味着当读者通过本网站的联盟链接购买产品时，我可能会获得佣金，但不会增加读者的额外费用。本网站的产品推荐仅供一般信息参考。",
+      "本网站部分产品链接为 Amazon 联盟链接。若你通过这些链接购买，我可能会获得少量佣金，但不会增加你的购买成本。推荐内容以日常护肤参考为主，不替代专业医疗建议。",
     footer: "美妆、护肤与自我护理推荐。",
     privacy: "隐私政策",
     contact: "联系",
@@ -212,7 +212,7 @@ const copy = {
       "本工具仅用于一般美妆与自我护理建议，不用于诊断或治疗痘痘、湿疹、玫瑰痤疮、感染、过敏、色素疾病、皮肤癌或任何医学皮肤问题。",
     startCamera: "打开相机",
     stopCamera: "关闭相机",
-    takePhoto: "拍摄整体照片",
+    takePhoto: "拍摄照片",
     takeMagnifiedPhoto: "拍摄放大区域",
     retake: "重新拍摄",
     clearPhoto: "清除照片",
@@ -1491,6 +1491,23 @@ function App() {
     if (videoRef.current) videoRef.current.srcObject = null;
   };
 
+  const handleShootButton = async () => {
+    if (!streamRef.current) {
+      await startCamera();
+      return;
+    }
+    takePhoto();
+    stopCamera();
+  };
+
+  const handleRetakeButton = async () => {
+    setPhoto("");
+    setOverallAnalysis(null);
+    setLocalAnalysis(null);
+    setZoneComparisons(null);
+    await startCamera();
+  };
+
   const takePhoto = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -1747,11 +1764,16 @@ function App() {
                 </div>
               </div>
 
-              <div className="cameraButtons">
-                <button className="button dark" type="button" onClick={startCamera}>{t.startCamera}</button>
-                <button className="button light" type="button" onClick={takePhoto}>{analysisMode === "magnifier" ? t.takeMagnifiedPhoto : t.takePhoto}</button>
-                <button className="button light" type="button" onClick={clearPhoto}>{photo ? t.retake : t.clearPhoto}</button>
-                <button className="button light" type="button" onClick={stopCamera}>{t.stopCamera}</button>
+              <div className="cameraButtons simpleCameraButtons">
+                {!photo ? (
+                  <button className="button dark primaryShootButton" type="button" onClick={handleShootButton}>
+                    {analysisMode === "magnifier" ? t.takeMagnifiedPhoto : t.takePhoto}
+                  </button>
+                ) : (
+                  <button className="button light primaryShootButton" type="button" onClick={handleRetakeButton}>
+                    {t.retake}
+                  </button>
+                )}
               </div>
 
               <div className="cameraButtons">

@@ -356,3 +356,233 @@
     padding-bottom: 6px;
   }
 }
+
+
+/* Simplified camera controls */
+.simpleCameraButtons {
+  margin-top: 18px;
+}
+
+.primaryShootButton {
+  min-width: min(100%, 360px);
+  width: auto;
+}
+
+@media (max-width: 740px) {
+  .primaryShootButton {
+    width: 100%;
+  }
+}
+
+
+/* Hero typography refinement: make Chinese/long hero titles elegant and not oversized */
+.heroCopy {
+  overflow: hidden;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 5.6vw, 5.8rem);
+  line-height: 0.96;
+  max-width: 820px;
+  letter-spacing: -0.045em;
+}
+
+/* Chinese characters visually occupy more space, so keep hero copy calmer */
+html:lang(zh) .hero h1,
+.hero h1 {
+  word-break: keep-all;
+}
+
+/* Use a slightly smaller size for CJK text in the hero when the page is Chinese */
+.site .hero h1 {
+  text-wrap: balance;
+}
+
+@supports not (text-wrap: balance) {
+  .site .hero h1 {
+    max-width: 760px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .hero h1 {
+    font-size: clamp(2.8rem, 8vw, 5rem);
+    line-height: 1;
+  }
+}
+
+@media (max-width: 740px) {
+  .hero h1 {
+    font-size: clamp(2.4rem, 13vw, 4.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+
+  .heroCopy {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+}
+
+
+/* Overall visual polish: calmer luxury typography for large Chinese/section headings */
+.sectionIntro {
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sectionIntro h2 {
+  font-size: clamp(2.2rem, 4.2vw, 4.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Chinese headings need less extreme sizing than English serif headings */
+.sectionIntro h2,
+.productSection .sectionIntro h2,
+.productLibrary .sectionIntro h2,
+.guides .sectionIntro h2,
+.visualAnalysis .sectionIntro h2 {
+  text-wrap: balance;
+  word-break: keep-all;
+}
+
+/* Featured recommendation title was too dominant in Chinese */
+.productSection .sectionIntro h2 {
+  font-size: clamp(2rem, 3.6vw, 3.7rem);
+  max-width: 880px;
+}
+
+/* Product library and guide group headings should feel premium, not oversized */
+.concernGroupHeader h3,
+.guideDetailCard h3 {
+  font-size: clamp(1.9rem, 3.5vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+/* Report headings also need to be readable on desktop */
+.reportHeader h3,
+.emptyReport h3 {
+  font-size: clamp(1.8rem, 3.2vw, 3.2rem);
+  line-height: 1.08;
+}
+
+/* Improve vertical rhythm around big sections */
+.productSection,
+.productLibrary,
+.guides,
+.guideDetails,
+.visualAnalysis {
+  padding-top: clamp(58px, 7vw, 96px);
+  padding-bottom: clamp(58px, 7vw, 96px);
+}
+
+/* More breathing room for product cards */
+.productDetails h3 {
+  font-size: clamp(1.35rem, 2vw, 1.72rem);
+}
+
+.solutionProductCard strong,
+.groupedProductCard strong {
+  font-size: 1rem;
+}
+
+/* Navigation should stay elegant after adding more links */
+.nav {
+  column-gap: 16px;
+  font-size: 0.76rem;
+}
+
+/* On smaller screens, keep large Chinese headings controlled */
+@media (max-width: 740px) {
+  .sectionIntro h2,
+  .productSection .sectionIntro h2 {
+    font-size: clamp(2rem, 10vw, 3.2rem);
+    line-height: 1.12;
+  }
+
+  .concernGroupHeader h3,
+  .guideDetailCard h3 {
+    font-size: clamp(1.8rem, 9vw, 3rem);
+  }
+}
+
+
+/* Stronger hero fix: shorter, smaller, fully visible hero title */
+.hero {
+  overflow: hidden;
+}
+
+.heroCopy {
+  min-width: 0;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 4.4vw, 4.6rem);
+  line-height: 1.05;
+  max-width: 620px;
+  letter-spacing: -0.035em;
+  overflow-wrap: normal;
+}
+
+/* Keep Chinese hero especially calm and elegant */
+.heroCopy .kicker {
+  margin-bottom: 14px;
+}
+
+.heroCopy > p:not(.kicker) {
+  max-width: 520px;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+@media (max-width: 1180px) {
+  .hero h1 {
+    font-size: clamp(2.5rem, 6.5vw, 4.2rem);
+    max-width: 680px;
+  }
+}
+
+@media (max-width: 740px) {
+  .hero h1 {
+    font-size: clamp(2.15rem, 10vw, 3.3rem);
+    line-height: 1.08;
+    max-width: 100%;
+  }
+}
+
+
+/* Refined Chinese disclosure and large-section typography */
+.disclosure h2 {
+  font-size: clamp(2rem, 3.4vw, 3.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  max-width: 520px;
+}
+
+.disclosure {
+  align-items: start;
+}
+
+.disclosure > p {
+  max-width: 760px;
+}
+
+/* Keep all major Chinese section titles more elegant */
+.section h2,
+.disclosure h2 {
+  word-break: keep-all;
+  text-wrap: balance;
+}
+
+@media (max-width: 740px) {
+  .disclosure h2 {
+    font-size: clamp(1.9rem, 9vw, 3rem);
+    max-width: 100%;
+  }
+}
