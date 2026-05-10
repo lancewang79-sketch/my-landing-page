@@ -117,6 +117,11 @@ const copy = {
     expertAdvice: "Beauty-care advice",
     recommendedProducts: "Recommended products",
     targetedProductOptions: "Targeted product options",
+    productLibrary: "Product Library",
+    productLibraryTitle: "Shop by skin concern",
+    productLibraryIntro: "Browse product options grouped by the concern detected by the visual analysis tool. Each group explains the routine purpose and shows relevant affiliate product options.",
+    viewProducts: "View products",
+    concernGroups: "Concern groups",
     solutionBundle: "Targeted solution bundle",
     whyBundle: "Why this combination",
     howToUse: "How to use",
@@ -230,6 +235,11 @@ const copy = {
     expertAdvice: "护肤顾问建议",
     recommendedProducts: "推荐产品",
     targetedProductOptions: "针对性产品组合",
+    productLibrary: "产品库",
+    productLibraryTitle: "按皮肤问题浏览产品",
+    productLibraryIntro: "根据视觉分析工具识别的皮肤关注点浏览产品组合。每个分组都会说明护理目的，并展示相关联盟产品选择。",
+    viewProducts: "查看产品",
+    concernGroups: "问题分组",
     solutionBundle: "针对性解决方案组合",
     whyBundle: "为什么这样组合",
     howToUse: "使用方法",
@@ -641,6 +651,80 @@ function getDominantConcern(result) {
 }
 
 
+
+
+const concernGroups = [
+  {
+    id: "acne",
+    key: "acne",
+    en: "Acne-like blemishes / clogged pores",
+    zh: "痘痘样瑕疵 / 闭口毛孔堵塞",
+    summaryEn:
+      "For spot-like redness, clogged-pore texture and blemish-prone routines. Focus on gentle cleansing, low-frequency actives and barrier-safe moisturising.",
+    summaryZh:
+      "适合点状泛红、闭口样纹理和瑕疵倾向。重点是温和清洁、低频活性成分和不破坏屏障的保湿。",
+  },
+  {
+    id: "dryness",
+    key: "dryness",
+    en: "Dryness / peeling / flaking",
+    zh: "干燥 / 脱皮 / 起屑",
+    summaryEn:
+      "For dry-looking texture, roughness and flaky patches. Focus on barrier comfort, richer moisturising and avoiding harsh exfoliation.",
+    summaryZh:
+      "适合干燥纹理、粗糙和脱皮小片。重点是屏障舒缓、加强保湿和避免强去角质。",
+  },
+  {
+    id: "redness",
+    key: "redness",
+    en: "Redness / sensitivity / barrier stress",
+    zh: "泛红 / 敏感 / 屏障压力",
+    summaryEn:
+      "For red-tone tendency and stressed-looking skin. Focus on simplifying the routine, fragrance-free basics and calming support.",
+    summaryZh:
+      "适合泛红倾向和屏障压力感。重点是精简流程、无香精基础护理和舒缓支持。",
+  },
+  {
+    id: "shine",
+    key: "shine",
+    en: "Oiliness / shine / T-zone reflection",
+    zh: "油光 / T 区反光",
+    summaryEn:
+      "For visible shine and oily-feeling routines. Focus on gentle cleansing, lightweight hydration and comfortable sunscreen.",
+    summaryZh:
+      "适合明显油光和偏油肤感。重点是温和清洁、轻盈保湿和肤感舒适的防晒。",
+  },
+  {
+    id: "texture",
+    key: "texture",
+    en: "Texture / fine lines / wrinkles",
+    zh: "纹理 / 细纹 / 皱纹",
+    summaryEn:
+      "For visible texture and line-like detail. Focus on hydration, sunscreen and slow introduction of beginner anti-ageing actives.",
+    summaryZh:
+      "适合纹理和线状细节可见度较高。重点是保湿、防晒和循序渐进加入新手抗老成分。",
+  },
+  {
+    id: "pigmentation",
+    key: "pigmentation",
+    en: "Uneven tone / dark-spot-like contrast",
+    zh: "肤色不均 / 斑点样色差",
+    summaryEn:
+      "For uneven colour and dark-spot-like contrast. Focus on daily sunscreen first, then brightening-support ingredients.",
+    summaryZh:
+      "适合肤色不均和斑点样色差。重点是先稳定防晒，再考虑提亮辅助成分。",
+  },
+  {
+    id: "pores",
+    key: "pores",
+    en: "Pores / visible detail / rough texture",
+    zh: "毛孔 / 细节可见 / 粗糙纹理",
+    summaryEn:
+      "For pore visibility and rough-looking texture. Focus on gentle cleansing, low-frequency BHA and oil-balance support.",
+    summaryZh:
+      "适合毛孔可见度和粗糙纹理。重点是温和清洁、低频 BHA 和油脂平衡支持。",
+  },
+];
 
 const affiliateLibrary = {
   acne: [
@@ -1502,6 +1586,7 @@ function App() {
         </a>
         <nav className="nav" aria-label="Main navigation">
           <a href="#products">{t.navProducts}</a>
+          <a href="#product-library">{t.productLibrary}</a>
           <a href="#guides">{t.navGuides}</a>
           <a href="#skin-analysis">{t.navAnalysis}</a>
           <a href="#disclosure">{t.navDisclosure}</a>
@@ -1743,6 +1828,51 @@ function App() {
           </div>
           <div className="categoryList">
             {categories.map((category) => <a href="#products" key={category.en}>{category[lang]}</a>)}
+          </div>
+        </section>
+
+        
+        <section id="product-library" className="section productLibrary">
+          <div className="sectionIntro">
+            <p className="kicker">{t.productLibrary}</p>
+            <h2>{t.productLibraryTitle}</h2>
+            <p>{t.productLibraryIntro}</p>
+          </div>
+
+          <div className="concernJumpGrid">
+            {concernGroups.map((group) => (
+              <a href={`#concern-${group.id}`} key={group.id}>
+                <strong>{lang === "en" ? group.en : group.zh}</strong>
+                <span>{t.viewProducts}</span>
+              </a>
+            ))}
+          </div>
+
+          <div className="concernProductSections">
+            {concernGroups.map((group) => {
+              const items = affiliateLibrary[group.key] || [];
+              return (
+                <section id={`concern-${group.id}`} className="concernProductGroup" key={group.id}>
+                  <div className="concernGroupHeader">
+                    <p className="kicker">{t.concernGroups}</p>
+                    <h3>{lang === "en" ? group.en : group.zh}</h3>
+                    <p>{lang === "en" ? group.summaryEn : group.summaryZh}</p>
+                  </div>
+
+                  <div className="groupedProductGrid">
+                    {items.map((item) => (
+                      <a href={item.href} target="_blank" rel="noreferrer" className="groupedProductCard" key={item.href}>
+                        {item.image && <img src={item.image} alt={lang === "en" ? item.en : item.zh} />}
+                        <div>
+                          <strong>{lang === "en" ? item.en : item.zh}</strong>
+                          <span>{lang === "en" ? item.roleEn : item.roleZh}</span>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
           </div>
         </section>
 
