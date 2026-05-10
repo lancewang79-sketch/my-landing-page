@@ -1,15 +1,24 @@
 {
   "files": {
-    "main.css": "/my-landing-page/static/css/main.926c9b20.css",
-    "main.js": "/my-landing-page/static/js/main.2a19f51f.js",
+    "main.css": "/my-landing-page/static/css/main.eb9a8960.css",
+    "main.js": "/my-landing-page/static/js/main.e8f2db27.js",
     "static/js/453.51363e4d.chunk.js": "/my-landing-page/static/js/453.51363e4d.chunk.js",
+    "static/media/travel-toiletry-bag.jpg": "/my-landing-page/static/media/travel-toiletry-bag.a41dfebfba38e8f4c5ca.jpg",
+    "static/media/everyday-sunscreen.jpg": "/my-landing-page/static/media/everyday-sunscreen.7e8e62d25888f52a9d0a.jpg",
+    "static/media/lip-balm.jpg": "/my-landing-page/static/media/lip-balm.32b07998471ddef53ba1.jpg",
+    "static/media/beauty-organiser.jpg": "/my-landing-page/static/media/beauty-organiser.28045bb0a5740005cfe4.jpg",
+    "static/media/makeup-sponge.jpg": "/my-landing-page/static/media/makeup-sponge.edb6277eede54120d191.jpg",
+    "static/media/soft-face-towels.jpg": "/my-landing-page/static/media/soft-face-towels.7b4959d5f1ea49dcb914.jpg",
+    "static/media/cerave-cleanser.jpg": "/my-landing-page/static/media/cerave-cleanser.34199e7bbf301aa04ff6.jpg",
+    "static/media/gentle-cleanser.jpg": "/my-landing-page/static/media/gentle-cleanser.c3b35fc6cbb8605092a8.jpg",
+    "static/media/lightweight-moisturiser.jpg": "/my-landing-page/static/media/lightweight-moisturiser.97cc754804e997329fd4.jpg",
     "index.html": "/my-landing-page/index.html",
-    "main.926c9b20.css.map": "/my-landing-page/static/css/main.926c9b20.css.map",
-    "main.2a19f51f.js.map": "/my-landing-page/static/js/main.2a19f51f.js.map",
+    "main.eb9a8960.css.map": "/my-landing-page/static/css/main.eb9a8960.css.map",
+    "main.e8f2db27.js.map": "/my-landing-page/static/js/main.e8f2db27.js.map",
     "453.51363e4d.chunk.js.map": "/my-landing-page/static/js/453.51363e4d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.926c9b20.css",
-    "static/js/main.2a19f51f.js"
+    "static/css/main.eb9a8960.css",
+    "static/js/main.e8f2db27.js"
   ]
 }
