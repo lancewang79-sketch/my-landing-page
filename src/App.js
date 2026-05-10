@@ -225,12 +225,18 @@ const products = [
 ];
 
 const guides = [
-  { en: "Best Skincare Basics for Beginners", zh: "新手护肤基础好物指南" },
-  { en: "Simple Morning Skincare Routine", zh: "简单早间护肤流程" },
-  { en: "Everyday Sunscreen Guide", zh: "日常防晒选择指南" },
-  { en: "Beauty Tools That Are Actually Useful", zh: "真正实用的美妆工具" },
-  { en: "Affordable Makeup Essentials", zh: "日常基础彩妆必备" },
-  { en: "Beauty Gift Ideas for Her", zh: "适合送她的美妆礼物灵感" },
+  { id: "skincare-basics",
+    en: "Best Skincare Basics for Beginners", zh: "新手护肤基础好物指南" },
+  { id: "morning-routine",
+    en: "Simple Morning Skincare Routine", zh: "简单早间护肤流程" },
+  { id: "sunscreen-guide",
+    en: "Everyday Sunscreen Guide", zh: "日常防晒选择指南" },
+  { id: "beauty-tools",
+    en: "Beauty Tools That Are Actually Useful", zh: "真正实用的美妆工具" },
+  { id: "makeup-essentials",
+    en: "Affordable Makeup Essentials", zh: "日常基础彩妆必备" },
+  { id: "gift-ideas",
+    en: "Beauty Gift Ideas for Her", zh: "适合送她的美妆礼物灵感" },
 ];
 
 function App() {
