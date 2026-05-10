@@ -18,7 +18,7 @@ const App = () => {
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <h1>Student Productivity Recommendations</h1>
+      <h1>Beauty and Skincare Essentials</h1>
       <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#picks">Picks</a></li>
@@ -34,8 +34,8 @@ const Navbar = () => {
 const HeroSection = () => {
   return (
     <section className="hero">
-      <h2>Build a Better Study Desk</h2>
-      <h3>Explore our recommendations for study, productivity, and desk setup products.</h3>
+      <h2>Glow Up Your Skincare Routine</h2>
+      <h3>Explore our recommendations for beauty and skincare products.</h3>
       <button className="cta-button">View Product Picks</button>
       <button className="cta-button secondary">Read Buying Guide</button>
     </section>
@@ -47,39 +47,39 @@ const ProductRecommendations = () => {
     <section id="picks" className="product-recommendations">
       <h2>Our Top Picks</h2>
       <div className="product-card">
-        <img src="#" alt="Ergonomic Desk Lamp" />
-        <h3>Ergonomic Desk Lamp</h3>
-        <p>Brighten your workspace and reduce eye strain.</p>
+        <img src="#" alt="Moisturizer" />
+        <h3>Moisturizer</h3>
+        <p>Hydrate and rejuvenate your skin.</p>
         <button className="cta-button">Check on Amazon</button>
       </div>
       <div className="product-card">
-        <img src="#" alt="Noise-Cancelling Headphones" />
-        <h3>Noise-Cancelling Headphones</h3>
-        <p>Minimize distractions while studying.</p>
+        <img src="#" alt="Serum" />
+        <h3>Serum</h3>
+        <p>Target specific skin concerns effectively.</p>
         <button className="cta-button">Check on Amazon</button>
       </div>
       <div className="product-card">
-        <img src="#" alt="Laptop Stand" />
-        <h3>Laptop Stand</h3>
-        <p>Improve ergonomics and comfort.</p>
+        <img src="#" alt="Sunscreen" />
+        <h3>Sunscreen</h3>
+        <p>Protect your skin from harmful UV rays.</p>
         <button className="cta-button">Check on Amazon</button>
       </div>
       <div className="product-card">
-        <img src="#" alt="Mechanical Keyboard" />
-        <h3>Mechanical Keyboard</h3>
-        <p>Enhance your typing experience.</p>
+        <img src="#" alt="Cleanser" />
+        <h3>Cleanser</h3>
+        <p>Keep your face clean and fresh.</p>
         <button className="cta-button">Check on Amazon</button>
       </div>
       <div className="product-card">
-        <img src="#" alt="Study Planner" />
-        <h3>Study Planner</h3>
-        <p>Organize your study sessions effectively.</p>
+        <img src="#" alt="Makeup Remover" />
+        <h3>Makeup Remover</h3>
+        <p>Gently remove makeup without harming skin.</p>
         <button className="cta-button">Check on Amazon</button>
       </div>
       <div className="product-card">
-        <img src="#" alt="Desk Organiser" />
-        <h3>Desk Organiser</h3>
-        <p>Keeps your workspace tidy and efficient.</p>
+        <img src="#" alt="Face Mask" />
+        <h3>Face Mask</h3>
+        <p>Indulge your skin with a nourishing mask.</p>
         <button className="cta-button">Check on Amazon</button>
       </div>
     </section>
@@ -99,7 +99,7 @@ const About = () => {
   return (
     <section id="about" className="about">
       <h2>About Us</h2>
-      <p>We provide recommendations for products that enhance productivity and organization for students.</p>
+      <p>We provide recommendations for beauty and skincare products that enhance your routine.</p>
     </section>
   );
 };
@@ -121,7 +121,7 @@ const Articles = () => {
 const Footer = () => {
   return (
     <footer className="footer">
-      <p>© 2026 Student Productivity Recommendations</p>
+      <p>© 2026 Beauty and Skincare Essentials</p>
     </footer>
   );
 };
