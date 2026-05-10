@@ -672,7 +672,6 @@ a {
 .guideCard {
   min-height: 380px;
 }
-cat >> src/App.css <<'EOF'
 
 .guideDetails {
   background: #fff;
