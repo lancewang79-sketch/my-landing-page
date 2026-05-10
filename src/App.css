@@ -41,3 +41,73 @@
   image-rendering: auto;
   backface-visibility: hidden;
 }
+
+
+.bundleBox {
+  padding: 22px;
+  background: #fff;
+  border: 1px solid rgba(24, 21, 19, 0.14);
+  margin-top: 16px;
+}
+
+.bundleBox h4 {
+  margin: 0 0 18px;
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+}
+
+.bundleSection {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(24, 21, 19, 0.12);
+}
+
+.bundleSection strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #181513;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.bundleSection p,
+.bundleSection li {
+  color: #524942;
+  line-height: 1.7;
+}
+
+.bundleSection ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.keywordGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.keywordGrid span {
+  display: inline-flex;
+  padding: 8px 10px;
+  background: #f8f3ed;
+  border: 1px solid rgba(24, 21, 19, 0.12);
+  color: #3d352f;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.cameraUpgradeTip {
+  margin-top: 14px;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid rgba(24, 21, 19, 0.16);
+  color: #3d352f;
+  font-weight: 800;
+  line-height: 1.6;
+}

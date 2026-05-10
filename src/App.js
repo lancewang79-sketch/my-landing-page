@@ -81,6 +81,13 @@ const copy = {
     scoreHigh: "High",
     expertAdvice: "Beauty-care advice",
     recommendedProducts: "Recommended products",
+    solutionBundle: "Targeted solution bundle",
+    whyBundle: "Why this combination",
+    howToUse: "How to use",
+    whatToAvoid: "What to avoid",
+    searchKeywords: "Product search keywords",
+    ingredientDirection: "Ingredient direction",
+    cameraUpgradeTip: "For sharper analysis, use your phone camera, preferably the rear camera, in bright even daylight. Laptop webcams often cannot show pores, peeling or fine lines clearly.",
     routineTitle: "Suggested routine",
     morning: "Morning",
     evening: "Evening",
@@ -186,6 +193,13 @@ const copy = {
     scoreHigh: "较高",
     expertAdvice: "护肤顾问建议",
     recommendedProducts: "推荐产品",
+    solutionBundle: "针对性解决方案组合",
+    whyBundle: "为什么这样组合",
+    howToUse: "使用方法",
+    whatToAvoid: "需要避免",
+    searchKeywords: "产品搜索关键词",
+    ingredientDirection: "成分方向",
+    cameraUpgradeTip: "为了获得更清晰的分析，建议使用手机摄像头，最好是后置摄像头，并在明亮均匀的自然光下拍摄。笔记本电脑摄像头通常很难看清毛孔、脱皮和细纹。",
     routineTitle: "建议护肤流程",
     morning: "早上",
     evening: "晚上",
@@ -589,65 +603,225 @@ function getDominantConcern(result) {
   return concernScores[0][1] >= 48 ? concernScores[0][0] : "maintenance";
 }
 
+
+function getSolutionBundle(lang, main) {
+  const zh = lang === "zh";
+
+  const bundles = {
+    acne: {
+      title: zh ? "瑕疵/痘痘倾向：控痘但不破坏屏障" : "Blemish-prone: control breakouts while protecting the barrier",
+      why: zh
+        ? "当画面中出现点状泛红、局部不均匀和纹理变化时，护理重点不是猛用强功效产品，而是先温和清洁、维持保湿，再低频加入针对闭口或痘痘的成分。"
+        : "When the image shows spot-like redness, local unevenness and texture changes, the goal is not to overload actives. Start with gentle cleansing and moisturising, then add blemish-focused ingredients slowly.",
+      ingredientDirection: zh
+        ? "水杨酸/BHA、低浓度过氧化苯甲酰、壬二酸、温和洁面、非致粉刺保湿、防晒。强功效产品应低频开始。"
+        : "Salicylic acid/BHA, low-strength benzoyl peroxide, azelaic acid, gentle cleanser, non-comedogenic moisturiser and sunscreen. Start strong actives slowly.",
+      howToUse: zh
+        ? ["早上：温和洁面 → 轻盈保湿 → 防晒", "晚上：温和洁面 → 保湿；每周低频加入一种控痘/疏通毛孔产品", "一次只新增一个强功效产品，观察 1–2 周耐受度"]
+        : ["Morning: gentle cleanser → lightweight moisturiser → sunscreen", "Evening: gentle cleanser → moisturiser; add one blemish/clogged-pore product at low frequency", "Introduce only one strong active at a time and watch tolerance for 1–2 weeks"],
+      avoid: zh
+        ? ["不要同时叠加水杨酸、过氧化苯甲酰和视黄醇", "不要用磨砂膏反复摩擦痘痘", "不要因为出油就过度清洁"]
+        : ["Do not layer salicylic acid, benzoyl peroxide and retinol all at once", "Avoid scrubbing blemishes", "Avoid over-cleansing because skin feels oily"],
+      productIds: ["gentle-cleanser", "face-towels", "sunscreen", "moisturiser"],
+      keywords: [
+        "salicylic acid cleanser 0.5% 2% gentle acne prone skin",
+        "benzoyl peroxide wash 2.5% 4% sensitive skin",
+        "azelaic acid 10% serum redness blemish prone skin",
+        "non comedogenic lightweight moisturiser acne prone skin",
+        "oil free sunscreen SPF 30 50 acne prone skin"
+      ],
+    },
+    dryness: {
+      title: zh ? "干燥/脱皮倾向：屏障舒缓与保湿修护" : "Dryness/flaking: barrier comfort and moisture recovery",
+      why: zh
+        ? "如果画面出现粗糙、灰白小片或脱皮样纹理，优先级应是减少刺激、补充保湿和修护屏障，而不是立刻去角质或上视黄醇。"
+        : "If the image shows roughness, grey-white patches or flaking-like texture, prioritise reducing irritation, moisturising and barrier support rather than exfoliating or starting retinol immediately.",
+      ingredientDirection: zh
+        ? "神经酰胺、甘油、透明质酸、尿素低浓度、角鲨烷、乳木果脂、凡士林/封闭型修护膏。"
+        : "Ceramides, glycerin, hyaluronic acid, low-strength urea, squalane, shea butter and petrolatum/occlusive balms.",
+      howToUse: zh
+        ? ["早上：清水或温和洁面 → 保湿霜 → 防晒", "晚上：温和洁面 → 较滋润面霜；局部脱皮处可少量叠加修护膏", "皮肤刺痛或脱皮时暂停酸类和视黄醇"]
+        : ["Morning: rinse or gentle cleanser → moisturiser → sunscreen", "Evening: gentle cleanser → richer cream; apply a small amount of balm on flaky patches", "Pause acids and retinoids while skin is stinging or peeling"],
+      avoid: zh
+        ? ["热水洗脸", "强清洁/强去角质", "脱皮时使用高浓度酸类或视黄醇"]
+        : ["Hot water", "Harsh cleansing or strong exfoliation", "High-strength acids or retinol while peeling"],
+      productIds: ["moisturiser", "lip-balm", "cerave", "sunscreen"],
+      keywords: [
+        "ceramide moisturising cream dry sensitive skin",
+        "fragrance free rich moisturiser glycerin ceramides",
+        "cicaplast baume b5 barrier repair cream",
+        "petrolatum healing ointment dry patches",
+        "hydrating cleanser dry sensitive skin"
+      ],
+    },
+    redness: {
+      title: zh ? "泛红/屏障压力：精简、舒缓、低刺激" : "Redness/barrier stress: simplify, calm and reduce irritation",
+      why: zh
+        ? "红色通道偏高可能来自光线、温度、刺激或皮肤状态。此时最重要的是减少复杂度，而不是继续增加强功效产品。"
+        : "Higher red-channel balance can be caused by lighting, temperature, irritation or skin state. The priority is reducing routine complexity rather than adding more strong actives.",
+      ingredientDirection: zh
+        ? "无香精温和洁面、神经酰胺、泛醇、积雪草、壬二酸低频、矿物/温和防晒。"
+        : "Fragrance-free gentle cleanser, ceramides, panthenol, centella, low-frequency azelaic acid and gentle/mineral sunscreen.",
+      howToUse: zh
+        ? ["早上：清水或温和洁面 → 屏障保湿 → 防晒", "晚上：温和洁面 → 修护型面霜", "先维持 2 周极简流程，再考虑加入活性成分"]
+        : ["Morning: rinse or gentle cleanser → barrier moisturiser → sunscreen", "Evening: gentle cleanser → repair-style moisturiser", "Keep a minimal routine for 2 weeks before adding actives"],
+      avoid: zh
+        ? ["香精浓重产品", "频繁刷酸", "磨砂膏", "同时使用多种活性成分"]
+        : ["Heavy fragrance", "Frequent acids", "Scrubs", "Multiple active ingredients at once"],
+      productIds: ["cerave", "moisturiser", "face-towels", "sunscreen"],
+      keywords: [
+        "fragrance free gentle cleanser sensitive redness skin",
+        "barrier repair cream ceramide panthenol sensitive skin",
+        "mineral sunscreen zinc oxide sensitive skin SPF 30",
+        "azelaic acid 10% sensitive redness prone skin",
+        "centella calming serum sensitive skin"
+      ],
+    },
+    shine: {
+      title: zh ? "油光/T区反光：控油但不拔干" : "Shine/T-zone reflection: balance oil without stripping",
+      why: zh
+        ? "明显反光常与皮脂、护肤品残留或光线有关。护理目标是温和清洁和轻盈保湿，而不是把皮肤洗到紧绷。"
+        : "Visible shine can come from sebum, skincare residue or lighting. The goal is gentle cleansing and lightweight hydration, not stripping the skin until it feels tight.",
+      ingredientDirection: zh
+        ? "温和泡沫洁面、烟酰胺、轻盈凝胶面霜、清爽防晒、吸油纸/柔软洁面巾、低频泥膜。"
+        : "Gentle foaming cleanser, niacinamide, lightweight gel moisturiser, comfortable sunscreen, blotting sheets/soft towels and occasional clay mask.",
+      howToUse: zh
+        ? ["早上：温和洁面 → 轻盈保湿 → 清爽防晒", "白天：出油时用吸油纸轻压，不要反复洗脸", "晚上：洁面 → 轻盈保湿；泥膜每周 1 次即可"]
+        : ["Morning: gentle cleanse → lightweight moisturiser → comfortable sunscreen", "Daytime: blot gently rather than washing repeatedly", "Evening: cleanser → lightweight moisturiser; clay mask about once weekly if tolerated"],
+      avoid: zh
+        ? ["频繁洗脸", "完全跳过保湿", "厚重闷感产品如果不舒服"]
+        : ["Washing repeatedly", "Skipping moisturiser completely", "Heavy products if they feel uncomfortable"],
+      productIds: ["gentle-cleanser", "sunscreen", "face-towels", "moisturiser"],
+      keywords: [
+        "foaming cleanser oily skin gentle",
+        "niacinamide serum oily skin pores",
+        "oil free gel moisturiser non comedogenic",
+        "oil free sunscreen SPF 50 acne prone oily skin",
+        "clay mask oily t zone once weekly"
+      ],
+    },
+    texture: {
+      title: zh ? "纹理/细纹可见度：保湿、防晒、循序渐进抗老" : "Texture/fine-line visibility: hydrate, protect and introduce actives slowly",
+      why: zh
+        ? "纹理和线状细节会被干燥、表情、光线和相机锐度放大。基础是保湿和防晒；耐受稳定后再考虑低强度视黄醇。"
+        : "Texture and line-like detail can be amplified by dryness, expression, lighting and camera sharpness. Start with moisturising and sunscreen; consider low-strength retinol only when the skin is stable.",
+      ingredientDirection: zh
+        ? "保湿霜、防晒、低浓度视黄醇/视黄醛、烟酰胺、胜肽、透明质酸。视黄醇需夜间低频开始。"
+        : "Moisturiser, sunscreen, low-strength retinol/retinal, niacinamide, peptides and hyaluronic acid. Retinol should start low-frequency at night.",
+      howToUse: zh
+        ? ["早上：保湿 → 防晒", "晚上：洁面 → 保湿；耐受后每周 1–2 晚加入低强度视黄醇", "使用视黄醇期间必须重视防晒和保湿"]
+        : ["Morning: moisturiser → sunscreen", "Evening: cleanser → moisturiser; add low-strength retinol 1–2 nights weekly if tolerated", "When using retinol, be strict with sunscreen and moisturising"],
+      avoid: zh
+        ? ["一开始每天使用视黄醇", "脱皮泛红时继续加量", "白天不防晒"]
+        : ["Starting retinol every night", "Increasing while peeling/red", "Skipping daytime sunscreen"],
+      productIds: ["moisturiser", "sunscreen", "cerave", "makeup-sponge"],
+      keywords: [
+        "beginner retinol serum 0.1% 0.2% sensitive skin",
+        "retinal serum beginner sensitive skin",
+        "peptide serum fine lines fragrance free",
+        "hyaluronic acid serum dry fine lines",
+        "broad spectrum sunscreen SPF 50 anti aging"
+      ],
+    },
+    pores: {
+      title: zh ? "毛孔/细节可见度：疏通、控油、减少刺激" : "Pore/detail visibility: decongest, balance shine and avoid irritation",
+      why: zh
+        ? "毛孔可见度会受出油、近距离拍摄、光线和妆容影响。产品不能真正永久缩小毛孔，但可以通过温和清洁、控油和低频 BHA 让视觉上更平整。"
+        : "Pore visibility is affected by oil, close-up distance, lighting and makeup. Products cannot permanently shrink pores, but gentle cleansing, oil balance and low-frequency BHA can help the skin look smoother.",
+      ingredientDirection: zh
+        ? "BHA/水杨酸、烟酰胺、温和洁面、轻盈保湿、防晒、低频泥膜。"
+        : "BHA/salicylic acid, niacinamide, gentle cleanser, lightweight moisturiser, sunscreen and occasional clay mask.",
+      howToUse: zh
+        ? ["早上：洁面 → 轻盈保湿 → 防晒", "晚上：洁面 → 保湿；BHA 每周 1–3 次视耐受使用", "T区可低频泥膜，不要每天使用"]
+        : ["Morning: cleanser → lightweight moisturiser → sunscreen", "Evening: cleanser → moisturiser; BHA 1–3 times weekly depending on tolerance", "Clay mask can be occasional for T-zone, not daily"],
+      avoid: zh
+        ? ["用撕拉面膜频繁拉扯", "每天强去角质", "把毛孔当作可以永久关闭的问题"]
+        : ["Frequent peel-off masks", "Daily strong exfoliation", "Thinking pores can be permanently closed"],
+      productIds: ["gentle-cleanser", "face-towels", "makeup-sponge", "sunscreen"],
+      keywords: [
+        "2% BHA liquid exfoliant pores blackheads",
+        "salicylic acid toner clogged pores",
+        "niacinamide serum pores oily skin",
+        "gentle foaming cleanser pores oily skin",
+        "clay mask pores oily t zone"
+      ],
+    },
+    pigmentation: {
+      title: zh ? "色沉/斑点样色差：防晒优先，提亮辅助" : "Dark-spot contrast/uneven tone: sunscreen first, brightening support second",
+      why: zh
+        ? "色差和斑点样对比最怕没有稳定防晒。任何提亮类护理都应建立在日间防晒基础上，否则效果不稳定。"
+        : "Dark-spot-like contrast and uneven tone require consistent sunscreen first. Brightening-support products are less reliable without daily sun protection.",
+      ingredientDirection: zh
+        ? "广谱 SPF30+ 防晒、烟酰胺、维C、壬二酸、温和保湿、低频视黄醇。避免承诺快速淡斑。"
+        : "Broad-spectrum SPF30+ sunscreen, niacinamide, vitamin C, azelaic acid, moisturiser and low-frequency retinol. Avoid promises of rapid spot removal.",
+      howToUse: zh
+        ? ["早上：保湿 → 防晒；可选维C或烟酰胺", "晚上：洁面 → 保湿；根据耐受选择壬二酸/烟酰胺/低频视黄醇", "户外时补涂防晒并配合帽子/遮阳"]
+        : ["Morning: moisturiser → sunscreen; optional vitamin C or niacinamide", "Evening: cleanser → moisturiser; choose azelaic acid/niacinamide/low-frequency retinol depending on tolerance", "Reapply sunscreen outdoors and use hats/shade"],
+      avoid: zh
+        ? ["不防晒只用美白精华", "同时叠加多种提亮成分", "对快速变化、边界异常的斑点自行处理"]
+        : ["Using brightening serums without sunscreen", "Layering many brightening actives at once", "Self-treating rapidly changing or irregular spots"],
+      productIds: ["sunscreen", "moisturiser", "cerave", "lip-balm"],
+      keywords: [
+        "broad spectrum sunscreen SPF 50 dark spots",
+        "niacinamide serum uneven skin tone 5% 10%",
+        "azelaic acid 10% hyperpigmentation redness",
+        "vitamin C serum sensitive skin dark spots",
+        "retinol serum uneven tone beginner"
+      ],
+    },
+    maintenance: {
+      title: zh ? "状态维持：稳定基础护肤组合" : "Maintenance: stable basic routine",
+      why: zh
+        ? "当前没有单一特别突出的视觉问题时，不需要复杂叠加。稳定清洁、保湿、防晒就是最有价值的组合。"
+        : "When there is no strong dominant concern, a stable cleanser-moisturiser-sunscreen routine is the most useful combination.",
+      ingredientDirection: zh
+        ? "温和洁面、保湿、防晒、必要时加入唇部护理和收纳工具。"
+        : "Gentle cleanser, moisturiser, sunscreen, plus lip care and organisation if useful.",
+      howToUse: zh
+        ? ["早上：保湿 → 防晒", "晚上：温和洁面 → 保湿", "每次只新增一个产品，观察皮肤反应"]
+        : ["Morning: moisturiser → sunscreen", "Evening: gentle cleanser → moisturiser", "Add only one new product at a time and observe response"],
+      avoid: zh
+        ? ["因为皮肤状态还可以就频繁尝试强功效", "跟风买太多产品"]
+        : ["Adding strong actives just because skin is doing well", "Buying too many trend products"],
+      productIds: ["cerave", "moisturiser", "sunscreen", "lip-balm"],
+      keywords: [
+        "gentle cleanser normal skin",
+        "daily moisturiser fragrance free",
+        "broad spectrum sunscreen SPF 30 50 daily face",
+        "lip balm dry lips",
+        "basic skincare set cleanser moisturiser sunscreen"
+      ],
+    },
+  };
+
+  return bundles[main] || bundles.maintenance;
+}
+
 function generateReport(lang, result, zoneName = "") {
   const zh = lang === "zh";
   const main = getDominantConcern(result);
-
+  const bundle = getSolutionBundle(lang, main);
   const areaPrefix = zoneName
     ? zh
       ? `在${zoneName}区域，`
       : `In the ${zoneName} area, `
     : "";
 
-  const advice = {
-    acne: zh
-      ? `${areaPrefix}图像中可见较多局部红色或点状不均匀信号，可能与瑕疵、刺激、光线或相机清晰度有关。建议先保持温和清洁，不要频繁叠加强功效产品；如果有疼痛、反复红肿、结节样变化或持续加重，请咨询皮肤科医生。`
-      : `${areaPrefix}the image shows stronger local red or spot-like uneven signals. This may relate to blemishes, irritation, lighting or camera clarity. Start with gentle cleansing and avoid layering too many strong active products. If there is pain, recurring swelling, nodular changes or worsening symptoms, consider a dermatologist.`,
-    dryness: zh
-      ? `${areaPrefix}图像中干燥、粗糙或脱皮样纹理信号较明显。建议减少刺激性清洁、热水和频繁去角质，优先使用温和洁面与保湿修护。`
-      : `${areaPrefix}the image suggests stronger dryness, roughness or flaking-like texture. Reduce harsh cleansing, hot water and frequent exfoliation; prioritise gentle cleansing and moisturising support.`,
-    redness: zh
-      ? `${areaPrefix}红色调相对偏高，可能受光线、温度、刺激或皮肤状态影响。建议降低护肤流程复杂度，先用温和基础护理观察稳定性。`
-      : `${areaPrefix}the red-tone balance appears higher. This may be affected by lighting, temperature, irritation or skin state. Simplify the routine and focus on gentle basics first.`,
-    shine: zh
-      ? `${areaPrefix}反光或油光倾向较明显。建议选择温和洁面、轻盈保湿和肤感舒适的防晒，避免因为出油而过度清洁。`
-      : `${areaPrefix}shine or reflective signals are more visible. A gentle cleanser, lightweight moisturiser and comfortable sunscreen may fit better than over-cleansing.`,
-    texture: zh
-      ? `${areaPrefix}纹理和线状细节较明显，可能受干燥、表情、光线和镜头锐度影响。建议先做好保湿和防晒；如果皮肤耐受，再循序渐进考虑温和进阶护理。`
-      : `${areaPrefix}texture and line-like detail appear more visible, which can be affected by dryness, expression, lighting and camera sharpness. Prioritise moisturising and sunscreen first; consider advanced care gradually if tolerated.`,
-    pores: zh
-      ? `${areaPrefix}毛孔或细节可见度较高，常与光线、出油、近距离拍摄和局部纹理有关。建议温和清洁、轻盈保湿，并保持工具和毛巾清洁。`
-      : `${areaPrefix}pore or detail visibility appears higher, often influenced by lighting, shine, close-up distance and local texture. Use gentle cleansing, lightweight moisturising and clean tools/towels.`,
-    pigmentation: zh
-      ? `${areaPrefix}色沉或斑点样色差对比较明显。建议优先稳定日常防晒，避免承诺快速淡化；如果色斑快速变化、边界异常或伴随不适，应咨询医生。`
-      : `${areaPrefix}dark-spot or pigmentation-like contrast appears more visible. Prioritise daily sunscreen and avoid promises of rapid fading. If spots change rapidly, have irregular borders or symptoms, consult a clinician.`,
-    maintenance: zh
-      ? `${areaPrefix}整体没有出现特别突出的单一视觉问题。建议继续维持温和清洁、保湿和日间防晒，让皮肤状态保持稳定。`
-      : `${areaPrefix}the photo does not show one strongly dominant visual concern. Continue maintaining gentle cleansing, moisturising and daily sunscreen for a stable routine.`,
-  }[main];
+  const advice = zh
+    ? `${areaPrefix}主要视觉倾向是「${bundle.title}」。${bundle.why} 下面的方案不是医学处方，而是基于照片视觉信号生成的护肤组合建议。`
+    : `${areaPrefix}the main visual tendency is “${bundle.title}.” ${bundle.why} The plan below is not a medical prescription; it is a skincare combination generated from visual signals in the photo.`;
 
-  const routine = {
-    morning: zh
-      ? "温和清洁或清水清洁 → 轻盈保湿 → 日常防晒"
-      : "Gentle cleanse or rinse → lightweight moisturiser → daily sunscreen",
-    evening: zh
-      ? "温和洁面 → 保湿修护 → 根据需要加入唇部护理或柔软洁面巾"
-      : "Gentle cleanser → moisturising support → lip care or soft face towels if useful",
-    optional: zh
-      ? "如瑕疵或闭口明显，可低频率、单一成分地尝试控油/祛痘类护理；不要一次叠加太多强功效产品。"
-      : "If blemishes or clogged-pore-like texture are a concern, consider low-frequency, single-active care; avoid adding many strong products at once.",
+  return {
+    advice,
+    routine: {
+      morning: bundle.howToUse[0] || "",
+      evening: bundle.howToUse[1] || "",
+      optional: bundle.howToUse[2] || "",
+    },
+    productIds: bundle.productIds,
+    main,
+    bundle,
   };
-
-  let productIds = ["cerave", "moisturiser", "sunscreen"];
-  if (main === "acne") productIds = ["gentle-cleanser", "face-towels", "sunscreen"];
-  if (main === "dryness") productIds = ["moisturiser", "lip-balm", "cerave"];
-  if (main === "redness") productIds = ["cerave", "moisturiser", "face-towels"];
-  if (main === "shine") productIds = ["gentle-cleanser", "sunscreen", "face-towels"];
-  if (main === "texture") productIds = ["moisturiser", "sunscreen", "makeup-sponge"];
-  if (main === "pores") productIds = ["gentle-cleanser", "face-towels", "makeup-sponge"];
-  if (main === "pigmentation") productIds = ["sunscreen", "moisturiser", "cerave"];
-
-  return { advice, routine, productIds, main };
 }
 
 function getProductById(id) {
@@ -708,6 +882,39 @@ function ReportPanel({ title, result, report, t, lang, compact = false }) {
         <p className="kicker">{t.expertAdvice}</p>
         <p>{report.advice}</p>
       </div>
+
+      {report.bundle && (
+        <div className="bundleBox">
+          <p className="kicker">{t.solutionBundle}</p>
+          <h4>{report.bundle.title}</h4>
+
+          <div className="bundleSection">
+            <strong>{t.ingredientDirection}</strong>
+            <p>{report.bundle.ingredientDirection}</p>
+          </div>
+
+          <div className="bundleSection">
+            <strong>{t.howToUse}</strong>
+            <ul>
+              {report.bundle.howToUse.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+
+          <div className="bundleSection">
+            <strong>{t.whatToAvoid}</strong>
+            <ul>
+              {report.bundle.avoid.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+
+          <div className="bundleSection">
+            <strong>{t.searchKeywords}</strong>
+            <div className="keywordGrid">
+              {report.bundle.keywords.map((keyword) => <span key={keyword}>{keyword}</span>)}
+            </div>
+          </div>
+        </div>
+      )}
 
       {!compact && (
         <div className="routineBox">
@@ -1092,6 +1299,7 @@ function App() {
               {cameraError && <div className="cameraError">{cameraError}</div>}
               <div className="cameraStatus">{photo ? t.photoReady : t.noPhotoYet}</div>
               <div className="lightingTip">{t.lightingTips}</div>
+              <div className="cameraUpgradeTip">{t.cameraUpgradeTip}</div>
               <div className="algorithmNote">{t.algorithmNote}</div>
             </div>
 
