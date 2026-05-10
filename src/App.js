@@ -83,9 +83,9 @@ const copy = {
     contact: "Contact",
 
     analysisKicker: "AI-style visual beauty analysis",
-    analysisTitle: "Glow Skin Visual Analysis + Magnifier",
+    analysisTitle: "Glow Skin Visual Analysis",
     analysisIntro:
-      "Use the camera as a skin magnifier. Capture an overview photo, zoom into details, analyse local areas and receive a structured beauty-care report.",
+      "Follow the guided photo steps, take clear full-frame or close-up photos, and receive a structured beauty-care report based on camera evidence and your own skin concerns.",
     consent:
       "I understand this is a beauty routine helper, not a medical diagnosis tool.",
     privacyNote:
@@ -95,11 +95,11 @@ const copy = {
     startCamera: "Start Camera",
     stopCamera: "Stop Camera",
     takePhoto: "Take Photo",
-    takeMagnifiedPhoto: "Take Magnified Photo",
+    takeMagnifiedPhoto: "Take Close-up Photo",
     retake: "Retake",
     clearPhoto: "Clear Photo",
     runAnalysis: "Analyse Overview",
-    analyseArea: "Analyse Magnified Area",
+    analyseArea: "Analyse Current Photo",
     consentRequired: "Please confirm the consent note before starting the camera.",
     cameraUnavailable:
       "Camera access is not available. Please check browser permissions or try another browser.",
@@ -128,7 +128,33 @@ const copy = {
     whatToAvoid: "What to avoid",
     searchKeywords: "Product search keywords",
     ingredientDirection: "Ingredient direction",
-    cameraUpgradeTip: "For sharper analysis, use your phone camera, preferably the rear camera, in bright even daylight. Laptop webcams often cannot show pores, peeling or fine lines clearly.",
+    cameraUpgradeTip: "For sharper analysis, use your phone camera, preferably the rear camera, in bright even daylight. For close-up steps, move the camera closer instead of using digital zoom.",
+    visiaKicker: "VISIA-inspired protocol",
+    visiaTitle: "VISIA-style Skin Review",
+    visiaIntro: "A more rigorous workflow: multi-angle capture, close-up evidence, photo-quality gate, user concern calibration and eight-dimension visual scoring.",
+    captureProtocol: "Capture protocol",
+    userCalibration: "Your skin concerns",
+    selectConcerns: "Select the concerns you already notice. The report combines camera evidence with your own skin experience.",
+    combinedPriority: "Combined priorities",
+    evidenceReport: "Evidence-based result",
+    photoQualityGate: "Photo quality gate",
+    notReliable: "Not reliable",
+    possible: "Possible",
+    visible: "Visible",
+    notClear: "Not clearly visible",
+    retakeGuide: "Retake guidance",
+    capturedPhotos: "Captured photos",
+    captureThisStep: "Capture current step",
+    retakeCurrentStep: "Retake current step",
+    currentStepGuide: "Current photo guide",
+    poseExample: "Pose example",
+    captureTip: "Follow the selected guide. The app will automatically use the right analysis mode for that pose.",
+    noAreaSelectionNeeded: "No magnifier mode is needed. For close-up steps, physically move the phone/camera closer to the skin area and keep the image sharp.",
+    analysePhotoSet: "Analyse photo set",
+    requiredPhotosHint: "For a fuller VISIA-style review, capture at least: front overview, one cheek close-up, T-zone close-up and problem-area close-up.",
+    photoSetIncomplete: "Photo set is incomplete. You can still analyse, but some concerns may be missed.",
+    useThisPhoto: "Use this photo",
+    visiaDisclaimer: "This is a VISIA-inspired consumer camera workflow. It cannot detect true UV spots or porphyrins because those require UV/special imaging hardware.",
     routineTitle: "Suggested routine",
     morning: "Morning",
     evening: "Evening",
@@ -144,7 +170,7 @@ const copy = {
     rightCheek: "Right cheek",
     chin: "Chin",
     customCentre: "Centre close-up",
-    localReport: "Magnified area report",
+    localReport: "Current photo report",
     compareZones: "Zone comparison",
     algorithmNote:
       "The algorithm estimates visual tendencies from brightness, colour-channel balance, local contrast, highlights and texture variation. It is not a clinical measurement.",
@@ -201,9 +227,9 @@ const copy = {
     contact: "联系",
 
     analysisKicker: "AI 风格皮肤视觉分析",
-    analysisTitle: "Glow Skin 皮肤视觉分析 + 放大镜",
+    analysisTitle: "Glow Skin 皮肤视觉分析",
     analysisIntro:
-      "把相机变成皮肤放大镜。先拍摄整体照片，再放大查看细节，分析局部区域，并生成结构化护肤报告。",
+      "按照引导步骤拍摄清晰的整体或局部近照，系统会结合相机证据和你的真实肤感生成结构化护肤报告。",
     consent:
       "我理解这是美妆护肤流程助手，不是医疗诊断工具。",
     privacyNote:
@@ -213,11 +239,11 @@ const copy = {
     startCamera: "打开相机",
     stopCamera: "关闭相机",
     takePhoto: "拍摄照片",
-    takeMagnifiedPhoto: "拍摄放大区域",
+    takeMagnifiedPhoto: "拍摄局部近照",
     retake: "重新拍摄",
     clearPhoto: "清除照片",
     runAnalysis: "分析整体照片",
-    analyseArea: "分析放大区域",
+    analyseArea: "分析当前照片",
     consentRequired: "请先勾选同意说明，再打开相机。",
     cameraUnavailable:
       "无法访问相机。请检查浏览器权限，或尝试使用其他浏览器。",
@@ -246,7 +272,33 @@ const copy = {
     whatToAvoid: "需要避免",
     searchKeywords: "产品搜索关键词",
     ingredientDirection: "成分方向",
-    cameraUpgradeTip: "为了获得更清晰的分析，建议使用手机摄像头，最好是后置摄像头，并在明亮均匀的自然光下拍摄。笔记本电脑摄像头通常很难看清毛孔、脱皮和细纹。",
+    cameraUpgradeTip: "为了获得更清晰的分析，建议使用手机摄像头，最好是后置摄像头，并在明亮均匀的自然光下拍摄。拍局部近照时，请靠近皮肤，而不是依赖数码放大。",
+    visiaKicker: "VISIA 风格流程",
+    visiaTitle: "VISIA 式肤况复核",
+    visiaIntro: "更严谨的流程：多角度采集、局部近拍证据、照片质量门槛、用户自述校准和八维视觉评分。",
+    captureProtocol: "拍摄流程",
+    userCalibration: "你的皮肤关注点",
+    selectConcerns: "请选择你已经注意到的问题。报告会结合相机证据和你的真实肤感。",
+    combinedPriority: "综合优先级",
+    evidenceReport: "证据式结果",
+    photoQualityGate: "照片质量门槛",
+    notReliable: "无法可靠判断",
+    possible: "可能存在",
+    visible: "较明显",
+    notClear: "未明显可见",
+    retakeGuide: "重拍建议",
+    capturedPhotos: "已拍照片",
+    captureThisStep: "拍摄当前步骤",
+    retakeCurrentStep: "重拍当前步骤",
+    currentStepGuide: "当前拍摄指导",
+    poseExample: "姿势示意",
+    captureTip: "按照当前步骤的提示拍摄。系统会自动为该姿势选择对应分析方式。",
+    noAreaSelectionNeeded: "不需要放大镜模式。拍局部近照时，请把手机/摄像头靠近对应皮肤区域，并保持清晰。",
+    analysePhotoSet: "分析整组照片",
+    requiredPhotosHint: "为了更接近 VISIA 式复核，建议至少拍摄：正脸整体、脸颊近拍、T 区近拍和问题区域近拍。",
+    photoSetIncomplete: "照片组不完整。仍可分析，但部分问题可能漏检。",
+    useThisPhoto: "使用这张照片",
+    visiaDisclaimer: "这是 VISIA-inspired 的普通相机流程。它不能真正检测 UV spots 或 porphyrins，因为这些需要 UV/特殊光源硬件。",
     routineTitle: "建议护肤流程",
     morning: "早上",
     evening: "晚上",
@@ -262,7 +314,7 @@ const copy = {
     rightCheek: "右脸颊",
     chin: "下巴",
     customCentre: "中心近距离",
-    localReport: "放大区域报告",
+    localReport: "当前照片报告",
     compareZones: "区域对比",
     algorithmNote:
       "算法会从亮度、颜色通道、局部对比度、反光和纹理变化估算视觉倾向。这不是临床检测。",
@@ -725,6 +777,203 @@ const concernGroups = [
       "适合毛孔可见度和粗糙纹理。重点是温和清洁、低频 BHA 和油脂平衡支持。",
   },
 ];
+
+
+const captureSteps = [
+  {
+    id: "front",
+    en: "Front overview",
+    zh: "正脸整体照",
+    enTip: "Good for tone, redness, shine and overall balance.",
+    zhTip: "适合观察肤色、泛红、油光和整体状态。",
+    enInstruction: "Face the camera directly. Keep the whole face visible, remove glasses if possible, and use even front light.",
+    zhInstruction: "正对镜头，完整露出全脸；尽量摘下眼镜，在正面均匀光线下拍摄。",
+  },
+  {
+    id: "left",
+    en: "Left 45° angle",
+    zh: "左侧 45°",
+    enTip: "Useful for cheek texture, redness and uneven tone.",
+    zhTip: "适合观察脸颊纹理、泛红和肤色不均。",
+    enInstruction: "Turn your face about 45 degrees to the left. Keep the cheek clear and avoid strong side shadows.",
+    zhInstruction: "脸向左转约 45 度，露出脸颊；避免强侧光阴影。",
+  },
+  {
+    id: "right",
+    en: "Right 45° angle",
+    zh: "右侧 45°",
+    enTip: "Useful for side comparison and hidden uneven areas.",
+    zhTip: "适合左右对比和发现侧脸不均匀区域。",
+    enInstruction: "Turn your face about 45 degrees to the right. Keep the cheek and jawline clear.",
+    zhInstruction: "脸向右转约 45 度，露出脸颊和下颌线。",
+  },
+  {
+    id: "tzone",
+    en: "T-zone / nose close-up",
+    zh: "T 区 / 鼻翼近拍",
+    enTip: "Best for shine, pores and clogged-pore-like texture.",
+    zhTip: "最适合观察油光、毛孔和闭口样纹理。",
+    enInstruction: "Move closer to the nose and T-zone. Use your phone rear camera if possible; avoid digital zoom blur.",
+    zhInstruction: "靠近鼻翼和 T 区拍摄；建议用手机后置摄像头，避免过度数码放大导致模糊。",
+  },
+  {
+    id: "cheek",
+    en: "Cheek close-up",
+    zh: "脸颊近拍",
+    enTip: "Best for redness, dryness, pores and pigmentation contrast.",
+    zhTip: "最适合观察泛红、干燥、毛孔和色差。",
+    enInstruction: "Move closer to one cheek. Keep the cheek flat to the camera and use soft natural light.",
+    zhInstruction: "靠近一侧脸颊拍摄，让脸颊尽量正对镜头，并使用柔和自然光。",
+  },
+  {
+    id: "eyeForehead",
+    en: "Eye / forehead close-up",
+    zh: "眼周 / 额头近拍",
+    enTip: "Best for fine lines and texture visibility.",
+    zhTip: "最适合观察细纹和线状纹理。",
+    enInstruction: "Move closer to the eye/forehead area. Keep expression relaxed and avoid squinting.",
+    zhInstruction: "靠近眼周或额头拍摄，表情放松，不要眯眼。",
+  },
+  {
+    id: "problemArea",
+    en: "Problem-area close-up",
+    zh: "问题区域近拍",
+    enTip: "Use this for peeling, blemishes or any area you already worry about.",
+    zhTip: "用于你已经在意的脱皮、瑕疵或局部问题。",
+    enInstruction: "Aim at the exact area you already worry about, such as peeling, blemishes, redness, or rough texture.",
+    zhInstruction: "对准你最在意的具体区域，例如脱皮、瑕疵、泛红或粗糙纹理。",
+  },
+];
+
+const selfConcernOptions = [
+  { id: "acne", en: "Blemishes / clogged pores", zh: "痘痘 / 闭口" },
+  { id: "dryness", en: "Dryness / peeling / tightness", zh: "干燥 / 脱皮 / 紧绷" },
+  { id: "redness", en: "Redness / sensitivity", zh: "泛红 / 敏感" },
+  { id: "shine", en: "Oiliness / shine", zh: "油光 / 出油" },
+  { id: "texture", en: "Fine lines / texture", zh: "细纹 / 纹理" },
+  { id: "pores", en: "Pores / rough detail", zh: "毛孔 / 粗糙" },
+  { id: "pigmentation", en: "Uneven tone / dark spots", zh: "肤色不均 / 色沉" },
+];
+
+const visiaMetricConfig = [
+  {
+    key: "acne",
+    en: "Spots / blemish proxy",
+    zh: "可见斑点 / 瑕疵 proxy",
+    helpEn: "Looks for spot-like redness, local contrast and uneven areas. This is not an acne diagnosis.",
+    helpZh: "观察点状泛红、局部对比和不均匀区域。这不是痤疮诊断。",
+  },
+  {
+    key: "texture",
+    en: "Wrinkles / fine-line visibility",
+    zh: "皱纹 / 细纹可见度",
+    helpEn: "Uses line-like texture and edge density. Close-up eye/forehead photos are more reliable.",
+    helpZh: "基于线状纹理和边缘密度。眼周/额头近拍更可靠。",
+  },
+  {
+    key: "texture",
+    en: "Texture roughness",
+    zh: "纹理粗糙度",
+    helpEn: "Measures local contrast and micro-edge variation.",
+    helpZh: "基于局部对比度和细小边缘变化。",
+  },
+  {
+    key: "pores",
+    en: "Pore / detail visibility",
+    zh: "毛孔 / 细节可见度",
+    helpEn: "Requires a sharp close-up. If the image is blurry, the result should be treated as not reliable.",
+    helpZh: "需要清晰近拍。如果图像模糊，结果应视为不可靠。",
+  },
+  {
+    key: "pigmentation",
+    en: "Brown-spot-like contrast",
+    zh: "棕色 / 色沉样对比",
+    helpEn: "Estimates brown/dark local contrast under visible light.",
+    helpZh: "估算普通可见光下的棕色/暗色局部对比。",
+  },
+  {
+    key: "redness",
+    en: "Red areas",
+    zh: "泛红区域",
+    helpEn: "Uses red-channel balance and regional redness tendency.",
+    helpZh: "基于红色通道和区域泛红倾向。",
+  },
+  {
+    key: "dryness",
+    en: "Dryness / flaking proxy",
+    zh: "干燥 / 脱皮 proxy",
+    helpEn: "Looks for roughness, grey-white patches and flaky-looking texture.",
+    helpZh: "观察粗糙、灰白小片和脱皮样纹理。",
+  },
+  {
+    key: "shine",
+    en: "Shine / sebum-reflection proxy",
+    zh: "油光 / 皮脂反光 proxy",
+    helpEn: "Looks for high-brightness, low-saturation reflective areas.",
+    helpZh: "观察高亮、低饱和的反光区域。",
+  },
+];
+
+function classifyEvidence(score, confidence, t, selfNoted = false) {
+  if (confidence < 45) return t.notReliable;
+  if (score >= 70) return t.visible;
+  if (score >= 45 || selfNoted) return t.possible;
+  return t.notClear;
+}
+
+function buildVisiaRows(lang, result, selfConcerns, t) {
+  if (!result) return [];
+  const confidence = result.confidence || 0;
+
+  return visiaMetricConfig.map((metric) => {
+    const rawScore = Math.round(result[metric.key] || 0);
+    const selfNoted = selfConcerns.includes(metric.key);
+    const adjustedScore = Math.min(100, rawScore + (selfNoted ? 18 : 0));
+    return {
+      ...metric,
+      score: adjustedScore,
+      rawScore,
+      status: classifyEvidence(adjustedScore, confidence, t, selfNoted),
+      selfNoted,
+      help: lang === "en" ? metric.helpEn : metric.helpZh,
+      label: lang === "en" ? metric.en : metric.zh,
+    };
+  });
+}
+
+function getRetakeAdvice(lang, result, selfConcerns = []) {
+  const zh = lang === "zh";
+  if (!result) return "";
+  if (result.confidence < 45) {
+    return zh
+      ? "当前照片可信度偏低。请使用手机后置摄像头，在自然光下重新拍摄。"
+      : "The photo confidence is low. Use a phone rear camera in natural daylight and retake.";
+  }
+  if (result.blur < 45) {
+    return zh
+      ? "清晰度不足，毛孔、脱皮和细纹可能漏检。请靠近皮肤，避免数码放大过度。"
+      : "Sharpness is low, so pores, peeling and fine lines may be missed. Move closer and avoid excessive digital zoom.";
+  }
+  if (selfConcerns.includes("pores")) {
+    return zh
+      ? "你关注毛孔，建议补拍鼻翼/T 区或脸颊近距离照片。"
+      : "Because you selected pores, take a nose/T-zone or cheek close-up.";
+  }
+  if (selfConcerns.includes("texture")) {
+    return zh
+      ? "你关注细纹/纹理，建议补拍眼周或额头近距离照片。"
+      : "Because you selected fine lines/texture, take an eye or forehead close-up.";
+  }
+  if (selfConcerns.includes("dryness")) {
+    return zh
+      ? "你关注干燥/脱皮，建议补拍最干燥区域的近距离照片。"
+      : "Because you selected dryness/flaking, take a close-up of the driest area.";
+  }
+  return zh
+    ? "如果结果与实际肤感不一致，请补拍对应区域的局部近照。"
+    : "If the report misses a known concern, take a close-up of that exact area.";
+}
+
 
 const affiliateLibrary = {
   acne: [
@@ -1414,11 +1663,36 @@ function App() {
   const [zoom, setZoom] = useState(2);
   const [selectedZone, setSelectedZone] = useState("customCentre");
   const [analysisMode, setAnalysisMode] = useState("overview");
+  const [selectedCaptureStep, setSelectedCaptureStep] = useState("front");
+  const [selfConcerns, setSelfConcerns] = useState([]);
+  const [photoSet, setPhotoSet] = useState({});
+  const [photoSetAnalysis, setPhotoSetAnalysis] = useState(null);
   const [cameraInfo, setCameraInfo] = useState(null);
   const videoRef = useRef(null);
   const streamRef = useRef(null);
   const canvasRef = useRef(null);
   const t = copy[lang];
+  const currentCaptureStep = captureSteps.find((step) => step.id === selectedCaptureStep) || captureSteps[0];
+
+  const toggleSelfConcern = (concernId) => {
+    setSelfConcerns((current) =>
+      current.includes(concernId)
+        ? current.filter((item) => item !== concernId)
+        : [...current, concernId]
+    );
+  };
+
+  const setCaptureStep = (stepId) => {
+    setSelectedCaptureStep(stepId);
+    setAnalysisMode("overview");
+    setZoom(1);
+
+    if (photoSet[stepId]) {
+      setPhoto(photoSet[stepId].image);
+    } else {
+      setPhoto("");
+    }
+  };
 
   const overallReport = overallAnalysis ? generateReport(lang, overallAnalysis) : null;
   const localReport = localAnalysis ? generateReport(lang, localAnalysis.result, localAnalysis.zoneLabel) : null;
@@ -1502,9 +1776,15 @@ function App() {
 
   const handleRetakeButton = async () => {
     setPhoto("");
+    setPhotoSet((current) => {
+      const next = { ...current };
+      delete next[selectedCaptureStep];
+      return next;
+    });
     setOverallAnalysis(null);
     setLocalAnalysis(null);
     setZoneComparisons(null);
+    setPhotoSetAnalysis(null);
     await startCamera();
   };
 
@@ -1517,30 +1797,26 @@ function App() {
     const videoHeight = video.videoHeight || 720;
     const ctx = canvas.getContext("2d");
 
-    if (analysisMode === "magnifier") {
-      const selectedCrop = zoneDefs[selectedZone];
-      const sx = Math.floor(videoWidth * selectedCrop.x);
-      const sy = Math.floor(videoHeight * selectedCrop.y);
-      const sw = Math.floor(videoWidth * selectedCrop.w);
-      const sh = Math.floor(videoHeight * selectedCrop.h);
-
-      canvas.width = Math.max(sw, 1);
-      canvas.height = Math.max(sh, 1);
-      ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
-      setPhoto(canvas.toDataURL("image/png"));
-      setOverallAnalysis(null);
-      setLocalAnalysis(null);
-      setZoneComparisons(null);
-      return;
-    }
-
     canvas.width = videoWidth;
     canvas.height = videoHeight;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    setPhoto(canvas.toDataURL("image/png"));
+
+    const capturedDataUrl = canvas.toDataURL("image/png");
+
+    setPhoto(capturedDataUrl);
+    setPhotoSet((current) => ({
+      ...current,
+      [selectedCaptureStep]: {
+        image: capturedDataUrl,
+        mode: "overview",
+        zone: selectedCaptureStep,
+        capturedAt: new Date().toISOString(),
+      },
+    }));
     setOverallAnalysis(null);
     setLocalAnalysis(null);
     setZoneComparisons(null);
+    setPhotoSetAnalysis(null);
   };
 
   const loadPhotoToCanvas = (callback) => {
@@ -1570,6 +1846,56 @@ function App() {
       setOverallAnalysis(result);
       setZoneComparisons(comparisons);
       setCameraError("");
+    });
+  };
+
+  const analysePhotoSet = () => {
+    const entries = Object.entries(photoSet);
+    if (!entries.length) {
+      setCameraError(t.noPhoto);
+      return;
+    }
+
+    let completed = 0;
+    const results = [];
+
+    entries.forEach(([stepId, item]) => {
+      const image = new Image();
+      image.onload = () => {
+        const canvas = canvasRef.current;
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(image, 0, 0);
+        results.push({
+          stepId,
+          result: analyseCanvas(canvas),
+        });
+        completed += 1;
+
+        if (completed === entries.length) {
+          const combined = results.reduce((acc, item) => {
+            Object.entries(item.result).forEach(([key, value]) => {
+              acc[key] = Math.max(acc[key] || 0, value);
+            });
+            return acc;
+          }, {});
+
+          const avgConfidence = Math.round(
+            results.reduce((sum, item) => sum + (item.result.confidence || 0), 0) / results.length
+          );
+
+          combined.confidence = avgConfidence;
+          setPhotoSetAnalysis({
+            combined,
+            results,
+            count: results.length,
+          });
+          setOverallAnalysis(combined);
+          setCameraError("");
+        }
+      };
+      image.src = item.image;
     });
   };
 
@@ -1660,6 +1986,82 @@ function App() {
             <p>{t.analysisIntro}</p>
           </div>
 
+          <div className="visiaProtocol">
+            <div className="visiaProtocolIntro">
+              <p className="kicker">{t.visiaKicker}</p>
+              <h3>{t.visiaTitle}</h3>
+              <p>{t.visiaIntro}</p>
+              <p className="visiaDisclaimer">{t.visiaDisclaimer}</p>
+            </div>
+
+            <div className="captureStepsBox">
+              <p className="kicker">{t.captureProtocol}</p>
+              <div className="captureStepGrid">
+                {captureSteps.map((step) => (
+                  <button
+                    type="button"
+                    key={step.id}
+                    className={`${selectedCaptureStep === step.id ? "active" : ""} ${photoSet[step.id] ? "captured" : ""}`}
+                    onClick={() => setCaptureStep(step.id)}
+                  >
+                    <strong>{lang === "en" ? step.en : step.zh}</strong>
+                    <span>{lang === "en" ? step.enTip : step.zhTip}</span>
+                    {photoSet[step.id] && <em>✓ {t.capturedPhotos}</em>}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="selfConcernBox">
+              <p className="kicker">{t.userCalibration}</p>
+              <p>{t.selectConcerns}</p>
+              <div className="selfConcernGrid">
+                {selfConcernOptions.map((option) => (
+                  <button
+                    type="button"
+                    key={option.id}
+                    className={selfConcerns.includes(option.id) ? "active" : ""}
+                    onClick={() => toggleSelfConcern(option.id)}
+                  >
+                    {lang === "en" ? option.en : option.zh}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="photoSetBox">
+              <div>
+                <p className="kicker">{t.capturedPhotos}</p>
+                <p>{t.requiredPhotosHint}</p>
+              </div>
+
+              <div className="photoSetGrid">
+                {captureSteps.map((step) => {
+                  const item = photoSet[step.id];
+                  return (
+                    <button
+                      type="button"
+                      className={item ? "hasPhoto" : ""}
+                      key={`photo-${step.id}`}
+                      onClick={() => setCaptureStep(step.id)}
+                    >
+                      {item ? <img src={item.image} alt={lang === "en" ? step.en : step.zh} /> : <span>+</span>}
+                      <strong>{lang === "en" ? step.en : step.zh}</strong>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {Object.keys(photoSet).length < 4 && (
+                <div className="photoSetWarning">{t.photoSetIncomplete}</div>
+              )}
+
+              <button className="button dark analyseSetButton" type="button" onClick={analysePhotoSet}>
+                {t.analysePhotoSet}
+              </button>
+            </div>
+          </div>
+
           <div className="analysisGrid">
             <div className="cameraPanel">
               <div className="cameraConsent">
@@ -1671,21 +2073,19 @@ function App() {
                 <p>{t.medicalDisclaimer}</p>
               </div>
 
-              <div className="modeTabs">
-                <button
-                  type="button"
-                  className={analysisMode === "overview" ? "active" : ""}
-                  onClick={() => setAnalysisMode("overview")}
-                >
-                  {t.overviewMode}
-                </button>
-                <button
-                  type="button"
-                  className={analysisMode === "magnifier" ? "active" : ""}
-                  onClick={() => setAnalysisMode("magnifier")}
-                >
-                  {t.magnifierMode}
-                </button>
+              <div className="currentCaptureGuide">
+                <div>
+                  <p className="kicker">{t.currentStepGuide}</p>
+                  <h4>{lang === "en" ? currentCaptureStep.en : currentCaptureStep.zh}</h4>
+                  <p>{lang === "en" ? currentCaptureStep.enInstruction : currentCaptureStep.zhInstruction}</p>
+                  <p className="subtleGuide">{t.noAreaSelectionNeeded}</p>
+                </div>
+                <div className={`poseExample pose-${selectedCaptureStep}`}>
+                  <span>{t.poseExample}</span>
+                  <div className="faceOval">
+                    <i />
+                  </div>
+                </div>
               </div>
 
               <div className="cameraQualityBox">
@@ -1701,77 +2101,26 @@ function App() {
                 )}
               </div>
 
-              <div className="cameraFrame magnifierFrame">
+              <div className="cameraFrame">
                 {photo ? (
-                  <div className="photoMagnifier">
-                    <img
-                      src={photo}
-                      alt={lang === "en" ? "Captured skin visual analysis" : "已拍摄的皮肤视觉分析照片"}
-                      style={
-                        analysisMode === "magnifier"
-                          ? {
-                              transform: `scale(${zoom})`,
-                              transformOrigin: "50% 50%",
-                            }
-                          : undefined
-                      }
-                    />
-                    {analysisMode === "magnifier" && <div className="magnifiedBadge">{t.magnifierMode}</div>}
-                  </div>
-                ) : analysisMode === "magnifier" ? (
-                  <div className="photoMagnifier liveMagnifier">
-                    <video
-                      ref={videoRef}
-                      autoPlay
-                      playsInline
-                      muted
-                      style={{
-                        transform: `scale(${zoom})`,
-                        transformOrigin: `${(crop.x + crop.w / 2) * 100}% ${(crop.y + crop.h / 2) * 100}%`,
-                      }}
-                    />
-                    <div
-                      className="cropBox"
-                      style={{
-                        left: `${crop.x * 100}%`,
-                        top: `${crop.y * 100}%`,
-                        width: `${crop.w * 100}%`,
-                        height: `${crop.h * 100}%`,
-                      }}
-                    />
-                  </div>
+                  <img
+                    className="capturedPreview"
+                    src={photo}
+                    alt={lang === "en" ? "Captured skin visual analysis" : "已拍摄的皮肤视觉分析照片"}
+                  />
                 ) : (
                   <video ref={videoRef} autoPlay playsInline muted />
                 )}
                 <canvas ref={canvasRef} className="hiddenCanvas" />
               </div>
 
-              <div className="magnifierControls">
-                <div className="fieldGroup">
-                  <label>{t.selectedArea}</label>
-                  <select value={selectedZone} onChange={(event) => setSelectedZone(event.target.value)}>
-                    <option value="customCentre">{t.customCentre}</option>
-                    <option value="forehead">{t.forehead}</option>
-                    <option value="nose">{t.nose}</option>
-                    <option value="leftCheek">{t.leftCheek}</option>
-                    <option value="rightCheek">{t.rightCheek}</option>
-                    <option value="chin">{t.chin}</option>
-                  </select>
-                </div>
-                <div className="fieldGroup">
-                  <label>{t.zoom}: {zoom.toFixed(1)}x</label>
-                  <input min="1" max="4" step="0.25" value={zoom} onChange={(event) => setZoom(Number(event.target.value))} type="range" />
-                </div>
-              </div>
-
               <div className="cameraButtons simpleCameraButtons">
-                {!photo ? (
-                  <button className="button dark primaryShootButton" type="button" onClick={handleShootButton}>
-                    {analysisMode === "magnifier" ? t.takeMagnifiedPhoto : t.takePhoto}
-                  </button>
-                ) : (
+                <button className="button dark primaryShootButton" type="button" onClick={handleShootButton}>
+                  {t.captureThisStep}
+                </button>
+                {photoSet[selectedCaptureStep] && (
                   <button className="button light primaryShootButton" type="button" onClick={handleRetakeButton}>
-                    {t.retake}
+                    {t.retakeCurrentStep}
                   </button>
                 )}
               </div>
@@ -1779,9 +2128,6 @@ function App() {
               <div className="cameraButtons">
                 <button className="button dark wideButton" type="button" onClick={runOverallAnalysis}>
                   {t.runAnalysis}
-                </button>
-                <button className="button light wideButton" type="button" onClick={runLocalAnalysis}>
-                  {t.analyseArea}
                 </button>
               </div>
 
@@ -1820,6 +2166,56 @@ function App() {
                       lang={lang}
                       compact
                     />
+                  )}
+
+                  {overallAnalysis && (
+                    <div className="visiaReportBox">
+                      <p className="kicker">{t.evidenceReport}</p>
+                      {photoSetAnalysis && (
+                        <div className="photoSetSummary">
+                          <strong>{t.analysePhotoSet}</strong>
+                          <span>{photoSetAnalysis.count} {lang === "en" ? "photos combined" : "张照片已综合分析"}</span>
+                        </div>
+                      )}
+
+                      <div className="qualityGate">
+                        <strong>{t.photoQualityGate}</strong>
+                        <span>{t.confidence}: {overallAnalysis.confidence}/100</span>
+                        <span>{t.metrics.blur}: {overallAnalysis.blur}/100</span>
+                        <span>{t.retakeGuide}: {getRetakeAdvice(lang, overallAnalysis, selfConcerns)}</span>
+                      </div>
+
+                      <div className="visiaMetricTable">
+                        {buildVisiaRows(lang, overallAnalysis, selfConcerns, t).map((row, index) => (
+                          <div className="visiaMetricRow" key={`${row.label}-${index}`}>
+                            <div>
+                              <strong>{row.label}</strong>
+                              <p>{row.help}</p>
+                              {row.selfNoted && (
+                                <em>{lang === "en" ? "Included because you selected this concern." : "已根据你的自述关注点纳入优先级。"}</em>
+                              )}
+                            </div>
+                            <span className={`statusPill status-${row.status === t.visible ? "visible" : row.status === t.possible ? "possible" : row.status === t.notReliable ? "notReliable" : "low"}`}>
+                              {row.status}
+                            </span>
+                            <small>{row.score}/100</small>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="priorityBox">
+                        <p className="kicker">{t.combinedPriority}</p>
+                        {buildVisiaRows(lang, overallAnalysis, selfConcerns, t)
+                          .filter((row) => row.status === t.visible || row.status === t.possible || row.selfNoted)
+                          .slice(0, 4)
+                          .map((row, index) => (
+                            <div key={`priority-${row.label}`}>
+                              <strong>Priority {index + 1}</strong>
+                              <span>{row.label}</span>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
                   )}
 
                   {zoneComparisons && (

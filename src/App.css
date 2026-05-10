@@ -586,3 +586,571 @@ html:lang(zh) .hero h1,
     max-width: 100%;
   }
 }
+
+
+/* VISIA-inspired protocol upgrade */
+.visiaProtocol {
+  max-width: 1440px;
+  margin: 0 auto 32px;
+  display: grid;
+  gap: 18px;
+}
+
+.visiaProtocolIntro,
+.captureStepsBox,
+.selfConcernBox,
+.visiaReportBox {
+  background: #fff;
+  border: 1px solid rgba(24, 21, 19, 0.14);
+  padding: clamp(20px, 3vw, 34px);
+}
+
+.visiaProtocolIntro h3 {
+  margin: 0 0 14px;
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.visiaProtocolIntro p:not(.kicker),
+.selfConcernBox p,
+.visiaDisclaimer {
+  color: #5a5049;
+  line-height: 1.75;
+}
+
+.visiaDisclaimer {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #f8f3ed;
+  border-left: 3px solid #8b6a55;
+  font-weight: 800;
+}
+
+.captureStepGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.captureStepGrid button,
+.selfConcernGrid button {
+  text-align: left;
+  border: 1px solid rgba(24, 21, 19, 0.16);
+  background: #f8f3ed;
+  color: #181513;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.captureStepGrid button.active,
+.selfConcernGrid button.active {
+  background: #181513;
+  color: #fff;
+}
+
+.captureStepGrid strong,
+.captureStepGrid span {
+  display: block;
+}
+
+.captureStepGrid strong {
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.captureStepGrid span {
+  margin-top: 8px;
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.selfConcernGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.selfConcernGrid button {
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.qualityGate {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  background: #f8f3ed;
+  border: 1px solid rgba(24, 21, 19, 0.12);
+  margin-bottom: 18px;
+}
+
+.qualityGate strong {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.qualityGate span {
+  color: #524942;
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.visiaMetricTable {
+  display: grid;
+  gap: 10px;
+}
+
+.visiaMetricRow {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid rgba(24, 21, 19, 0.12);
+  background: #fff;
+}
+
+.visiaMetricRow strong {
+  display: block;
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.visiaMetricRow p {
+  margin: 6px 0 0;
+  color: #5a5049;
+  line-height: 1.45;
+  font-size: 0.9rem;
+}
+
+.visiaMetricRow em {
+  display: block;
+  margin-top: 8px;
+  color: #8b6a55;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 0.82rem;
+}
+
+.statusPill {
+  display: inline-flex;
+  min-width: 110px;
+  justify-content: center;
+  padding: 8px 10px;
+  border: 1px solid rgba(24, 21, 19, 0.2);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status-visible {
+  background: #181513;
+  color: #fff;
+}
+
+.status-possible {
+  background: #8b6a55;
+  color: #fff;
+}
+
+.status-notReliable {
+  background: #f8f3ed;
+  color: #8b1e1e;
+}
+
+.status-low {
+  background: #fff;
+  color: #5a5049;
+}
+
+.visiaMetricRow small {
+  font-weight: 900;
+  color: #8b6a55;
+}
+
+.priorityBox {
+  margin-top: 18px;
+  padding: 18px;
+  background: #f8f3ed;
+  border: 1px solid rgba(24, 21, 19, 0.12);
+  display: grid;
+  gap: 10px;
+}
+
+.priorityBox div {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  border-top: 1px solid rgba(24, 21, 19, 0.1);
+  padding-top: 10px;
+}
+
+.priorityBox strong {
+  color: #8b6a55;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1180px) {
+  .captureStepGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .visiaMetricRow {
+    grid-template-columns: 1fr;
+  }
+
+  .statusPill {
+    justify-content: flex-start;
+    width: fit-content;
+  }
+}
+
+@media (max-width: 740px) {
+  .captureStepGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .selfConcernGrid button {
+    width: 100%;
+  }
+}
+
+
+/* Multi-photo VISIA workflow */
+.captureStepGrid button.captured {
+  border-color: #181513;
+}
+
+.captureStepGrid button em {
+  display: inline-block;
+  margin-top: 10px;
+  font-style: normal;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: inherit;
+}
+
+.photoSetBox {
+  background: #fff;
+  border: 1px solid rgba(24, 21, 19, 0.14);
+  padding: clamp(20px, 3vw, 34px);
+}
+
+.photoSetBox p:not(.kicker) {
+  color: #5a5049;
+  line-height: 1.7;
+}
+
+.photoSetGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.photoSetGrid button {
+  border: 1px solid rgba(24, 21, 19, 0.16);
+  background: #f8f3ed;
+  padding: 8px;
+  display: grid;
+  gap: 8px;
+  cursor: pointer;
+  min-height: 132px;
+}
+
+.photoSetGrid button img {
+  width: 100%;
+  height: 84px;
+  object-fit: cover;
+  background: #181513;
+}
+
+.photoSetGrid button span {
+  display: grid;
+  place-items: center;
+  height: 84px;
+  background: #fff;
+  color: #8b6a55;
+  font-size: 2rem;
+}
+
+.photoSetGrid button strong {
+  font-size: 0.78rem;
+  line-height: 1.25;
+  color: #181513;
+}
+
+.photoSetGrid button.hasPhoto {
+  background: #fff;
+  border-color: #181513;
+}
+
+.photoSetWarning {
+  padding: 12px 14px;
+  background: #f8f3ed;
+  border-left: 3px solid #8b6a55;
+  color: #5a5049;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.analyseSetButton {
+  margin-top: 16px;
+}
+
+.photoSetSummary {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  margin-bottom: 14px;
+  background: #181513;
+  color: #fff;
+}
+
+.photoSetSummary strong {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1180px) {
+  .photoSetGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 740px) {
+  .photoSetGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* Guided capture polish: no manual area selector; each VISIA step controls the camera mode */
+.currentCaptureGuide {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 18px;
+  align-items: stretch;
+  margin-bottom: 18px;
+  padding: 18px;
+  background: #f8f3ed;
+  border: 1px solid rgba(24, 21, 19, 0.14);
+}
+
+.currentCaptureGuide h4 {
+  margin: 0 0 10px;
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.currentCaptureGuide p:not(.kicker) {
+  margin: 0;
+  color: #524942;
+  line-height: 1.65;
+}
+
+.subtleGuide {
+  margin-top: 12px !important;
+  font-weight: 800;
+  color: #8b6a55 !important;
+}
+
+.poseExample {
+  position: relative;
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #efe4db, #d8c4b4);
+  overflow: hidden;
+}
+
+.poseExample > span {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  color: #8b6a55;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.faceOval {
+  width: 92px;
+  height: 124px;
+  border: 3px solid #181513;
+  border-radius: 50% 50% 44% 44%;
+  position: relative;
+  background: rgba(255,255,255,0.35);
+}
+
+.faceOval::before,
+.faceOval::after {
+  content: "";
+  position: absolute;
+  top: 43px;
+  width: 10px;
+  height: 6px;
+  border-radius: 50%;
+  background: #181513;
+}
+
+.faceOval::before { left: 24px; }
+.faceOval::after { right: 24px; }
+
+.faceOval i {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  width: 28px;
+  height: 2px;
+  background: #181513;
+  transform: translateX(-50%);
+}
+
+.pose-left .faceOval {
+  transform: rotateY(0deg) skewY(-3deg) translateX(-18px);
+}
+
+.pose-right .faceOval {
+  transform: rotateY(0deg) skewY(3deg) translateX(18px);
+}
+
+.pose-tzone .faceOval,
+.pose-cheek .faceOval,
+.pose-eyeForehead .faceOval,
+.pose-problemArea .faceOval {
+  transform: scale(1.25);
+}
+
+.pose-tzone::after,
+.pose-cheek::after,
+.pose-eyeForehead::after,
+.pose-problemArea::after {
+  content: "";
+  position: absolute;
+  border: 2px solid #181513;
+  background: rgba(255,255,255,0.24);
+}
+
+.pose-tzone::after {
+  width: 36px;
+  height: 52px;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pose-cheek::after {
+  width: 48px;
+  height: 44px;
+  top: 82px;
+  right: 42%;
+  border-radius: 50%;
+}
+
+.pose-eyeForehead::after {
+  width: 72px;
+  height: 38px;
+  top: 54px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pose-problemArea::after {
+  width: 52px;
+  height: 52px;
+  top: 82px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+}
+
+.magnifierControls,
+.modeTabs {
+  display: none !important;
+}
+
+.cameraButtons.simpleCameraButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.primaryShootButton {
+  min-width: 240px;
+}
+
+@media (max-width: 740px) {
+  .currentCaptureGuide {
+    grid-template-columns: 1fr;
+  }
+
+  .poseExample {
+    min-height: 150px;
+  }
+
+  .cameraButtons.simpleCameraButtons {
+    flex-direction: column;
+  }
+
+  .primaryShootButton {
+    width: 100%;
+  }
+}
+
+
+/* No-magnifier capture: close-up is done by physically moving the camera closer */
+.magnifierFrame,
+.photoMagnifier,
+.liveMagnifier,
+.cropBox,
+.magnifiedBadge,
+.magnifierControls,
+.modeTabs {
+  display: none !important;
+}
+
+.cameraFrame {
+  min-height: 460px;
+  background: #201915;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.cameraFrame video,
+.cameraFrame .capturedPreview {
+  width: 100%;
+  height: 100%;
+  max-height: 560px;
+  object-fit: cover;
+}
+
+.currentCaptureGuide .subtleGuide {
+  color: #8b6a55 !important;
+}
+
+.pose-tzone::after,
+.pose-cheek::after,
+.pose-eyeForehead::after,
+.pose-problemArea::after {
+  border-style: dashed;
+}
