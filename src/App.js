@@ -10,6 +10,41 @@ import beautyOrganiserImg from "./images/beauty-organiser.jpg";
 import softFaceTowelsImg from "./images/soft-face-towels.jpg";
 import travelToiletryBagImg from "./images/travel-toiletry-bag.jpg";
 import ceraveCleanserImg from "./images/cerave-cleanser.jpg";
+import salicylicCleanserImg from "./images/salicylic-acid-cleanser.jpg";
+import benzoylPeroxideWashImg from "./images/benzoyl-peroxide-wash.jpg";
+import azelaicBlemishSerumImg from "./images/azelaic-acid-blemish-serum.jpg";
+import nonComedogenicMoisturiserImg from "./images/non-comedogenic-lightweight-moisturiser.jpg";
+import oilFreeSunscreenAcneImg from "./images/oil-free-sunscreen-acne-prone.jpg";
+import ceramideCreamImg from "./images/ceramide-moisturising-cream.jpg";
+import richMoisturiserImg from "./images/fragrance-free-rich-moisturiser.jpg";
+import cicaplastBaumeImg from "./images/cicaplast-baume-b5.jpg";
+import petrolatumOintmentImg from "./images/petrolatum-healing-ointment.jpg";
+import hydratingCleanserDryImg from "./images/hydrating-cleanser-dry-sensitive.jpg";
+import fragranceFreeCleanserImg from "./images/fragrance-free-gentle-cleanser.jpg";
+import barrierRepairCreamImg from "./images/barrier-repair-cream.jpg";
+import mineralSunscreenImg from "./images/mineral-sunscreen-zinc-spf30.jpg";
+import azelaicRednessSerumImg from "./images/azelaic-acid-redness-serum.jpg";
+import centellaCalmingSerumImg from "./images/centella-calming-serum.webp";
+import foamingCleanserOilyImg from "./images/foaming-cleanser-oily-skin.jpg";
+import niacinamideOilyPoresImg from "./images/niacinamide-oily-pores-serum.jpg";
+import oilFreeGelMoisturiserImg from "./images/oil-free-gel-moisturiser.jpg";
+import oilFreeSunscreenSpf50Img from "./images/oil-free-sunscreen-spf50.jpg";
+import clayMaskOilyTzoneImg from "./images/clay-mask-oily-tzone.jpg";
+import beginnerRetinolSerumImg from "./images/beginner-retinol-serum.jpg";
+import beginnerRetinalSerumImg from "./images/beginner-retinal-serum.jpg";
+import peptideSerumImg from "./images/peptide-serum-fine-lines.jpg";
+import hyaluronicAcidSerumImg from "./images/hyaluronic-acid-serum.jpg";
+import spf50AntiAgingImg from "./images/spf50-anti-aging-sunscreen.jpg";
+import spf50DarkSpotsImg from "./images/spf50-dark-spots-sunscreen.jpg";
+import niacinamideUnevenToneImg from "./images/niacinamide-uneven-tone-serum.jpg";
+import azelaicHyperpigmentationImg from "./images/azelaic-acid-hyperpigmentation.jpg";
+import vitaminCSerumImg from "./images/vitamin-c-sensitive-dark-spots.jpg";
+import retinolUnevenToneImg from "./images/retinol-uneven-tone-beginner.jpg";
+import bhaLiquidExfoliantImg from "./images/bha-2-liquid-exfoliant.jpg";
+import salicylicAcidTonerImg from "./images/salicylic-acid-toner.jpg";
+import niacinamidePoresSerumImg from "./images/niacinamide-pores-serum.jpg";
+import gentleFoamingCleanserPoresImg from "./images/gentle-foaming-cleanser-pores.jpg";
+import clayMaskPoresTzoneImg from "./images/clay-mask-pores-tzone.jpg";
 
 const copy = {
   en: {
@@ -81,6 +116,7 @@ const copy = {
     scoreHigh: "High",
     expertAdvice: "Beauty-care advice",
     recommendedProducts: "Recommended products",
+    targetedProductOptions: "Targeted product options",
     solutionBundle: "Targeted solution bundle",
     whyBundle: "Why this combination",
     howToUse: "How to use",
@@ -193,6 +229,7 @@ const copy = {
     scoreHigh: "较高",
     expertAdvice: "护肤顾问建议",
     recommendedProducts: "推荐产品",
+    targetedProductOptions: "针对性产品组合",
     solutionBundle: "针对性解决方案组合",
     whyBundle: "为什么这样组合",
     howToUse: "使用方法",
@@ -604,6 +641,330 @@ function getDominantConcern(result) {
 }
 
 
+
+const affiliateLibrary = {
+  acne: [
+    {
+      en: "Salicylic Acid Cleanser 0.5%–2%",
+      zh: "水杨酸洁面 0.5%–2%",
+      roleEn: "For clogged-pore and blemish-prone routines. Start slowly if skin is sensitive.",
+      roleZh: "适合闭口、毛孔堵塞和痘痘倾向。敏感皮建议低频开始。",
+      image: salicylicCleanserImg,
+      href: "https://amzn.to/4tYtlwv",
+    },
+    {
+      en: "Benzoyl Peroxide Wash 2.5%–4%",
+      zh: "过氧化苯甲酰洁面 2.5%–4%",
+      roleEn: "Optional acne-care wash. Can be drying, so pair with moisturiser.",
+      roleZh: "可选控痘洁面。可能拔干，需配合保湿。",
+      image: benzoylPeroxideWashImg,
+      href: "https://amzn.to/42pzoOM",
+    },
+    {
+      en: "Azelaic Acid 10% Serum",
+      zh: "壬二酸 10% 精华",
+      roleEn: "For blemish-prone skin, uneven tone and redness tendency.",
+      roleZh: "适合瑕疵、肤色不均和泛红倾向。",
+      image: azelaicBlemishSerumImg,
+      href: "https://amzn.to/4d29ref",
+    },
+    {
+      en: "Non-Comedogenic Lightweight Moisturiser",
+      zh: "非致粉刺轻盈保湿",
+      roleEn: "Keeps hydration in the routine without a heavy feel.",
+      roleZh: "帮助维持保湿，同时减少厚重感。",
+      image: nonComedogenicMoisturiserImg,
+      href: "https://amzn.to/4tphjuW",
+    },
+    {
+      en: "Oil-Free SPF 30–50 Sunscreen",
+      zh: "无油 SPF30–50 防晒",
+      roleEn: "Daily protection for acne-prone or oily-feeling skin.",
+      roleZh: "适合痘痘肌或偏油肤感的日常防护。",
+      image: oilFreeSunscreenAcneImg,
+      href: "https://amzn.to/3QZjQyE",
+    },
+  ],
+  dryness: [
+    {
+      en: "Ceramide Moisturising Cream",
+      zh: "神经酰胺保湿霜",
+      roleEn: "Core barrier-support moisturiser for dry or tight-feeling skin.",
+      roleZh: "适合干燥、紧绷肤感的核心屏障保湿。",
+      image: ceramideCreamImg,
+      href: "https://amzn.to/4u3JRvq",
+    },
+    {
+      en: "Fragrance-Free Rich Moisturiser",
+      zh: "无香精滋润型保湿霜",
+      roleEn: "Richer moisturising support for dry skin routines.",
+      roleZh: "为干燥皮肤提供更滋润的保湿支持。",
+      image: richMoisturiserImg,
+      href: "https://amzn.to/3Pg5dqa",
+    },
+    {
+      en: "Cicaplast Baume B5 Barrier Cream",
+      zh: "Cicaplast B5 屏障修护霜",
+      roleEn: "Barrier-comfort option for dry-looking or stressed areas.",
+      roleZh: "适合干燥或屏障压力区域的修护选择。",
+      image: cicaplastBaumeImg,
+      href: "https://amzn.to/4wkWBix",
+    },
+    {
+      en: "Petrolatum Healing Ointment",
+      zh: "凡士林类修护膏",
+      roleEn: "Occlusive support for very dry patches; use a small amount.",
+      roleZh: "适合局部很干区域的封闭修护，少量使用即可。",
+      image: petrolatumOintmentImg,
+      href: "https://amzn.to/4tXz45P",
+    },
+    {
+      en: "Hydrating Cleanser for Dry Sensitive Skin",
+      zh: "干敏肌保湿洁面",
+      roleEn: "Gentler cleansing direction for dryness or peeling tendency.",
+      roleZh: "适合干燥或脱皮倾向的温和清洁方向。",
+      image: hydratingCleanserDryImg,
+      href: "https://amzn.to/4dhHBcA",
+    },
+  ],
+  redness: [
+    {
+      en: "Fragrance-Free Gentle Cleanser",
+      zh: "无香精温和洁面",
+      roleEn: "Lower-irritation cleansing option for redness tendency.",
+      roleZh: "适合泛红倾向的低刺激清洁选择。",
+      image: fragranceFreeCleanserImg,
+      href: "https://amzn.to/49H24qf",
+    },
+    {
+      en: "Ceramide + Panthenol Barrier Cream",
+      zh: "神经酰胺 + 泛醇屏障霜",
+      roleEn: "Barrier-support option when skin looks stressed.",
+      roleZh: "适合皮肤看起来有屏障压力时使用。",
+      image: barrierRepairCreamImg,
+      href: "https://amzn.to/4tv0ZZM",
+    },
+    {
+      en: "Mineral Zinc Oxide SPF 30 Sunscreen",
+      zh: "氧化锌矿物 SPF30 防晒",
+      roleEn: "Gentler sunscreen direction for sensitive-feeling skin.",
+      roleZh: "适合敏感肤感的温和防晒方向。",
+      image: mineralSunscreenImg,
+      href: "https://amzn.to/4tqTgfk",
+    },
+    {
+      en: "Azelaic Acid 10% for Redness-Prone Skin",
+      zh: "泛红倾向壬二酸 10%",
+      roleEn: "Optional low-frequency active for redness and unevenness tendency.",
+      roleZh: "可低频使用，适合泛红和不均匀倾向。",
+      image: azelaicRednessSerumImg,
+      href: "https://amzn.to/4uFWigJ",
+    },
+    {
+      en: "Centella Calming Serum",
+      zh: "积雪草舒缓精华",
+      roleEn: "Calming-support direction for sensitive routines.",
+      roleZh: "适合敏感护理流程的舒缓方向。",
+      image: centellaCalmingSerumImg,
+      href: "https://amzn.to/49pLZ8h",
+    },
+  ],
+  shine: [
+    {
+      en: "Gentle Foaming Cleanser for Oily Skin",
+      zh: "偏油肌温和泡沫洁面",
+      roleEn: "Cleansing support for shine without aggressive stripping.",
+      roleZh: "帮助清洁油光，但避免过度拔干。",
+      image: foamingCleanserOilyImg,
+      href: "https://amzn.to/4nloHGx",
+    },
+    {
+      en: "Niacinamide Serum for Oily Skin/Pores",
+      zh: "偏油/毛孔烟酰胺精华",
+      roleEn: "Optional balancing ingredient for shine and visible pores.",
+      roleZh: "适合油光和毛孔可见度的平衡型成分。",
+      image: niacinamideOilyPoresImg,
+      href: "https://amzn.to/4nlpCXh",
+    },
+    {
+      en: "Oil-Free Gel Moisturiser",
+      zh: "无油凝胶保湿",
+      roleEn: "Light hydration without a heavy feel.",
+      roleZh: "轻盈保湿，不容易有厚重感。",
+      image: oilFreeGelMoisturiserImg,
+      href: "https://amzn.to/4dE7ZxN",
+    },
+    {
+      en: "Oil-Free SPF 50 Sunscreen",
+      zh: "无油 SPF50 防晒",
+      roleEn: "Comfortable daily protection for oily-feeling skin.",
+      roleZh: "适合偏油肤感的日常防晒。",
+      image: oilFreeSunscreenSpf50Img,
+      href: "https://amzn.to/4deK1bT",
+    },
+    {
+      en: "Clay Mask for Oily T-Zone",
+      zh: "T 区油光泥膜",
+      roleEn: "Occasional use only; not a daily stripping step.",
+      roleZh: "低频使用即可，不建议每天强清洁。",
+      image: clayMaskOilyTzoneImg,
+      href: "https://amzn.to/4uwQsye",
+    },
+  ],
+  texture: [
+    {
+      en: "Beginner Retinol Serum 0.1%–0.2%",
+      zh: "新手低浓度视黄醇 0.1%–0.2%",
+      roleEn: "Optional night active for texture/fine-line routines. Start slowly.",
+      roleZh: "适合纹理/细纹护理的夜间进阶成分，需低频开始。",
+      image: beginnerRetinolSerumImg,
+      href: "https://amzn.to/4d03Tkl",
+    },
+    {
+      en: "Beginner Retinal Serum",
+      zh: "新手视黄醛精华",
+      roleEn: "Advanced texture-care direction; introduce cautiously.",
+      roleZh: "进阶纹理护理方向，需谨慎建立耐受。",
+      image: beginnerRetinalSerumImg,
+      href: "https://amzn.to/4dAMMWo",
+    },
+    {
+      en: "Peptide Serum for Fine Lines",
+      zh: "细纹胜肽精华",
+      roleEn: "Supportive serum direction for visible fine-line routines.",
+      roleZh: "适合细纹可见度护理的辅助型精华。",
+      image: peptideSerumImg,
+      href: "https://amzn.to/4d04533",
+    },
+    {
+      en: "Hyaluronic Acid Serum",
+      zh: "透明质酸补水精华",
+      roleEn: "Hydration support when lines look more visible from dryness.",
+      roleZh: "当细纹因干燥更明显时，提供补水支持。",
+      image: hyaluronicAcidSerumImg,
+      href: "https://amzn.to/4eDphx8",
+    },
+    {
+      en: "Broad-Spectrum SPF 50 Anti-Aging Sunscreen",
+      zh: "广谱 SPF50 抗老防晒",
+      roleEn: "Daily foundation for texture, fine-line and prevention routines.",
+      roleZh: "纹理、细纹和预防型护理流程的日间基础。",
+      image: spf50AntiAgingImg,
+      href: "https://amzn.to/4toOI92",
+    },
+  ],
+  pigmentation: [
+    {
+      en: "Broad-Spectrum SPF 50 for Dark Spots",
+      zh: "色沉/斑点广谱 SPF50 防晒",
+      roleEn: "First priority for uneven tone and dark-spot-like contrast.",
+      roleZh: "肤色不均和斑点样色差的第一优先级。",
+      image: spf50DarkSpotsImg,
+      href: "https://amzn.to/4uKsUGl",
+    },
+    {
+      en: "Niacinamide 5%–10% Serum",
+      zh: "烟酰胺 5%–10% 精华",
+      roleEn: "Brightening-support direction for uneven tone.",
+      roleZh: "适合肤色不均的提亮辅助成分。",
+      image: niacinamideUnevenToneImg,
+      href: "https://amzn.to/3R2aXEr",
+    },
+    {
+      en: "Azelaic Acid 10% for Uneven Tone",
+      zh: "肤色不均壬二酸 10%",
+      roleEn: "Optional active for redness and pigmentation-like contrast.",
+      roleZh: "适合泛红和色沉样色差的可选活性成分。",
+      image: azelaicHyperpigmentationImg,
+      href: "https://amzn.to/4tpuxYE",
+    },
+    {
+      en: "Vitamin C Serum for Sensitive Skin",
+      zh: "敏感肌维 C 精华",
+      roleEn: "Brightening-support option; patch test if sensitive.",
+      roleZh: "提亮辅助选择；敏感皮建议先局部测试。",
+      image: vitaminCSerumImg,
+      href: "https://amzn.to/3QZl3pG",
+    },
+    {
+      en: "Beginner Retinol for Uneven Tone",
+      zh: "肤色不均新手视黄醇",
+      roleEn: "Night active direction. Use slowly and pair with sunscreen.",
+      roleZh: "夜间进阶成分，需低频使用并重视防晒。",
+      image: retinolUnevenToneImg,
+      href: "https://amzn.to/4deKz1r",
+    },
+  ],
+  pores: [
+    {
+      en: "2% BHA Liquid Exfoliant",
+      zh: "2% BHA 水杨酸精华水",
+      roleEn: "Optional exfoliant for clogged pores and visible texture.",
+      roleZh: "适合闭口和纹理可见度，建议低频开始。",
+      image: bhaLiquidExfoliantImg,
+      href: "https://amzn.to/4d3tUiQ",
+    },
+    {
+      en: "Salicylic Acid Toner",
+      zh: "水杨酸爽肤水",
+      roleEn: "Pore-care active direction; avoid daily use at first.",
+      roleZh: "毛孔护理活性方向，初期不建议每天使用。",
+      image: salicylicAcidTonerImg,
+      href: "https://amzn.to/4uKt1lf",
+    },
+    {
+      en: "Niacinamide Serum for Pores",
+      zh: "毛孔烟酰胺精华",
+      roleEn: "Supportive option for oil balance and pore visibility.",
+      roleZh: "适合油脂平衡和毛孔可见度的辅助选择。",
+      image: niacinamidePoresSerumImg,
+      href: "https://amzn.to/4djInpG",
+    },
+    {
+      en: "Gentle Foaming Cleanser for Pores",
+      zh: "毛孔护理温和泡沫洁面",
+      roleEn: "Daily cleansing support for oily or pore-visible areas.",
+      roleZh: "适合偏油或毛孔可见区域的日常清洁。",
+      image: gentleFoamingCleanserPoresImg,
+      href: "https://amzn.to/4wkvXpZ",
+    },
+    {
+      en: "Clay Mask for Pores/T-Zone",
+      zh: "毛孔/T 区泥膜",
+      roleEn: "Occasional T-zone care; avoid overuse.",
+      roleZh: "T 区可低频使用，避免过度清洁。",
+      image: clayMaskPoresTzoneImg,
+      href: "https://amzn.to/4uKtALT",
+    },
+  ],
+  maintenance: [
+    {
+      en: "CeraVe Hydrating Facial Cleanser",
+      zh: "CeraVe 保湿洁面乳",
+      roleEn: "Gentle everyday cleanser for stable basic routines.",
+      roleZh: "适合稳定基础流程的温和日常洁面。",
+      image: ceraveCleanserImg,
+      href: "https://amzn.to/48T3EVJ",
+    },
+    {
+      en: "Lightweight Moisturiser",
+      zh: "轻盈保湿面霜",
+      roleEn: "Daily moisturising support without a heavy feel.",
+      roleZh: "日常保湿支持，不容易厚重。",
+      image: lightweightMoisturiserImg,
+      href: "https://amzn.to/4wABDfY",
+    },
+    {
+      en: "Everyday Sunscreen",
+      zh: "日常防晒",
+      roleEn: "Daily protection foundation for most routines.",
+      roleZh: "大多数护肤流程的日间防护基础。",
+      image: everydaySunscreenImg,
+      href: "https://amzn.to/4nmIqpe",
+    },
+  ],
+};
+
 function getSolutionBundle(lang, main) {
   const zh = lang === "zh";
 
@@ -853,9 +1214,15 @@ function ProductMini({ product, lang }) {
   );
 }
 
+
+function getAffiliateItems(main) {
+  return affiliateLibrary[main] || affiliateLibrary.maintenance || [];
+}
+
 function ReportPanel({ title, result, report, t, lang, compact = false }) {
   if (!result || !report) return null;
   const recommendedProducts = report.productIds.map(getProductById);
+  const affiliateItems = getAffiliateItems(report.main);
 
   return (
     <div className={compact ? "compactReport" : "fullReport"}>
@@ -926,12 +1293,27 @@ function ReportPanel({ title, result, report, t, lang, compact = false }) {
       )}
 
       <div className="analysisProducts">
-        <p className="kicker">{t.recommendedProducts}</p>
-        <div className="miniRecommendationGrid">
-          {recommendedProducts.map((product) => (
-            <ProductMini product={product} lang={lang} key={product.id} />
-          ))}
-        </div>
+        <p className="kicker">{t.targetedProductOptions || t.recommendedProducts}</p>
+
+        {affiliateItems.length > 0 ? (
+          <div className="solutionProductGrid">
+            {affiliateItems.map((item) => (
+              <a href={item.href} target="_blank" rel="noreferrer" className="solutionProductCard" key={item.href}>
+                {item.image && (
+                  <img src={item.image} alt={lang === "en" ? item.en : item.zh} />
+                )}
+                <strong>{lang === "en" ? item.en : item.zh}</strong>
+                <span>{lang === "en" ? item.roleEn : item.roleZh}</span>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div className="miniRecommendationGrid">
+            {recommendedProducts.map((product) => (
+              <ProductMini product={product} lang={lang} key={product.id} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
