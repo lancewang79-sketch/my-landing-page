@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./App.css";
+import promoVideo from "./videos/glow-skin-promo.mp4";
 
 import gentleCleanserImg from "./images/gentle-cleanser.jpg";
 import lightweightMoisturiserImg from "./images/lightweight-moisturiser.jpg";
@@ -55,6 +56,12 @@ const copy = {
     navAnalysis: "Skin Analysis",
     navDisclosure: "Disclosure",
     heroKicker: "Beauty edits for everyday routines",
+    videoKicker: "Brand video",
+    videoTitle: "See how Glow Skin Picks works",
+    videoText: "Watch the short introduction to understand how camera-based skin review, routine planning, product pairing and daily checklist tracking help users make clearer skincare decisions.",
+    videoKicker: "品牌宣传片",
+    videoTitle: "了解 Glow Skin Picks 如何帮助你护肤",
+    videoText: "观看这段简短介绍，了解相机肤况分析、护肤方案生成、产品组合搭配和每日打勾记录如何帮助用户更清楚地选择护肤方案。",
     heroTitle: "Curated skincare, beauty tools and self-care finds.",
     heroText:
       "Glow Skin Picks helps readers discover thoughtful beauty products, compare everyday essentials and build simple routines with clear, transparent affiliate disclosures.",
@@ -118,6 +125,23 @@ const copy = {
     recommendedProducts: "Recommended products",
     targetedProductOptions: "Score-based product plan",
     productReason: "Why selected",
+    routineProtocol: "Detailed routine protocol",
+    morningProtocol: "Morning protocol",
+    eveningProtocol: "Evening protocol",
+    weeklyProtocol: "Weekly rhythm",
+    amount: "Amount",
+    order: "Order",
+    waitTime: "Wait time",
+    expectedResults: "Expected results",
+    diary: "Routine diary",
+    markDone: "Mark done",
+    todayProgress: "Today’s completion",
+    localDiaryNote: "This diary is saved locally on this device. For real user accounts and visitor/registration records, connect a backend such as Firebase or Supabase.",
+    useTheseProducts: "Use these products",
+    productDose: "Product dose",
+    productMethod: "How to apply",
+    noSpecificProduct: "No specific product required for this step",
+    loginNote: "Login + registration tracking requires a backend; GitHub Pages alone cannot securely store user accounts.",
     productLibrary: "Product Library",
     productLibraryTitle: "Shop by skin concern",
     productLibraryIntro: "Browse product options grouped by the concern detected by the visual analysis tool. Each group explains the routine purpose and shows relevant affiliate product options.",
@@ -263,6 +287,23 @@ const copy = {
     recommendedProducts: "推荐产品",
     targetedProductOptions: "按评分生成的产品方案",
     productReason: "推荐原因",
+    routineProtocol: "详细使用方案",
+    morningProtocol: "早间方案",
+    eveningProtocol: "晚间方案",
+    weeklyProtocol: "每周节奏",
+    amount: "用量",
+    order: "顺序",
+    waitTime: "间隔",
+    expectedResults: "周期预期",
+    diary: "护肤日记打勾",
+    markDone: "打勾完成",
+    todayProgress: "今日完成情况",
+    localDiaryNote: "当前打勾日记会保存在本设备浏览器。若要真实记录访问人数、注册用户和完成情况，需要接入 Firebase 或 Supabase 等后端。",
+    useTheseProducts: "使用产品",
+    productDose: "产品用量",
+    productMethod: "具体用法",
+    noSpecificProduct: "这一步不需要指定产品",
+    loginNote: "登录、注册和访问统计需要后端支持；GitHub Pages 静态网站本身不能安全保存用户账号。",
     productLibrary: "产品库",
     productLibraryTitle: "按皮肤问题浏览产品",
     productLibraryIntro: "根据视觉分析工具识别的皮肤关注点浏览产品组合。每个分组都会说明护理目的，并展示相关联盟产品选择。",
@@ -1695,7 +1736,334 @@ function buildScoreBasedProductPlan(result, report, selfConcerns = []) {
   return uniqueByHref(selected).slice(0, 7);
 }
 
-function ReportPanel({ title, result, report, t, lang, selfConcerns = [], compact = false }) {
+
+function buildRoutineProtocol(main, result, selfConcerns, lang) {
+  const zh = lang === "zh";
+  const score = (key) => Math.round(result?.[key] || 0);
+  const highDry = score("dryness") >= 62 || selfConcerns.includes("dryness");
+  const highRed = score("redness") >= 58 || selfConcerns.includes("redness");
+  const acne = score("acne") >= 55 || selfConcerns.includes("acne");
+  const pores = score("pores") >= 58 || selfConcerns.includes("pores");
+  const shine = score("shine") >= 55 || selfConcerns.includes("shine");
+  const texture = score("texture") >= 58 || selfConcerns.includes("texture");
+  const pigmentation = score("pigmentation") >= 55 || selfConcerns.includes("pigmentation");
+
+  const base = {
+    morning: [
+      {
+        id: "am-cleanse",
+        step: zh ? "清洁" : "Cleanse",
+        amount: zh ? "约 20–30 秒；干敏时可只用清水" : "20–30 seconds; rinse only if dry/sensitive",
+        detail: zh ? "不要用热水，不要搓到紧绷。" : "Avoid hot water and do not cleanse until tight.",
+        wait: zh ? "擦干后立即下一步" : "Next step immediately after patting dry",
+      },
+      {
+        id: "am-moisturise",
+        step: zh ? "保湿" : "Moisturise",
+        amount: zh ? "豌豆到一枚硬币大小，薄涂全脸" : "pea to coin-size, thin layer over face",
+        detail: zh ? "干燥区域可多半层；T 区偏油则薄涂。" : "Add half-layer on dry patches; keep T-zone thin if oily.",
+        wait: zh ? "等待 1–2 分钟" : "wait 1–2 minutes",
+      },
+      {
+        id: "am-sunscreen",
+        step: zh ? "防晒" : "Sunscreen",
+        amount: zh ? "两指长度或约 1/4 茶匙用于脸和颈部" : "two-finger length or about 1/4 tsp for face and neck",
+        detail: zh ? "白天最后一步。户外、流汗或擦拭后需要补涂。" : "Last morning step. Reapply outdoors, after sweating or wiping.",
+        wait: zh ? "出门前 15 分钟更理想" : "ideally 15 minutes before going out",
+      },
+    ],
+    evening: [
+      {
+        id: "pm-cleanse",
+        step: zh ? "温和清洁" : "Gentle cleanse",
+        amount: zh ? "30–45 秒；有防晒/彩妆时认真清洁" : "30–45 seconds; cleanse thoroughly if wearing sunscreen/makeup",
+        detail: zh ? "避免磨砂和过度清洁。" : "Avoid scrubs and over-cleansing.",
+        wait: zh ? "擦干后 1 分钟内保湿" : "moisturise within 1 minute after patting dry",
+      },
+      {
+        id: "pm-repair",
+        step: zh ? "修护保湿" : "Repair moisturiser",
+        amount: zh ? "一枚硬币大小；干燥处可加量" : "coin-size; add more on dry areas",
+        detail: zh ? "这是多数问题的安全基础，尤其泛红、干燥、刺痛时。" : "Safe foundation for most concerns, especially redness/dryness/stinging.",
+        wait: zh ? "作为最后一步，或等活性成分后 5 分钟再用" : "last step, or 5 minutes after active treatment",
+      },
+    ],
+    weekly: [],
+    expected: [],
+  };
+
+  if (acne || pores) {
+    base.evening.splice(1, 0, {
+      id: "pm-bha",
+      step: zh ? "BHA/水杨酸或控痘活性" : "BHA/salicylic or blemish active",
+      amount: zh ? "每次薄薄一层；从每周 1–2 晚开始" : "thin layer; start 1–2 nights per week",
+      detail: highDry || highRed
+        ? (zh ? "因干燥/泛红分数较高，先不要叠加强活性。优先选温和方向，如壬二酸或低频 BHA。" : "Because dryness/redness is elevated, avoid stacking strong actives. Prefer gentler direction such as azelaic acid or low-frequency BHA.")
+        : (zh ? "只选一种活性，不要同晚叠加 BHA、过氧化苯甲酰和视黄醇。" : "Choose one active only; do not stack BHA, benzoyl peroxide and retinol on the same night."),
+      wait: zh ? "使用后等 5–10 分钟，再上保湿" : "wait 5–10 minutes, then moisturise",
+    });
+    base.weekly.push(zh ? "闭口/痘痘护理：第 1–2 周每周 1–2 晚；若不刺痛脱皮，第 3–4 周可到每周 2–3 晚。" : "Blemish/clogged-pore care: weeks 1–2 use 1–2 nights/week; if no stinging/peeling, weeks 3–4 increase to 2–3 nights/week.");
+  }
+
+  if (shine) {
+    base.weekly.push(zh ? "油光明显时：泥膜只建议 T 区每周 1 次，5–10 分钟即可，不要每天使用。" : "If shine is high: clay mask T-zone only once weekly for 5–10 minutes, not daily.");
+  }
+
+  if (texture && !highDry && !highRed) {
+    base.evening.splice(1, 0, {
+      id: "pm-retinol",
+      step: zh ? "新手视黄醇/视黄醛夜间护理" : "Beginner retinol/retinal night care",
+      amount: zh ? "全脸豌豆大小；避开眼角、鼻翼沟、嘴角" : "pea-size for entire face; avoid eye corners, nose folds and mouth corners",
+      detail: zh ? "每周 1–2 晚开始，不和酸类同晚使用。孕期/备孕/哺乳不要使用视黄醇类。" : "Start 1–2 nights/week; do not use with acids same night. Avoid retinoids during pregnancy/trying/breastfeeding.",
+      wait: zh ? "洁面后等皮肤干 10 分钟，再上；之后保湿" : "wait 10 minutes after cleansing until skin is dry; moisturise after",
+    });
+    base.weekly.push(zh ? "细纹/纹理：第 1–4 周建立耐受；第 6–8 周通常更容易看到肤感平整度变化。" : "Texture/fine lines: weeks 1–4 build tolerance; weeks 6–8 are more realistic for visible smoothness changes.");
+  }
+
+  if (pigmentation) {
+    base.morning.splice(1, 0, {
+      id: "am-brightening",
+      step: zh ? "提亮辅助：烟酰胺/维 C/壬二酸三选一" : "Brightening support: choose niacinamide / vitamin C / azelaic acid",
+      amount: zh ? "2–3 滴或薄薄一层" : "2–3 drops or a thin layer",
+      detail: highRed
+        ? (zh ? "泛红倾向时优先烟酰胺或壬二酸，维 C 需谨慎局部测试。" : "If redness-prone, prefer niacinamide or azelaic acid; patch test vitamin C carefully.")
+        : (zh ? "不要同时叠加太多提亮成分，防晒才是核心。" : "Do not layer too many brightening actives; sunscreen is the core."),
+      wait: zh ? "等待 1–2 分钟再保湿" : "wait 1–2 minutes before moisturiser",
+    });
+    base.expected.push(zh ? "色沉/肤色不均：2–4 周主要看稳定度和不再加深；8–12 周才更适合评估淡化趋势。" : "Uneven tone: weeks 2–4 look for stability/no darkening; weeks 8–12 are more realistic for fading trend.");
+  }
+
+  if (highDry || highRed) {
+    base.evening.push({
+      id: "pm-occlusive",
+      step: zh ? "局部封闭修护" : "Spot occlusive repair",
+      amount: zh ? "米粒大小，只点涂干裂/脱皮处" : "rice-grain amount only on cracked/flaky patches",
+      detail: zh ? "不要全脸厚涂在容易闷痘区域。" : "Do not apply thickly over acne-prone areas.",
+      wait: zh ? "晚间最后一步" : "last evening step",
+    });
+    base.weekly.unshift(zh ? "屏障优先：连续 7–14 天先把刺痛、紧绷、脱皮压下来，再逐步加入活性成分。" : "Barrier first: for 7–14 days reduce stinging/tightness/flaking before adding actives.");
+    base.expected.push(zh ? "干燥/泛红：3–7 天应先看到紧绷感下降；2 周后观察脱皮和刺痛是否减少。" : "Dryness/redness: in 3–7 days tightness should reduce; after 2 weeks check peeling/stinging.");
+  }
+
+  if (!base.weekly.length) {
+    base.weekly.push(zh ? "维持型：连续 2 周保持清洁 + 保湿 + 防晒，不急着增加强功效。" : "Maintenance: keep cleanser + moisturiser + sunscreen for 2 weeks before adding strong actives.");
+  }
+
+  if (!base.expected.length) {
+    base.expected.push(zh ? "第 1–2 周：先看是否更稳定、更少紧绷或出油。第 4 周：再判断是否需要加入更强成分。" : "Weeks 1–2: look for more stability, less tightness or shine. Week 4: decide whether stronger actives are needed.");
+  }
+
+  return base;
+}
+
+
+function productText(item, lang) {
+  if (!item) return "";
+  return lang === "zh" ? item.zh : item.en;
+}
+
+function findProductForStep(productPlan, stepId, lang) {
+  const text = (item) => `${item.en || ""} ${item.zh || ""}`.toLowerCase();
+  const findOne = (patterns) => productPlan.find((item) => patterns.some((pattern) => text(item).includes(pattern)));
+  const findMany = (patterns, limit = 2) =>
+    productPlan.filter((item) => patterns.some((pattern) => text(item).includes(pattern))).slice(0, limit);
+
+  if (stepId.includes("cleanse")) {
+    return findMany(["cleanser", "洁面", "清洁"], 2);
+  }
+
+  if (stepId.includes("moisturise") || stepId.includes("repair")) {
+    return findMany(["moisturiser", "moisturising", "cream", "barrier", "保湿", "修护", "屏障", "霜"], 2);
+  }
+
+  if (stepId.includes("sunscreen")) {
+    return findMany(["sunscreen", "spf", "防晒"], 2);
+  }
+
+  if (stepId.includes("bha")) {
+    return findMany(["bha", "salicylic", "benzoyl", "azelaic", "水杨酸", "过氧化", "壬二酸"], 2);
+  }
+
+  if (stepId.includes("retinol")) {
+    return findMany(["retinol", "retinal", "视黄醇", "视黄醛"], 2);
+  }
+
+  if (stepId.includes("brightening")) {
+    return findMany(["niacinamide", "vitamin c", "azelaic", "烟酰胺", "维 c", "壬二酸"], 2);
+  }
+
+  if (stepId.includes("occlusive")) {
+    return findMany(["petrolatum", "ointment", "cicaplast", "凡士林", "修护膏", "b5"], 2);
+  }
+
+  return [];
+}
+
+function getStepProductInstruction(stepId, products, lang) {
+  const zh = lang === "zh";
+  const names = products.map((item) => productText(item, lang)).join(" / ");
+
+  if (!products.length) {
+    return {
+      names: "",
+      dose: zh ? "按肤感执行即可。" : "Follow skin feel.",
+      method: zh ? "这一步以手法和顺序为主。" : "This step is mainly about method and order.",
+    };
+  }
+
+  if (stepId.includes("cleanse")) {
+    return {
+      names,
+      dose: zh ? "约黄豆到豌豆大小，或按产品泵头 1 泵。" : "soybean to pea-size, or 1 pump if pump bottle.",
+      method: zh ? "湿脸后轻柔按摩 20–45 秒，用温水冲净；不要洗到紧绷。" : "Massage on wet face for 20–45 seconds, rinse with lukewarm water; do not cleanse until tight.",
+    };
+  }
+
+  if (stepId.includes("moisturise") || stepId.includes("repair")) {
+    return {
+      names,
+      dose: zh ? "豌豆到一枚硬币大小；干燥区可多半层。" : "pea to coin-size; add half-layer on dry areas.",
+      method: zh ? "在精华/活性成分后薄涂全脸。T 区偏油则薄涂，两颊干燥可加量。" : "Apply a thin layer after serum/active. Keep T-zone light; add more to dry cheeks.",
+    };
+  }
+
+  if (stepId.includes("sunscreen")) {
+    return {
+      names,
+      dose: zh ? "脸和颈部约两指长度，或约 1/4 茶匙。" : "two-finger length for face/neck, or about 1/4 tsp.",
+      method: zh ? "早上最后一步。出门前 15 分钟使用；户外、流汗、擦拭后补涂。" : "Last morning step. Apply 15 minutes before going out; reapply outdoors, after sweating or wiping.",
+    };
+  }
+
+  if (stepId.includes("bha")) {
+    return {
+      names,
+      dose: zh ? "薄薄一层；初期每周 1–2 晚，不要每天开始。" : "thin layer; start 1–2 nights/week, not daily.",
+      method: zh ? "洁面后、保湿前使用。先选一种活性，不要同晚叠加 BHA、过氧化苯甲酰和视黄醇。" : "Use after cleansing and before moisturiser. Choose one active only; do not stack BHA, benzoyl peroxide and retinol the same night.",
+    };
+  }
+
+  if (stepId.includes("retinol")) {
+    return {
+      names,
+      dose: zh ? "全脸豌豆大小；避开眼角、鼻翼沟和嘴角。" : "pea-size for the full face; avoid eye corners, nose folds and mouth corners.",
+      method: zh ? "夜间使用。洁面后等皮肤干 10 分钟再上，之后保湿；每周 1–2 晚开始。" : "Night only. Wait 10 minutes after cleansing until dry, then apply; moisturise after. Start 1–2 nights/week.",
+    };
+  }
+
+  if (stepId.includes("brightening")) {
+    return {
+      names,
+      dose: zh ? "2–3 滴或薄薄一层。" : "2–3 drops or a thin layer.",
+      method: zh ? "早上可用在保湿前，敏感皮先局部测试。提亮类必须配合防晒。" : "Use in the morning before moisturiser; patch test if sensitive. Brightening steps must pair with sunscreen.",
+    };
+  }
+
+  if (stepId.includes("occlusive")) {
+    return {
+      names,
+      dose: zh ? "米粒大小，只点涂在干裂/脱皮处。" : "rice-grain amount only on cracked/flaky patches.",
+      method: zh ? "晚间最后一步，局部点涂。不要全脸厚涂在容易闷痘区域。" : "Last evening step, spot apply only. Do not apply thickly over acne-prone areas.",
+    };
+  }
+
+  return {
+    names,
+    dose: zh ? "少量薄涂，根据耐受调整。" : "use a small thin layer; adjust by tolerance.",
+    method: zh ? "按步骤顺序使用，若刺痛明显则暂停。" : "Use in sequence; pause if significant stinging occurs.",
+  };
+}
+
+function RoutineProtocolPanel({ result, report, lang, t, selfConcerns, isDiaryItemDone, toggleDiaryItem }) {
+  const protocol = buildRoutineProtocol(report?.main, result, selfConcerns, lang);
+  const productPlan = buildScoreBasedProductPlan(result, report, selfConcerns);
+  const renderSteps = (steps, prefix) => (
+    <div className="protocolStepList">
+      {steps.map((step, index) => {
+        const itemId = `${prefix}-${step.id}`;
+        const done = isDiaryItemDone(itemId);
+        return (
+          <div className={`protocolStep ${done ? "done" : ""}`} key={itemId}>
+            <div className="stepNumber">{index + 1}</div>
+            <div>
+              <h5>{step.step}</h5>
+              {(() => {
+                const stepProducts = findProductForStep(productPlan, step.id, lang);
+                const instruction = getStepProductInstruction(step.id, stepProducts, lang);
+                return (
+                  <div className="stepProductUse">
+                    {stepProducts.length > 0 ? (
+                      <>
+                        <p><strong>{t.useTheseProducts}:</strong> {instruction.names}</p>
+                        <p><strong>{t.productDose}:</strong> {instruction.dose}</p>
+                        <p><strong>{t.productMethod}:</strong> {instruction.method}</p>
+                        <div className="stepProductLinks">
+                          {stepProducts.map((product) => (
+                            <a href={product.href} target="_blank" rel="noreferrer" key={`${itemId}-${product.href}`}>
+                              {lang === "en" ? product.en : product.zh}
+                            </a>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <p><strong>{t.noSpecificProduct}:</strong> {instruction.method}</p>
+                    )}
+                  </div>
+                );
+              })()}
+              <p><strong>{t.amount}:</strong> {step.amount}</p>
+              <p><strong>{t.order}:</strong> {step.detail}</p>
+              <p><strong>{t.waitTime}:</strong> {step.wait}</p>
+            </div>
+            <button type="button" onClick={() => toggleDiaryItem(itemId)}>
+              {done ? "✓" : "○"} {t.markDone}
+            </button>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  return (
+    <div className="routineProtocolBox">
+      <p className="kicker">{t.routineProtocol}</p>
+
+      <div className="protocolColumns">
+        <section>
+          <h4>{t.morningProtocol}</h4>
+          {renderSteps(protocol.morning, "morning")}
+        </section>
+
+        <section>
+          <h4>{t.eveningProtocol}</h4>
+          {renderSteps(protocol.evening, "evening")}
+        </section>
+      </div>
+
+      <div className="weeklyProtocolBox">
+        <h4>{t.weeklyProtocol}</h4>
+        <ul>
+          {protocol.weekly.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+      </div>
+
+      <div className="expectedResultsBox">
+        <h4>{t.expectedResults}</h4>
+        <ul>
+          {protocol.expected.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+      </div>
+
+      <div className="diaryNoteBox">
+        <strong>{t.diary}</strong>
+        <p>{t.localDiaryNote}</p>
+        <p>{t.loginNote}</p>
+      </div>
+    </div>
+  );
+}
+
+function ReportPanel({ title, result, report, t, lang, selfConcerns = [], isDiaryItemDone, toggleDiaryItem, compact = false }) {
   if (!result || !report) return null;
   const recommendedProducts = report.productIds.map(getProductById);
   const affiliateItems = buildScoreBasedProductPlan(result, report, selfConcerns);
@@ -1768,6 +2136,18 @@ function ReportPanel({ title, result, report, t, lang, selfConcerns = [], compac
         </div>
       )}
 
+      {!compact && (
+        <RoutineProtocolPanel
+          result={result}
+          report={report}
+          lang={lang}
+          t={t}
+          selfConcerns={selfConcerns}
+          isDiaryItemDone={isDiaryItemDone}
+          toggleDiaryItem={toggleDiaryItem}
+        />
+      )}
+
       <div className="analysisProducts">
         <p className="kicker">{t.targetedProductOptions || t.recommendedProducts}</p>
 
@@ -1813,6 +2193,13 @@ function App() {
   const [selfConcerns, setSelfConcerns] = useState([]);
   const [photoSet, setPhotoSet] = useState({});
   const [photoSetAnalysis, setPhotoSetAnalysis] = useState(null);
+  const [routineDiary, setRoutineDiary] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("glowSkinRoutineDiary") || "{}");
+    } catch {
+      return {};
+    }
+  });
   const [cameraInfo, setCameraInfo] = useState(null);
   const videoRef = useRef(null);
   const streamRef = useRef(null);
@@ -1838,6 +2225,27 @@ function App() {
     } else {
       setPhoto("");
     }
+  };
+
+  const toggleDiaryItem = (itemId) => {
+    const today = new Date().toISOString().slice(0, 10);
+    setRoutineDiary((current) => {
+      const todayItems = current[today] || {};
+      const next = {
+        ...current,
+        [today]: {
+          ...todayItems,
+          [itemId]: !todayItems[itemId],
+        },
+      };
+      localStorage.setItem("glowSkinRoutineDiary", JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const isDiaryItemDone = (itemId) => {
+    const today = new Date().toISOString().slice(0, 10);
+    return Boolean(routineDiary[today]?.[itemId]);
   };
 
   const overallReport = overallAnalysis ? generateReport(lang, overallAnalysis) : null;
@@ -2302,6 +2710,8 @@ function App() {
                       t={t}
                       lang={lang}
                       selfConcerns={selfConcerns}
+                      isDiaryItemDone={isDiaryItemDone}
+                      toggleDiaryItem={toggleDiaryItem}
                     />
                   )}
 
@@ -2313,6 +2723,8 @@ function App() {
                       t={t}
                       lang={lang}
                       selfConcerns={selfConcerns}
+                      isDiaryItemDone={isDiaryItemDone}
+                      toggleDiaryItem={toggleDiaryItem}
                       compact
                     />
                   )}
@@ -2440,6 +2852,29 @@ function App() {
                 </section>
               );
             })}
+          </div>
+        </section>
+
+        
+        <section id="brand-video" className="section brandVideoSection">
+          <div className="sectionIntro videoIntro">
+            <p className="kicker">{t.videoKicker}</p>
+            <h2>{t.videoTitle}</h2>
+            <p>{t.videoText}</p>
+          </div>
+
+          <div className="promoVideoShell">
+            <video
+              className="promoVideo"
+              src={promoVideo}
+              controls
+              playsInline
+              preload="metadata"
+            >
+              {lang === "en"
+                ? "Your browser does not support the video tag."
+                : "你的浏览器不支持视频播放。"}
+            </video>
           </div>
         </section>
 

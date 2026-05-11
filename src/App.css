@@ -1334,3 +1334,204 @@ html:lang(zh) .hero h1,
     font-size: 0.52rem;
   }
 }
+
+
+/* Detailed routine protocol + local diary */
+.routineProtocolBox {
+  margin-top: 18px;
+  padding: clamp(18px, 3vw, 28px);
+  background: #fff;
+  border: 1px solid rgba(24, 21, 19, 0.14);
+}
+
+.protocolColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.routineProtocolBox h4 {
+  margin: 0 0 14px;
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-size: clamp(1.3rem, 2vw, 1.9rem);
+  font-weight: 400;
+}
+
+.protocolStepList {
+  display: grid;
+  gap: 10px;
+}
+
+.protocolStep {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  background: #f8f3ed;
+  border: 1px solid rgba(24, 21, 19, 0.12);
+}
+
+.protocolStep.done {
+  background: #f2eee8;
+  opacity: 0.82;
+}
+
+.stepNumber {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background: #181513;
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.8rem;
+}
+
+.protocolStep h5 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.protocolStep p {
+  margin: 5px 0;
+  color: #524942;
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.protocolStep button {
+  border: 1px solid #181513;
+  background: #fff;
+  padding: 8px 10px;
+  font-weight: 900;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.protocolStep.done button {
+  background: #181513;
+  color: #fff;
+}
+
+.weeklyProtocolBox,
+.expectedResultsBox,
+.diaryNoteBox {
+  margin-top: 16px;
+  padding: 16px;
+  background: #f8f3ed;
+  border: 1px solid rgba(24, 21, 19, 0.12);
+}
+
+.weeklyProtocolBox ul,
+.expectedResultsBox ul {
+  margin: 0;
+  padding-left: 20px;
+  color: #524942;
+  line-height: 1.7;
+}
+
+.diaryNoteBox strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #181513;
+}
+
+.diaryNoteBox p {
+  margin: 6px 0;
+  color: #5a5049;
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .protocolColumns {
+    grid-template-columns: 1fr;
+  }
+
+  .protocolStep {
+    grid-template-columns: 30px 1fr;
+  }
+
+  .protocolStep button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+
+/* Product-specific routine instructions */
+.stepProductUse {
+  margin: 10px 0;
+  padding: 10px 12px;
+  background: #fff;
+  border-left: 3px solid #8b6a55;
+}
+
+.stepProductUse p {
+  margin: 5px 0;
+}
+
+.stepProductLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.stepProductLinks a {
+  display: inline-flex;
+  padding: 7px 9px;
+  border: 1px solid rgba(24, 21, 19, 0.2);
+  background: #f8f3ed;
+  color: #181513;
+  font-size: 0.8rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.stepProductLinks a:hover {
+  background: #181513;
+  color: #fff;
+}
+
+
+/* Promotional video section */
+.brandVideoSection {
+  background: #181513;
+  color: #fff;
+}
+
+.brandVideoSection .sectionIntro h2,
+.brandVideoSection .sectionIntro p,
+.brandVideoSection .kicker {
+  color: #fff;
+}
+
+.brandVideoSection .sectionIntro p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.promoVideoShell {
+  max-width: 1120px;
+  margin: 36px auto 0;
+  padding: clamp(10px, 2vw, 18px);
+  background: rgba(255, 252, 248, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.28);
+}
+
+.promoVideo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  object-fit: contain;
+}
+
+@media (max-width: 740px) {
+  .promoVideoShell {
+    margin-top: 24px;
+    padding: 8px;
+  }
+}
