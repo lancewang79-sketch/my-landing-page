@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 import "./App.css";
 import promoVideo from "./videos/glow-skin-promo.mp4";
 
@@ -21,7 +22,6 @@ import richMoisturiserImg from "./images/fragrance-free-rich-moisturiser.jpg";
 import cicaplastBaumeImg from "./images/cicaplast-baume-b5.jpg";
 import petrolatumOintmentImg from "./images/petrolatum-healing-ointment.jpg";
 import hydratingCleanserDryImg from "./images/hydrating-cleanser-dry-sensitive.jpg";
-import fragranceFreeCleanserImg from "./images/fragrance-free-gentle-cleanser.jpg";
 import barrierRepairCreamImg from "./images/barrier-repair-cream.jpg";
 import mineralSunscreenImg from "./images/mineral-sunscreen-zinc-spf30.jpg";
 import azelaicRednessSerumImg from "./images/azelaic-acid-redness-serum.jpg";
@@ -92,7 +92,7 @@ const copy = {
     analysisKicker: "AI-style visual beauty analysis",
     analysisTitle: "Glow Skin Visual Analysis",
     analysisIntro:
-      "Follow the guided photo steps, take clear full-frame or close-up photos, and receive a structured beauty-care report based on camera evidence and your own skin concerns.",
+      "Follow a short guided scan, let the app auto-capture useful frames, and receive a structured beauty-care report based on camera evidence and your own skin concerns.",
     consent:
       "I understand this is a beauty routine helper, not a medical diagnosis tool.",
     privacyNote:
@@ -116,14 +116,24 @@ const copy = {
     lightingTips:
       "For a better result, face a window or soft light, remove strong shadows, clean your lens and avoid heavy filters.",
     reportTitle: "Your skin visual report",
-    confidence: "Analysis confidence",
+    confidence: "Skin condition snapshot",
+    skinSnapshotNote: "Visible signals from this scan only. This is skincare guidance, not medical diagnosis.",
+    routineIntensity: "Routine intensity",
+    regionEvidence: "Region evidence",
+    regionEvidenceIntro: "The scanner reviews zoomed skin-region crops instead of treating the whole photo as one flat image.",
+    skinQualityScore: "Skin quality snapshot",
     scoreLow: "Low",
     scoreMild: "Mild",
     scoreModerate: "Moderate",
     scoreHigh: "High",
     expertAdvice: "Beauty-care advice",
     recommendedProducts: "Recommended products",
-    targetedProductOptions: "Score-based product plan",
+    targetedProductOptions: "Personalised product plan",
+    personalisationNote: "Selected by concern score, barrier tolerance, routine role and product diversity — not by a fixed product list.",
+    roleFoundation: "Foundation",
+    roleTreatment: "Targeted treatment",
+    roleWeekly: "Weekly option",
+    roleRepair: "Repair support",
     productReason: "Why selected",
     routineProtocol: "Detailed routine protocol",
     morningProtocol: "Morning protocol",
@@ -170,6 +180,39 @@ const copy = {
     retakeGuide: "Retake guidance",
     capturedPhotos: "Captured photos",
     captureThisStep: "Capture current step",
+    scanKicker: "Guided skin scan",
+    scanTitle: "One scan, several useful frames",
+    scanIntro: "No need to manually take seven photos. Click Start Skin Scan, follow the short on-screen prompts, and the app will auto-capture usable frames while you slowly move your face.",
+    scanInsteadManual: "This scan replaces the manual photo boxes. It is easier for users and usually gives more consistent framing.",
+    startScan: "Start Skin Scan",
+    stopScan: "Stop Scan",
+    scanProgress: "Scan progress",
+    scanPrepare: "Get ready",
+    scanCapturing: "Capturing",
+    scanNext: "Next step soon",
+    scanCountdown: "seconds left",
+    scanSlowTip: "Move slowly. The app gives you time to adjust before each frame is captured.",
+    currentScanStep: "Current scan step",
+    scanReady: "Ready to scan",
+    scanComplete: "Scan complete — report generated",
+    scanAutoCaptured: "Auto-captured frames",
+    scanQuality: "Live quality check",
+    faceDetectStatus: "Face detection",
+    faceEngineStatus: "Face engine",
+    faceEngineLoading: "Loading FaceMesh",
+    faceEngineMesh: "MediaPipe FaceMesh active",
+    faceEngineFallback: "Fallback detector active",
+    faceDetected: "Face found — scanner will crop automatically",
+    faceNotDetected: "Face not found yet — keep your face visible in the camera window",
+    autoFaceCropNote: "The scanner now searches for the face inside the camera window and uses the detected face area for skin-region crops where supported.",
+    meshNote: "Face guide overlay",
+    scanLighting: "Lighting",
+    scanResolution: "Resolution",
+    scanStability: "Stability",
+    scanGood: "Good",
+    scanImproveLight: "Use brighter, even light",
+    scanHoldStill: "Hold still",
+    scanMoveCloser: "Move a little closer",
     retakeCurrentStep: "Retake current step",
     currentStepGuide: "Current photo guide",
     poseExample: "Pose example",
@@ -205,15 +248,15 @@ const copy = {
     lowResWarning: "The current camera stream is low resolution. Try a phone camera, rear camera, brighter light, or the live GitHub Pages site on mobile for sharper detail.",
     metrics: {
       lighting: "Lighting quality",
-      acne: "Blemish / acne-like visibility",
-      dryness: "Dryness / flaking tendency",
-      redness: "Redness tendency",
-      shine: "Shine / oiliness tendency",
-      texture: "Texture / fine-line visibility",
-      pores: "Pore / detail visibility",
-      pigmentation: "Dark-spot contrast",
-      evenness: "Tone evenness",
-      blur: "Sharpness quality",
+      acne: "Visible blemish-like signal",
+      dryness: "Dryness / flaking signal",
+      redness: "Visible redness signal",
+      shine: "Shine / oiliness signal",
+      texture: "Texture / fine-line signal",
+      pores: "Pore-like detail signal",
+      pigmentation: "Uneven-tone / dark-spot-like signal",
+      evenness: "Tone-balance signal",
+      blur: "Image sharpness",
     },
   },
   zh: {
@@ -254,7 +297,7 @@ const copy = {
     analysisKicker: "AI 风格皮肤视觉分析",
     analysisTitle: "Glow Skin 皮肤视觉分析",
     analysisIntro:
-      "按照引导步骤拍摄清晰的整体或局部近照，系统会结合相机证据和你的真实肤感生成结构化护肤报告。",
+      "按照简短的引导式扫描流程，系统会自动截取可用画面，并结合相机证据和你的真实肤感生成结构化护肤报告。",
     consent:
       "我理解这是美妆护肤流程助手，不是医疗诊断工具。",
     privacyNote:
@@ -278,7 +321,12 @@ const copy = {
     lightingTips:
       "为了提升结果稳定性，建议面对窗边或柔和光源，避免强阴影，擦净镜头，不使用重滤镜。",
     reportTitle: "你的皮肤视觉分析报告",
-    confidence: "分析可信度",
+    confidence: "肤况概览",
+    skinSnapshotNote: "仅反映本次扫描中的可见皮肤状态信号，属于护肤参考，不是医疗诊断。",
+    routineIntensity: "方案强度",
+    regionEvidence: "区域证据",
+    regionEvidenceIntro: "扫描器会分析自动放大的皮肤区域，而不是把整张照片平均处理。",
+    skinQualityScore: "肤况状态概览",
     scoreLow: "低",
     scoreMild: "轻微",
     scoreModerate: "中等",
@@ -332,6 +380,39 @@ const copy = {
     retakeGuide: "重拍建议",
     capturedPhotos: "已拍照片",
     captureThisStep: "拍摄当前步骤",
+    scanKicker: "引导式肤况扫描",
+    scanTitle: "一次扫描，自动截取关键画面",
+    scanIntro: "不再要求用户手动拍七张照片。点击开始肤况扫描，按屏幕提示缓慢调整角度，系统会自动截取可用画面。",
+    scanInsteadManual: "这个扫描流程替代原来的手动照片框，用户更容易完成，取景也会更稳定。",
+    startScan: "开始肤况扫描",
+    stopScan: "停止扫描",
+    scanProgress: "扫描进度",
+    scanPrepare: "准备调整",
+    scanCapturing: "正在截取",
+    scanNext: "即将进入下一步",
+    scanCountdown: "秒后截取",
+    scanSlowTip: "请慢慢调整。每一步都会先给你准备时间，再自动截取画面。",
+    currentScanStep: "当前扫描步骤",
+    scanReady: "准备扫描",
+    scanComplete: "扫描完成，报告已生成",
+    scanAutoCaptured: "自动截取画面",
+    scanQuality: "实时质量检查",
+    faceDetectStatus: "人脸检测",
+    faceEngineStatus: "人脸引擎",
+    faceEngineLoading: "正在加载 FaceMesh",
+    faceEngineMesh: "MediaPipe FaceMesh 已启用",
+    faceEngineFallback: "备用检测已启用",
+    faceDetected: "已找到人脸，系统会自动裁剪分析区域",
+    faceNotDetected: "暂未找到人脸，请让脸部出现在相机画面内",
+    autoFaceCropNote: "扫描器会在相机画面中寻找人脸，并在浏览器支持时基于检测到的人脸区域自动裁剪皮肤分析区域。",
+    meshNote: "人脸网格引导",
+    scanLighting: "光线",
+    scanResolution: "分辨率",
+    scanStability: "稳定度",
+    scanGood: "良好",
+    scanImproveLight: "请使用更明亮均匀的光线",
+    scanHoldStill: "请保持稳定",
+    scanMoveCloser: "请稍微靠近一些",
     retakeCurrentStep: "重拍当前步骤",
     currentStepGuide: "当前拍摄指导",
     poseExample: "姿势示意",
@@ -367,15 +448,15 @@ const copy = {
     lowResWarning: "当前相机流分辨率偏低。建议使用手机摄像头、后置摄像头、更亮光线，或在手机上打开 GitHub Pages 网页获得更清晰细节。",
     metrics: {
       lighting: "光线质量",
-      acne: "痘痘 / 瑕疵可见度",
-      dryness: "干燥 / 脱皮倾向",
-      redness: "泛红倾向",
-      shine: "油光 / 反光倾向",
-      texture: "纹理 / 细纹可见度",
-      pores: "毛孔 / 细节可见度",
-      pigmentation: "色沉 / 斑点样色差",
-      evenness: "肤色均匀度",
-      blur: "清晰度质量",
+      acne: "瑕疵样可见信号",
+      dryness: "干燥 / 脱皮信号",
+      redness: "可见泛红信号",
+      shine: "油光信号",
+      texture: "纹理 / 细纹信号",
+      pores: "毛孔样细节信号",
+      pigmentation: "肤色不均 / 色沉样信号",
+      evenness: "肤色平衡信号",
+      blur: "图像清晰度",
     },
   },
 };
@@ -569,6 +650,283 @@ function levelText(t, score) {
   }[level];
 }
 
+
+const FACE_REGION_CROPS = [
+  {
+    id: "forehead",
+    en: "Forehead",
+    zh: "额头",
+    crop: { x: 0.22, y: 0.08, w: 0.56, h: 0.24 },
+    weights: { texture: 1.2, shine: 0.9, pigmentation: 0.9, dryness: 0.8 },
+  },
+  {
+    id: "leftCheek",
+    en: "Left cheek",
+    zh: "左脸颊",
+    crop: { x: 0.08, y: 0.30, w: 0.42, h: 0.36 },
+    weights: { redness: 1.25, dryness: 1.15, texture: 1.05, pores: 0.95, pigmentation: 1.0 },
+  },
+  {
+    id: "rightCheek",
+    en: "Right cheek",
+    zh: "右脸颊",
+    crop: { x: 0.50, y: 0.30, w: 0.42, h: 0.36 },
+    weights: { redness: 1.25, dryness: 1.15, texture: 1.05, pores: 0.95, pigmentation: 1.0 },
+  },
+  {
+    id: "tzone",
+    en: "T-zone / nose",
+    zh: "T 区 / 鼻翼",
+    crop: { x: 0.30, y: 0.18, w: 0.40, h: 0.50 },
+    weights: { shine: 1.35, pores: 1.25, acne: 1.05, redness: 0.8 },
+  },
+  {
+    id: "chin",
+    en: "Chin / lower face",
+    zh: "下巴 / 下脸部",
+    crop: { x: 0.24, y: 0.62, w: 0.52, h: 0.27 },
+    weights: { acne: 1.25, dryness: 0.95, texture: 0.9 },
+  },
+  {
+    id: "eyeForehead",
+    en: "Eye-side / upper face",
+    zh: "眼周 / 上脸部",
+    crop: { x: 0.18, y: 0.17, w: 0.64, h: 0.28 },
+    weights: { texture: 1.35, dryness: 0.9, pigmentation: 0.85 },
+  },
+];
+
+function weightedAverage(items, key, weights = {}) {
+  let numerator = 0;
+  let denominator = 0;
+  items.forEach((item) => {
+    const weight = item.region.weights?.[key] || weights[key] || 1;
+    numerator += (item.scores[key] || 0) * weight;
+    denominator += weight;
+  });
+  return denominator ? numerator / denominator : 0;
+}
+
+function createZoomCropDataUrl(sourceCanvas, crop) {
+  const zoomCanvas = document.createElement("canvas");
+  const sourceWidth = Math.max(24, Math.floor(sourceCanvas.width * crop.w));
+  const sourceHeight = Math.max(24, Math.floor(sourceCanvas.height * crop.h));
+  const sourceX = Math.max(0, Math.floor(sourceCanvas.width * crop.x));
+  const sourceY = Math.max(0, Math.floor(sourceCanvas.height * crop.y));
+
+  zoomCanvas.width = 360;
+  zoomCanvas.height = 360;
+  const ctx = zoomCanvas.getContext("2d");
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+  ctx.drawImage(sourceCanvas, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, zoomCanvas.width, zoomCanvas.height);
+  return zoomCanvas.toDataURL("image/jpeg", 0.84);
+}
+
+
+function normaliseDetectedFaceBox(rawBox, canvas) {
+  if (!rawBox || !canvas?.width || !canvas?.height) return null;
+
+  const x = clamp(rawBox.x / canvas.width, 0, 1);
+  const y = clamp(rawBox.y / canvas.height, 0, 1);
+  const w = clamp(rawBox.width / canvas.width, 0, 1);
+  const h = clamp(rawBox.height / canvas.height, 0, 1);
+
+  // Expand more generously so forehead, cheeks and chin are not reduced to tiny slices.
+  const expandX = w * 0.22;
+  const expandYTop = h * 0.24;
+  const expandYBottom = h * 0.18;
+
+  return {
+    x: clamp(x - expandX, 0, 1),
+    y: clamp(y - expandYTop, 0, 1),
+    w: clamp(w + expandX * 2, 0.18, 1),
+    h: clamp(h + expandYTop + expandYBottom, 0.22, 1),
+  };
+}
+
+
+function normaliseFaceBoxFromLandmarks(landmarks, canvas) {
+  if (!landmarks?.length || !canvas?.width || !canvas?.height) return null;
+
+  let minX = 1;
+  let minY = 1;
+  let maxX = 0;
+  let maxY = 0;
+
+  landmarks.forEach((point) => {
+    if (typeof point.x !== "number" || typeof point.y !== "number") return;
+    minX = Math.min(minX, point.x);
+    minY = Math.min(minY, point.y);
+    maxX = Math.max(maxX, point.x);
+    maxY = Math.max(maxY, point.y);
+  });
+
+  if (maxX <= minX || maxY <= minY) return null;
+
+  const raw = {
+    x: minX * canvas.width,
+    y: minY * canvas.height,
+    width: (maxX - minX) * canvas.width,
+    height: (maxY - minY) * canvas.height,
+  };
+
+  return normaliseDetectedFaceBox(raw, canvas);
+}
+
+function createMeshPreviewPoints(landmarks) {
+  if (!landmarks?.length) return [];
+
+  // A small subset is enough for visual feedback without slowing down React rendering.
+  const indices = [
+    10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288, 397, 365, 379, 378,
+    400, 377, 152, 148, 176, 149, 150, 136, 172, 58, 132, 93, 234, 127, 162, 21,
+    54, 103, 67, 109, 151, 9, 8, 168, 6, 197, 195, 5, 4, 1, 19, 94, 2, 98, 327,
+    33, 133, 362, 263, 61, 291, 13, 14, 78, 308
+  ];
+
+  return indices
+    .map((index) => landmarks[index])
+    .filter(Boolean)
+    .map((point) => ({
+      x: clamp(point.x, 0, 1),
+      y: clamp(point.y, 0, 1),
+    }));
+}
+
+async function detectFaceWithMediaPipe(canvas, faceLandmarker) {
+  if (!canvas || !faceLandmarker) return null;
+
+  try {
+    const result = faceLandmarker.detect(canvas);
+    const landmarks = result?.faceLandmarks?.[0];
+
+    if (!landmarks?.length) return null;
+
+    return {
+      faceBox: normaliseFaceBoxFromLandmarks(landmarks, canvas),
+      meshPoints: createMeshPreviewPoints(landmarks),
+      source: "mediapipe",
+    };
+  } catch {
+    return null;
+  }
+}
+
+function estimateFaceBoxFromSkinPixels(canvas) {
+  if (!canvas?.width || !canvas?.height) return null;
+
+  const ctx = canvas.getContext("2d");
+  const sampleCanvas = document.createElement("canvas");
+  const targetW = 220;
+  const targetH = Math.round((canvas.height / canvas.width) * targetW);
+  sampleCanvas.width = targetW;
+  sampleCanvas.height = targetH;
+  const sampleCtx = sampleCanvas.getContext("2d");
+  sampleCtx.drawImage(canvas, 0, 0, targetW, targetH);
+  const data = sampleCtx.getImageData(0, 0, targetW, targetH).data;
+
+  let minX = targetW;
+  let minY = targetH;
+  let maxX = 0;
+  let maxY = 0;
+  let skinCount = 0;
+
+  for (let y = 0; y < targetH; y += 2) {
+    for (let x = 0; x < targetW; x += 2) {
+      const idx = (y * targetW + x) * 4;
+      const r = data[idx];
+      const g = data[idx + 1];
+      const b = data[idx + 2];
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
+      const saturation = max === 0 ? 0 : (max - min) / max;
+
+      const skinLike =
+        r > 50 &&
+        g > 30 &&
+        b > 18 &&
+        r > b * 0.88 &&
+        r > g * 0.68 &&
+        saturation < 0.82 &&
+        brightness > 38 &&
+        brightness < 238;
+
+      if (skinLike) {
+        skinCount += 1;
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x);
+        maxY = Math.max(maxY, y);
+      }
+    }
+  }
+
+  const total = (targetW * targetH) / 4;
+  if (skinCount < total * 0.035 || maxX <= minX || maxY <= minY) return null;
+
+  const raw = {
+    x: (minX / targetW) * canvas.width,
+    y: (minY / targetH) * canvas.height,
+    width: ((maxX - minX) / targetW) * canvas.width,
+    height: ((maxY - minY) / targetH) * canvas.height,
+  };
+
+  return normaliseDetectedFaceBox(raw, canvas);
+}
+
+function cropWithinFace(faceBox, regionCrop) {
+  if (!faceBox) return regionCrop;
+
+  return {
+    x: clamp(faceBox.x + faceBox.w * regionCrop.x, 0, 1),
+    y: clamp(faceBox.y + faceBox.h * regionCrop.y, 0, 1),
+    w: clamp(faceBox.w * regionCrop.w, 0.03, 1),
+    h: clamp(faceBox.h * regionCrop.h, 0.03, 1),
+  };
+}
+
+async function detectFaceBoxFromCanvas(canvas, faceLandmarker = null) {
+  if (!canvas) return null;
+
+  const mediaPipeResult = await detectFaceWithMediaPipe(canvas, faceLandmarker);
+  if (mediaPipeResult?.faceBox) return mediaPipeResult;
+
+  if (window.FaceDetector) {
+    try {
+      const detector = new window.FaceDetector({
+        fastMode: true,
+        maxDetectedFaces: 1,
+      });
+      const faces = await detector.detect(canvas);
+
+      if (faces && faces.length) {
+        const box = faces[0].boundingBox;
+        const normalised = normaliseDetectedFaceBox(box, canvas);
+        if (normalised) {
+          return {
+            faceBox: normalised,
+            source: "browser-face-detector",
+            meshPoints: [],
+          };
+        }
+      }
+    } catch {
+      // Fall through to skin-pixel fallback below.
+    }
+  }
+
+  const fallback = estimateFaceBoxFromSkinPixels(canvas);
+  return fallback
+    ? {
+        faceBox: fallback,
+        source: "skin-pixel-fallback",
+        meshPoints: [],
+      }
+    : null;
+}
+
 function analyseCanvas(canvas, crop = null) {
   const ctx = canvas.getContext("2d");
   let sx = 0;
@@ -579,8 +937,8 @@ function analyseCanvas(canvas, crop = null) {
   if (crop) {
     sx = Math.floor(canvas.width * crop.x);
     sy = Math.floor(canvas.height * crop.y);
-    sw = Math.floor(canvas.width * crop.w);
-    sh = Math.floor(canvas.height * crop.h);
+    sw = Math.max(10, Math.floor(canvas.width * crop.w));
+    sh = Math.max(10, Math.floor(canvas.height * crop.h));
   }
 
   const image = ctx.getImageData(sx, sy, sw, sh).data;
@@ -595,9 +953,11 @@ function analyseCanvas(canvas, crop = null) {
   let skinLikePixels = 0;
   let colorVarianceSum = 0;
   let brownContrastSum = 0;
-  let luminances = [];
+  let redSpotPixels = 0;
+  let darkSpotPixels = 0;
+  const luminances = [];
 
-  const sampleStep = 4;
+  const sampleStep = 3;
 
   for (let y = 0; y < sh; y += sampleStep) {
     for (let x = 0; x < sw; x += sampleStep) {
@@ -611,18 +971,19 @@ function analyseCanvas(canvas, crop = null) {
       const brightness = 0.299 * r + 0.587 * g + 0.114 * b;
       const saturation = max === 0 ? 0 : (max - min) / max;
       const redness = r - (g + b) / 2;
-      const brownish = Math.max(0, r * 0.45 + g * 0.32 - b * 0.62 - 32);
+      const brownish = Math.max(0, r * 0.48 + g * 0.34 - b * 0.68 - 34);
 
       const skinLike =
-        r > 50 &&
-        g > 32 &&
-        b > 20 &&
-        r > b * 0.92 &&
-        r > g * 0.72 &&
-        saturation < 0.72 &&
-        brightness > 35;
+        r > 45 &&
+        g > 28 &&
+        b > 18 &&
+        r > b * 0.86 &&
+        r > g * 0.66 &&
+        saturation < 0.78 &&
+        brightness > 32 &&
+        brightness < 245;
 
-      count++;
+      count += 1;
       brightnessSum += brightness;
       saturationSum += saturation;
       rednessSum += redness;
@@ -630,105 +991,277 @@ function analyseCanvas(canvas, crop = null) {
       brownContrastSum += brownish;
       luminances.push(brightness);
 
-      if (skinLike) skinLikePixels++;
-      if (brightness > 215 && saturation < 0.25) shinePixels++;
-      if (brightness > 235) veryBright++;
-      if (brightness < 35) veryDark++;
+      if (skinLike) skinLikePixels += 1;
+      if (brightness > 210 && saturation < 0.28) shinePixels += 1;
+      if (brightness > 235) veryBright += 1;
+      if (brightness < 36) veryDark += 1;
+      if (skinLike && redness > 26 && saturation > 0.18) redSpotPixels += 1;
+      if (skinLike && brownish > 24 && brightness < 176) darkSpotPixels += 1;
     }
   }
 
-  const avgBrightness = brightnessSum / count;
-  const avgSaturation = saturationSum / count;
-  const avgRedness = rednessSum / count;
-  const skinRatio = skinLikePixels / count;
-  const avgBrownContrast = brownContrastSum / count;
+  const avgBrightness = brightnessSum / Math.max(count, 1);
+  const avgSaturation = saturationSum / Math.max(count, 1);
+  const avgRedness = rednessSum / Math.max(count, 1);
+  const skinRatio = skinLikePixels / Math.max(count, 1);
+  const avgBrownContrast = brownContrastSum / Math.max(count, 1);
 
   let textureSum = 0;
   let edgeCount = 0;
   let microEdges = 0;
+  let lineLikeEdges = 0;
 
-  for (let y = 4; y < sh - 4; y += 6) {
-    for (let x = 4; x < sw - 4; x += 6) {
+  for (let y = 4; y < sh - 4; y += 4) {
+    for (let x = 4; x < sw - 4; x += 4) {
       const idx = (y * sw + x) * 4;
-      const idxRight = (y * sw + Math.min(sw - 1, x + 3)) * 4;
-      const idxDown = (Math.min(sh - 1, y + 3) * sw + x) * 4;
+      const idxRight = (y * sw + Math.min(sw - 1, x + 2)) * 4;
+      const idxDown = (Math.min(sh - 1, y + 2) * sw + x) * 4;
+      const idxDiag = (Math.min(sh - 1, y + 2) * sw + Math.min(sw - 1, x + 2)) * 4;
 
       const lum = 0.299 * image[idx] + 0.587 * image[idx + 1] + 0.114 * image[idx + 2];
       const lumR = 0.299 * image[idxRight] + 0.587 * image[idxRight + 1] + 0.114 * image[idxRight + 2];
       const lumD = 0.299 * image[idxDown] + 0.587 * image[idxDown + 1] + 0.114 * image[idxDown + 2];
+      const lumDiag = 0.299 * image[idxDiag] + 0.587 * image[idxDiag + 1] + 0.114 * image[idxDiag + 2];
 
-      const localEdge = Math.abs(lum - lumR) + Math.abs(lum - lumD);
+      const horizontalEdge = Math.abs(lum - lumR);
+      const verticalEdge = Math.abs(lum - lumD);
+      const diagonalEdge = Math.abs(lum - lumDiag);
+      const localEdge = horizontalEdge + verticalEdge + diagonalEdge * 0.6;
+
       textureSum += localEdge;
-      edgeCount++;
-      if (localEdge > 32) microEdges++;
+      edgeCount += 1;
+      if (localEdge > 24) microEdges += 1;
+      if (horizontalEdge > 18 && verticalEdge < horizontalEdge * 0.65) lineLikeEdges += 1;
     }
   }
 
-  const avgTexture = textureSum / edgeCount;
+  const avgTexture = textureSum / Math.max(edgeCount, 1);
+  const microEdgeRatio = microEdges / Math.max(edgeCount, 1);
+  const lineEdgeRatio = lineLikeEdges / Math.max(edgeCount, 1);
   const brightnessSpread = Math.sqrt(
-    luminances.reduce((sum, lum) => sum + Math.pow(lum - avgBrightness, 2), 0) / luminances.length
+    luminances.reduce((sum, lum) => sum + Math.pow(lum - avgBrightness, 2), 0) / Math.max(luminances.length, 1)
   );
 
   const lightingScore = clamp(
     100 -
-      Math.abs(avgBrightness - 145) * 0.75 -
-      (veryBright / count) * 180 -
-      (veryDark / count) * 160 -
-      Math.max(0, brightnessSpread - 58) * 0.45,
+      Math.abs(avgBrightness - 148) * 0.72 -
+      (veryBright / Math.max(count, 1)) * 180 -
+      (veryDark / Math.max(count, 1)) * 165 -
+      Math.max(0, brightnessSpread - 60) * 0.42,
     0,
     100
   );
 
-  const sharpnessScore = clamp(avgTexture * 2.25 + (microEdges / Math.max(edgeCount, 1)) * 120, 0, 100);
-
+  const sharpnessScore = clamp(avgTexture * 2.1 + microEdgeRatio * 130, 0, 100);
   const acneScore = clamp(
-    Math.max(0, avgRedness - 8) * 1.45 +
-      Math.max(0, avgTexture - 22) * 0.9 +
-      avgSaturation * 24,
+    (redSpotPixels / Math.max(skinLikePixels, 1)) * 520 +
+      Math.max(0, avgRedness - 9) * 1.35 +
+      Math.max(0, avgTexture - 23) * 0.65 +
+      avgSaturation * 18,
     0,
     100
   );
 
   const drynessScore = clamp(
-    Math.max(0, avgTexture - 18) * 1.15 +
-      Math.max(0, 115 - avgBrightness) * 0.28 +
-      Math.max(0, brightnessSpread - 42) * 0.35,
+    Math.max(0, avgTexture - 18) * 1.08 +
+      Math.max(0, 120 - avgBrightness) * 0.26 +
+      Math.max(0, brightnessSpread - 44) * 0.34 +
+      Math.max(0, 0.45 - skinRatio) * 22,
     0,
     100
   );
 
-  const rednessScore = clamp(Math.max(0, avgRedness - 4) * 2.4 + avgSaturation * 18, 0, 100);
+  const rednessScore = clamp(
+    Math.max(0, avgRedness - 4) * 2.15 +
+      (redSpotPixels / Math.max(skinLikePixels, 1)) * 260 +
+      avgSaturation * 12,
+    0,
+    100
+  );
+
   const shineScore = clamp(
-    (shinePixels / count) * 900 +
-      (veryBright / count) * 500 +
-      Math.max(0, avgBrightness - 165) * 0.45 -
-      avgSaturation * 8,
+    (shinePixels / Math.max(count, 1)) * 950 +
+      (veryBright / Math.max(count, 1)) * 460 +
+      Math.max(0, avgBrightness - 166) * 0.42 -
+      avgSaturation * 7,
     0,
     100
   );
 
-  const textureScore = clamp(avgTexture * 1.6 + Math.max(0, brightnessSpread - 38) * 0.55, 0, 100);
-  const poreScore = clamp((microEdges / Math.max(edgeCount, 1)) * 240 + Math.max(0, avgTexture - 20) * 1.1, 0, 100);
-  const pigmentationScore = clamp(avgBrownContrast * 1.65 + Math.max(0, brightnessSpread - 44) * 0.55, 0, 100);
-  const evennessScore = clamp(
-    100 - (colorVarianceSum / count) * 0.55 - brightnessSpread * 0.55 - rednessScore * 0.12,
+  const textureScore = clamp(
+    avgTexture * 1.35 +
+      Math.max(0, brightnessSpread - 38) * 0.48 +
+      lineEdgeRatio * 160,
     0,
     100
   );
+
+  const poreScore = clamp(
+    microEdgeRatio * 260 +
+      Math.max(0, avgTexture - 20) * 0.95 +
+      Math.max(0, avgSaturation - 0.22) * 22,
+    0,
+    100
+  );
+
+  const pigmentationScore = clamp(
+    avgBrownContrast * 1.45 +
+      (darkSpotPixels / Math.max(skinLikePixels, 1)) * 360 +
+      Math.max(0, brightnessSpread - 45) * 0.48,
+    0,
+    100
+  );
+
+  const evennessScore = clamp(
+    100 - (colorVarianceSum / Math.max(count, 1)) * 0.48 - brightnessSpread * 0.52 - rednessScore * 0.1,
+    0,
+    100
+  );
+
+  const visualQuality = Math.round(
+    clamp(lightingScore * 0.48 + Math.min(skinRatio * 165, 100) * 0.25 + sharpnessScore * 0.27, 0, 100)
+  );
+
+  const skinReliability = clamp((skinRatio - 0.16) / 0.42, 0.25, 1);
+  const safeConcernScore = (score) => Math.round(clamp(score * skinReliability, 0, 100));
 
   return {
     lighting: Math.round(lightingScore),
-    acne: Math.round(acneScore),
-    dryness: Math.round(drynessScore),
-    redness: Math.round(rednessScore),
-    shine: Math.round(shineScore),
-    texture: Math.round(textureScore),
-    pores: Math.round(poreScore),
-    pigmentation: Math.round(pigmentationScore),
+    acne: safeConcernScore(acneScore),
+    dryness: safeConcernScore(drynessScore),
+    redness: safeConcernScore(rednessScore),
+    shine: Math.round(clamp(shineScore * clamp((skinRatio - 0.08) / 0.36, 0.45, 1), 0, 100)),
+    texture: safeConcernScore(textureScore),
+    pores: safeConcernScore(poreScore),
+    pigmentation: safeConcernScore(pigmentationScore),
     evenness: Math.round(evennessScore),
     blur: Math.round(sharpnessScore),
-    confidence: Math.round(clamp(lightingScore * 0.55 + Math.min(skinRatio * 150, 100) * 0.25 + sharpnessScore * 0.2, 0, 100)),
+    visualQuality,
+    confidence: visualQuality,
+    skinRatio: Math.round(skinRatio * 100),
   };
+}
+
+function analyseFrameRegions(canvas, stepId = "front", detectedFaceBox = null) {
+  const closeUpMap = {
+    tzone: ["tzone", "forehead"],
+    cheek: ["leftCheek", "rightCheek"],
+    left: ["leftCheek"],
+    right: ["rightCheek"],
+    front: ["forehead", "leftCheek", "rightCheek", "tzone", "chin"],
+    problemArea: ["leftCheek", "rightCheek", "chin"],
+  };
+
+  const selectedIds = closeUpMap[stepId] || closeUpMap.front;
+  const selectedRegions = FACE_REGION_CROPS.filter((region) => selectedIds.includes(region.id));
+
+  return selectedRegions.map((region) => {
+    const analysisCrop = cropWithinFace(detectedFaceBox, region.crop);
+    return {
+      region,
+      scores: analyseCanvas(canvas, analysisCrop),
+      zoomImage: createZoomCropDataUrl(canvas, analysisCrop),
+      usedFaceDetection: Boolean(detectedFaceBox),
+    };
+  });
+}
+
+function combineRegionResults(regionItems) {
+  if (!regionItems.length) {
+    return analyseCanvas(document.createElement("canvas"));
+  }
+
+  const metrics = ["acne", "dryness", "redness", "shine", "texture", "pores", "pigmentation"];
+  const combined = {};
+
+  metrics.forEach((key) => {
+    combined[key] = Math.round(clamp(weightedAverage(regionItems, key), 0, 100));
+  });
+
+  combined.lighting = Math.round(weightedAverage(regionItems, "lighting"));
+  combined.blur = Math.round(weightedAverage(regionItems, "blur"));
+  combined.evenness = Math.round(weightedAverage(regionItems, "evenness"));
+  combined.visualQuality = Math.round(weightedAverage(regionItems, "visualQuality"));
+  combined.confidence = combined.visualQuality;
+
+  // Region-specific boosts: do not let one whole-face average hide visible local concerns.
+  const maxFor = (key) => Math.max(...regionItems.map((item) => item.scores[key] || 0));
+  combined.acne = Math.round(clamp(combined.acne * 0.72 + maxFor("acne") * 0.28, 0, 100));
+  combined.redness = Math.round(clamp(combined.redness * 0.7 + maxFor("redness") * 0.3, 0, 100));
+  combined.pores = Math.round(clamp(combined.pores * 0.65 + maxFor("pores") * 0.35, 0, 100));
+  combined.pigmentation = Math.round(clamp(combined.pigmentation * 0.72 + maxFor("pigmentation") * 0.28, 0, 100));
+
+  const evidenceByRegion = new Map();
+
+  regionItems.forEach((item) => {
+    const dominant = [
+      ["acne", item.scores.acne],
+      ["dryness", item.scores.dryness],
+      ["redness", item.scores.redness],
+      ["shine", item.scores.shine],
+      ["texture", item.scores.texture],
+      ["pores", item.scores.pores],
+      ["pigmentation", item.scores.pigmentation],
+    ].sort((a, b) => b[1] - a[1])[0];
+
+    const evidenceItem = {
+      id: item.region.id,
+      en: item.region.en,
+      zh: item.region.zh,
+      dominant: dominant[0],
+      score: Math.round(dominant[1]),
+      skinRatio: item.scores.skinRatio || 0,
+      scores: item.scores,
+      zoomImage: item.zoomImage,
+    };
+
+    const existing = evidenceByRegion.get(evidenceItem.id);
+    if (!existing || evidenceItem.score + evidenceItem.skinRatio * 0.25 > existing.score + existing.skinRatio * 0.25) {
+      evidenceByRegion.set(evidenceItem.id, evidenceItem);
+    }
+  });
+
+  combined.regionEvidence = Array.from(evidenceByRegion.values())
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 6);
+
+  combined.priorityScores = [
+    { key: "acne", score: combined.acne },
+    { key: "dryness", score: combined.dryness },
+    { key: "redness", score: combined.redness },
+    { key: "shine", score: combined.shine },
+    { key: "pores", score: combined.pores },
+    { key: "texture", score: combined.texture },
+    { key: "pigmentation", score: combined.pigmentation },
+  ].sort((a, b) => b.score - a.score);
+
+  combined.routineLevel = determineRoutineLevel(combined);
+  combined.skinQuality = Math.round(
+    clamp(
+      100 -
+        combined.acne * 0.14 -
+        combined.dryness * 0.15 -
+        combined.redness * 0.15 -
+        combined.shine * 0.08 -
+        combined.pores * 0.1 -
+        combined.texture * 0.12 -
+        combined.pigmentation * 0.11 +
+        combined.visualQuality * 0.2,
+      0,
+      100
+    )
+  );
+
+  return combined;
+}
+
+function determineRoutineLevel(result) {
+  const barrierStress = Math.max(result.dryness || 0, result.redness || 0);
+  const activeNeed = Math.max(result.acne || 0, result.pores || 0, result.texture || 0, result.pigmentation || 0);
+  if (barrierStress >= 68) return "repair";
+  if (activeNeed >= 76 && barrierStress < 55) return "active";
+  if (activeNeed >= 58 || barrierStress >= 52) return "balanced";
+  return "maintenance";
 }
 
 function getDominantConcern(result) {
@@ -742,10 +1275,8 @@ function getDominantConcern(result) {
     ["pigmentation", result.pigmentation],
   ].sort((a, b) => b[1] - a[1]);
 
-  return concernScores[0][1] >= 48 ? concernScores[0][0] : "maintenance";
+  return concernScores[0][1] >= 45 ? concernScores[0][0] : "maintenance";
 }
-
-
 
 
 const concernGroups = [
@@ -887,6 +1418,61 @@ const captureSteps = [
     zhInstruction: "对准你最在意的具体区域，例如脱皮、瑕疵、泛红或粗糙纹理。",
   },
 ];
+
+const scanSteps = [
+  {
+    id: "front",
+    en: "Look straight",
+    zh: "正对镜头",
+    enInstruction: "Keep your face inside the oval. Use bright, even light.",
+    zhInstruction: "让脸部进入椭圆框内，使用明亮均匀的光线。",
+    prepare: 3200,
+    capture: 1200,
+    duration: 4400,
+  },
+  {
+    id: "left",
+    en: "Turn slightly left",
+    zh: "轻微向左转",
+    enInstruction: "Slowly turn your face left. Keep your cheek visible.",
+    zhInstruction: "脸部慢慢向左转，让脸颊保持清楚可见。",
+    prepare: 3200,
+    capture: 1200,
+    duration: 4400,
+  },
+  {
+    id: "right",
+    en: "Turn slightly right",
+    zh: "轻微向右转",
+    enInstruction: "Slowly turn your face right. Keep your cheek visible.",
+    zhInstruction: "脸部慢慢向右转，让另一侧脸颊保持清楚可见。",
+    prepare: 3200,
+    capture: 1200,
+    duration: 4400,
+  },
+  {
+    id: "tzone",
+    en: "Move closer to T-zone",
+    zh: "靠近 T 区",
+    enInstruction: "Move the camera closer to the forehead and nose area. Do not use digital zoom.",
+    zhInstruction: "把摄像头靠近额头和鼻翼区域，不要使用数码放大。",
+    prepare: 3600,
+    capture: 1400,
+    duration: 5000,
+  },
+  {
+    id: "cheek",
+    en: "Move closer to cheek",
+    zh: "靠近脸颊",
+    enInstruction: "Move closer to one cheek so redness, dryness and texture are easier to see.",
+    zhInstruction: "靠近一侧脸颊，方便观察泛红、干燥和纹理。",
+    prepare: 3600,
+    capture: 1400,
+    duration: 5000,
+  },
+];
+
+
 
 const selfConcernOptions = [
   { id: "acne", en: "Blemishes / clogged pores", zh: "痘痘 / 闭口" },
@@ -1104,15 +1690,7 @@ const affiliateLibrary = {
     },
   ],
   redness: [
-    {
-      en: "Fragrance-Free Gentle Cleanser",
-      zh: "无香精温和洁面",
-      roleEn: "Lower-irritation cleansing option for redness tendency.",
-      roleZh: "适合泛红倾向的低刺激清洁选择。",
-      image: fragranceFreeCleanserImg,
-      href: "https://amzn.to/49H24qf",
-    },
-    {
+{
       en: "Ceramide + Panthenol Barrier Cream",
       zh: "神经酰胺 + 泛醇屏障霜",
       roleEn: "Barrier-support option when skin looks stressed.",
@@ -1534,19 +2112,48 @@ function getSolutionBundle(lang, main) {
   return bundles[main] || bundles.maintenance;
 }
 
+
 function generateReport(lang, result, zoneName = "") {
   const zh = lang === "zh";
   const main = getDominantConcern(result);
   const bundle = getSolutionBundle(lang, main);
+  const priorities = (result.priorityScores || [])
+    .slice(0, 3)
+    .map((item) => {
+      const labels = {
+        acne: zh ? "瑕疵样信号" : "blemish-like signal",
+        dryness: zh ? "干燥/脱皮信号" : "dryness/flaking signal",
+        redness: zh ? "泛红信号" : "redness signal",
+        shine: zh ? "油光信号" : "shine signal",
+        texture: zh ? "纹理/细纹信号" : "texture/fine-line signal",
+        pores: zh ? "毛孔样细节信号" : "pore-like detail signal",
+        pigmentation: zh ? "肤色不均/色沉样信号" : "uneven-tone signal",
+      };
+      return `${labels[item.key]} ${Math.round(item.score)}/100`;
+    });
+
+  const intensityLabel = {
+    repair: zh ? "Level 1 — 修护优先" : "Level 1 — barrier-first",
+    maintenance: zh ? "Level 1 — 稳定维持" : "Level 1 — maintenance",
+    balanced: zh ? "Level 2 — 稳定基础上谨慎加入活性" : "Level 2 — cautious active support",
+    active: zh ? "Level 3 — 屏障稳定时可加强功效" : "Level 3 — stronger active pathway if barrier is stable",
+  }[result.routineLevel || "maintenance"];
+
   const areaPrefix = zoneName
     ? zh
       ? `在${zoneName}区域，`
       : `In the ${zoneName} area, `
     : "";
 
+  const evidenceText = priorities.length
+    ? zh
+      ? `本次扫描的主要可见优先级为：${priorities.join("，")}。`
+      : `The main visible priorities in this scan are: ${priorities.join(", ")}.`
+    : "";
+
   const advice = zh
-    ? `${areaPrefix}主要视觉倾向是「${bundle.title}」。${bundle.why} 下面的方案不是医学处方，而是基于照片视觉信号生成的护肤组合建议。`
-    : `${areaPrefix}the main visual tendency is “${bundle.title}.” ${bundle.why} The plan below is not a medical prescription; it is a skincare combination generated from visual signals in the photo.`;
+    ? `${areaPrefix}${evidenceText} 推荐方案强度：${intensityLabel}。${bundle.why} 下面的方案不是医学处方，而是基于本次扫描的可见肤况信号和你选择的肤感问题生成的护肤组合建议。`
+    : `${areaPrefix}${evidenceText} Recommended routine intensity: ${intensityLabel}. ${bundle.why} The plan below is not a medical prescription; it is skincare guidance generated from visible scan signals and your selected concerns.`;
 
   return {
     advice,
@@ -1558,8 +2165,10 @@ function generateReport(lang, result, zoneName = "") {
     productIds: bundle.productIds,
     main,
     bundle,
+    intensityLabel,
   };
 }
+
 
 function getProductById(id) {
   return products.find((product) => product.id === id) || products[0];
@@ -1618,123 +2227,404 @@ function firstItems(group, indexes = []) {
   return indexes.map((index) => list[index]).filter(Boolean);
 }
 
+
+
+const PRODUCT_ROLE_LABELS = {
+  foundation: { en: "Foundation", zh: "基础护理" },
+  treatment: { en: "Targeted treatment", zh: "针对性护理" },
+  weekly: { en: "Weekly option", zh: "每周选项" },
+  repair: { en: "Repair support", zh: "修护支持" },
+};
+
+const PRODUCT_SCORE_PROFILES = {
+  acne: {
+    role: "treatment",
+    concernTags: ["acne", "pores"],
+    avoidIfBarrierHigh: false,
+    strength: "active",
+    minScore: { acne: 46 },
+    boostIf: { acne: 48, pores: 55 },
+    riskIf: { dryness: 65, redness: 65 },
+  },
+  dryness: {
+    role: "repair",
+    concernTags: ["dryness", "redness"],
+    avoidIfBarrierHigh: false,
+    strength: "gentle",
+    minScore: { dryness: 34 },
+    boostIf: { dryness: 45, redness: 52 },
+    riskIf: {},
+  },
+  redness: {
+    role: "repair",
+    concernTags: ["redness", "dryness"],
+    avoidIfBarrierHigh: false,
+    strength: "gentle",
+    minScore: { redness: 38 },
+    boostIf: { redness: 48, dryness: 58 },
+    riskIf: {},
+  },
+  shine: {
+    role: "foundation",
+    concernTags: ["shine", "pores"],
+    avoidIfBarrierHigh: false,
+    strength: "gentle",
+    minScore: { shine: 42 },
+    boostIf: { shine: 52, pores: 52 },
+    riskIf: { dryness: 75 },
+  },
+  pores: {
+    role: "treatment",
+    concernTags: ["pores", "shine"],
+    avoidIfBarrierHigh: false,
+    strength: "active",
+    minScore: { pores: 46 },
+    boostIf: { pores: 52, shine: 55 },
+    riskIf: { dryness: 68, redness: 68 },
+  },
+  texture: {
+    role: "treatment",
+    concernTags: ["texture", "dryness"],
+    avoidIfBarrierHigh: true,
+    strength: "active",
+    minScore: { texture: 48 },
+    boostIf: { texture: 56 },
+    riskIf: { dryness: 62, redness: 62 },
+  },
+  pigmentation: {
+    role: "treatment",
+    concernTags: ["pigmentation", "redness"],
+    avoidIfBarrierHigh: false,
+    strength: "active",
+    minScore: { pigmentation: 45 },
+    boostIf: { pigmentation: 52, redness: 58 },
+    riskIf: { redness: 76 },
+  },
+  maintenance: {
+    role: "foundation",
+    concernTags: ["maintenance"],
+    avoidIfBarrierHigh: false,
+    strength: "gentle",
+    minScore: {},
+    boostIf: {},
+    riskIf: {},
+  },
+};
+
+function inferProductRole(group, item, index) {
+  const text = `${item?.en || ""} ${item?.zh || ""}`.toLowerCase();
+
+  if (
+    text.includes("sunscreen") ||
+    text.includes("spf") ||
+    text.includes("cleanser") ||
+    text.includes("洁面") ||
+    text.includes("防晒")
+  ) {
+    return "foundation";
+  }
+
+  if (
+    text.includes("cicaplast") ||
+    text.includes("petrolatum") ||
+    text.includes("ointment") ||
+    text.includes("barrier") ||
+    text.includes("ceramide") ||
+    text.includes("moisturiser") ||
+    text.includes("moisturising") ||
+    text.includes("cream") ||
+    text.includes("修护") ||
+    text.includes("保湿") ||
+    text.includes("面霜")
+  ) {
+    return group === "dryness" || group === "redness" ? "repair" : "foundation";
+  }
+
+  if (
+    text.includes("mask") ||
+    text.includes("泥膜") ||
+    text.includes("clay")
+  ) {
+    return "weekly";
+  }
+
+  if (
+    text.includes("bha") ||
+    text.includes("salicylic") ||
+    text.includes("benzoyl") ||
+    text.includes("retinol") ||
+    text.includes("retinal") ||
+    text.includes("vitamin c") ||
+    text.includes("niacinamide") ||
+    text.includes("azelaic") ||
+    text.includes("peptide") ||
+    text.includes("水杨酸") ||
+    text.includes("壬二酸") ||
+    text.includes("烟酰胺") ||
+    text.includes("视黄") ||
+    text.includes("维 c")
+  ) {
+    return "treatment";
+  }
+
+  return PRODUCT_SCORE_PROFILES[group]?.role || "foundation";
+}
+
+function inferProductTags(group, item) {
+  const text = `${item?.en || ""} ${item?.zh || ""}`.toLowerCase();
+  const tags = new Set(PRODUCT_SCORE_PROFILES[group]?.concernTags || [group]);
+
+  if (text.includes("sunscreen") || text.includes("spf") || text.includes("防晒")) tags.add("sunscreen");
+  if (text.includes("cleanser") || text.includes("洁面")) tags.add("cleanser");
+  if (text.includes("moistur") || text.includes("cream") || text.includes("保湿") || text.includes("面霜")) tags.add("moisturiser");
+  if (text.includes("barrier") || text.includes("ceramide") || text.includes("cicaplast") || text.includes("repair") || text.includes("修护") || text.includes("屏障")) tags.add("barrier");
+  if (text.includes("bha") || text.includes("salicylic") || text.includes("水杨酸")) tags.add("bha");
+  if (text.includes("benzoyl") || text.includes("过氧化")) tags.add("benzoyl");
+  if (text.includes("azelaic") || text.includes("壬二酸")) tags.add("azelaic");
+  if (text.includes("niacinamide") || text.includes("烟酰胺")) tags.add("niacinamide");
+  if (text.includes("retinol") || text.includes("retinal") || text.includes("视黄")) tags.add("retinoid");
+  if (text.includes("vitamin c") || text.includes("维 c")) tags.add("vitamin-c");
+  if (text.includes("clay") || text.includes("mask") || text.includes("泥膜")) tags.add("weekly-mask");
+  if (text.includes("mineral") || text.includes("zinc") || text.includes("矿物")) tags.add("sensitive-sunscreen");
+
+  return Array.from(tags);
+}
+
+function buildProductCandidates() {
+  return Object.entries(affiliateLibrary).flatMap(([group, items]) =>
+    (items || []).map((item, index) => ({
+      ...item,
+      group,
+      libraryIndex: index,
+      role: inferProductRole(group, item, index),
+      tags: inferProductTags(group, item),
+      profile: PRODUCT_SCORE_PROFILES[group] || PRODUCT_SCORE_PROFILES.maintenance,
+    }))
+  );
+}
+
+function scoreProductCandidate(candidate, result, selfConcerns = [], selected = []) {
+  const scores = {
+    acne: result.acne || 0,
+    dryness: result.dryness || 0,
+    redness: result.redness || 0,
+    shine: result.shine || 0,
+    pores: result.pores || 0,
+    texture: result.texture || 0,
+    pigmentation: result.pigmentation || 0,
+  };
+
+  const barrierStress = Math.max(scores.dryness, scores.redness);
+  const activeNeed = Math.max(scores.acne, scores.pores, scores.texture, scores.pigmentation);
+  const profile = candidate.profile || PRODUCT_SCORE_PROFILES.maintenance;
+
+  let score = 8;
+
+  // Concern match
+  (profile.concernTags || []).forEach((tag) => {
+    if (scores[tag] !== undefined) score += scores[tag] * 0.48;
+    if (selfConcerns.includes(tag)) score += 14;
+  });
+
+  // Explicit min-score requirements
+  Object.entries(profile.minScore || {}).forEach(([key, min]) => {
+    if ((scores[key] || 0) < min && !selfConcerns.includes(key)) score -= 28;
+  });
+
+  // Boost thresholds
+  Object.entries(profile.boostIf || {}).forEach(([key, threshold]) => {
+    if ((scores[key] || 0) >= threshold) score += 12 + ((scores[key] || 0) - threshold) * 0.18;
+  });
+
+  // Safety penalties
+  Object.entries(profile.riskIf || {}).forEach(([key, threshold]) => {
+    if ((scores[key] || 0) >= threshold) score -= 18 + ((scores[key] || 0) - threshold) * 0.2;
+  });
+
+  if (profile.avoidIfBarrierHigh && barrierStress >= 62) score -= 40;
+  if (candidate.tags.includes("benzoyl") && barrierStress >= 58) score -= 30;
+  if (candidate.tags.includes("retinoid") && barrierStress >= 58) score -= 34;
+  if (candidate.tags.includes("bha") && barrierStress >= 68) score -= 28;
+  if (candidate.tags.includes("vitamin-c") && scores.redness >= 70) score -= 18;
+
+  // Foundation logic
+  if (candidate.role === "foundation") score += 18;
+  if (candidate.tags.includes("sunscreen")) score += 20;
+  if (candidate.tags.includes("cleanser")) score += barrierStress >= 58 ? 16 : 8;
+  if (candidate.tags.includes("moisturiser")) score += barrierStress >= 50 ? 18 : 10;
+  if (candidate.tags.includes("barrier")) score += barrierStress * 0.32;
+
+  // Treatment logic
+  if (candidate.role === "treatment") {
+    score += activeNeed >= 55 ? 12 : -8;
+    if (barrierStress >= 70) score -= 18;
+  }
+
+  // Weekly logic
+  if (candidate.role === "weekly") {
+    score += scores.shine >= 70 || scores.pores >= 70 ? 12 : -18;
+    if (barrierStress >= 55) score -= 24;
+  }
+
+  // Diversity penalty: avoid repeated same functional tags.
+  const selectedTags = selected.flatMap((item) => item.tags || []);
+  candidate.tags.forEach((tag) => {
+    const count = selectedTags.filter((selectedTag) => selectedTag === tag).length;
+    if (count > 0 && !["sunscreen", "moisturiser", "barrier"].includes(tag)) score -= 14 * count;
+  });
+
+  // Avoid too many items from same original group.
+  const sameGroupCount = selected.filter((item) => item.group === candidate.group).length;
+  if (sameGroupCount >= 2) score -= 18 * sameGroupCount;
+
+  // Gentle fairness: rotate products inside the same group so later products are not impossible to show.
+  // This is deliberately small and applied after safety penalties.
+  score += Math.min(candidate.libraryIndex || 0, 4) * 1.8;
+
+  return Math.round(score * 10) / 10;
+}
+
+function reasonForCandidate(candidate, result, lang) {
+  const zh = lang === "zh";
+  const topConcern = [
+    ["acne", result.acne || 0, zh ? "瑕疵样信号" : "blemish-like signal"],
+    ["dryness", result.dryness || 0, zh ? "干燥/脱皮信号" : "dryness/flaking signal"],
+    ["redness", result.redness || 0, zh ? "泛红信号" : "redness signal"],
+    ["shine", result.shine || 0, zh ? "油光信号" : "shine signal"],
+    ["pores", result.pores || 0, zh ? "毛孔样细节" : "pore-like detail"],
+    ["texture", result.texture || 0, zh ? "纹理/细纹信号" : "texture/fine-line signal"],
+    ["pigmentation", result.pigmentation || 0, zh ? "肤色不均信号" : "uneven-tone signal"],
+  ].sort((a, b) => b[1] - a[1])[0];
+
+  const role = PRODUCT_ROLE_LABELS[candidate.role] || PRODUCT_ROLE_LABELS.foundation;
+
+  if (zh) {
+    if (candidate.tags.includes("sunscreen")) return `作为${role.zh}，防晒是所有色沉、细纹和屏障护理的基础步骤。`;
+    if (candidate.tags.includes("barrier")) return `作为${role.zh}，适合在干燥/泛红或屏障压力较高时优先使用。`;
+    if (candidate.tags.includes("bha")) return `针对${topConcern[2]}，低频使用更适合闭口、毛孔和油光管理。`;
+    if (candidate.tags.includes("azelaic")) return `针对${topConcern[2]}，壬二酸方向可兼顾瑕疵、泛红和肤色不均。`;
+    if (candidate.tags.includes("retinoid")) return `针对${topConcern[2]}，仅在屏障稳定时作为循序渐进的夜间功效步骤。`;
+    if (candidate.tags.includes("niacinamide")) return `针对${topConcern[2]}，烟酰胺方向更适合油脂平衡、毛孔和肤色支持。`;
+    return `根据${topConcern[2]}和当前方案强度，作为${role.zh}加入。`;
+  }
+
+  if (candidate.tags.includes("sunscreen")) return `As ${role.en.toLowerCase()}, sunscreen is foundational for tone, texture and barrier support.`;
+  if (candidate.tags.includes("barrier")) return `As ${role.en.toLowerCase()}, this supports dryness, redness and barrier-stress signals.`;
+  if (candidate.tags.includes("bha")) return `For ${topConcern[2]}, low-frequency BHA direction can support clogged-pore, pore and shine management.`;
+  if (candidate.tags.includes("azelaic")) return `For ${topConcern[2]}, azelaic acid direction can support blemish, redness and uneven-tone concerns.`;
+  if (candidate.tags.includes("retinoid")) return `For ${topConcern[2]}, use only if the barrier is stable and introduce slowly at night.`;
+  if (candidate.tags.includes("niacinamide")) return `For ${topConcern[2]}, niacinamide direction can support oil balance, pores and tone.`;
+  return `Selected as ${role.en.toLowerCase()} based on the visible priority signals and routine intensity.`;
+}
+
+function pickBestByRole(scored, role, selected, limit = 1) {
+  const picked = [];
+  for (const item of scored) {
+    if (item.role !== role) continue;
+    if (selected.some((selectedItem) => selectedItem.href === item.href)) continue;
+    picked.push(item);
+    selected.push(item);
+    if (picked.length >= limit) break;
+  }
+  return picked;
+}
+
+
+
 function buildScoreBasedProductPlan(result, report, selfConcerns = []) {
   if (!result) return getAffiliateItems(report?.main || "maintenance");
 
-  const concerns = [
-    { key: "dryness", score: result.dryness || 0 },
-    { key: "redness", score: result.redness || 0 },
-    { key: "acne", score: result.acne || 0 },
-    { key: "shine", score: result.shine || 0 },
-    { key: "pores", score: result.pores || 0 },
-    { key: "texture", score: result.texture || 0 },
-    { key: "pigmentation", score: result.pigmentation || 0 },
-  ].map((item) => ({
-    ...item,
-    adjusted: Math.min(100, item.score + (selfConcerns.includes(item.key) ? 18 : 0)),
-  })).sort((a, b) => b.adjusted - a.adjusted);
+  const candidates = buildProductCandidates();
 
-  const primary = concerns[0]?.key || report?.main || "maintenance";
   const selected = [];
+  const scored = candidates
+    .map((candidate) => ({
+      ...candidate,
+      suitabilityScore: scoreProductCandidate(candidate, result, selfConcerns, selected),
+    }))
+    .sort((a, b) => b.suitabilityScore - a.suitabilityScore);
 
-  // Universal foundation: most routines need a cleanser/moisturiser/sunscreen direction.
-  // Then add actives only when scores justify them.
-  if (primary === "dryness" || (result.dryness || 0) >= 62 || selfConcerns.includes("dryness")) {
-    selected.push(
-      ...firstItems("dryness", [4]).map((i) => withReason(i, "Gentle cleansing for dry or peeling-prone skin.", "干燥或脱皮倾向下，优先选择温和清洁。")),
-      ...firstItems("dryness", [0, 2]).map((i) => withReason(i, "Barrier-support moisturising is the priority.", "屏障保湿修护是优先级。"))
-    );
-    if ((result.dryness || 0) >= 72) {
-      selected.push(...firstItems("dryness", [3]).map((i) => withReason(i, "High dryness score: small amount on very dry patches.", "干燥评分较高，可少量用于局部很干区域。")));
+  // 1) Foundation: one cleanser, one moisturiser/repair, one sunscreen where possible.
+  const cleanser = scored.find((item) => item.tags.includes("cleanser"));
+  if (cleanser) selected.push(cleanser);
+
+  const moisturiser = scored.find(
+    (item) =>
+      !selected.some((selectedItem) => selectedItem.href === item.href) &&
+      (item.tags.includes("moisturiser") || item.tags.includes("barrier"))
+  );
+  if (moisturiser) selected.push(moisturiser);
+
+  const sunscreen = scored.find(
+    (item) =>
+      !selected.some((selectedItem) => selectedItem.href === item.href) &&
+      item.tags.includes("sunscreen")
+  );
+  if (sunscreen) selected.push(sunscreen);
+
+  // 2) Targeted treatments, safely diversified.
+  const treatmentSlots = result.routineLevel === "repair" ? 1 : result.routineLevel === "active" ? 3 : 2;
+  const treatmentCandidates = scored
+    .filter((item) => item.role === "treatment")
+    .sort((a, b) => scoreProductCandidate(b, result, selfConcerns, selected) - scoreProductCandidate(a, result, selfConcerns, selected));
+
+  for (const item of treatmentCandidates) {
+    if (selected.length >= 3 + treatmentSlots) break;
+    if (selected.some((selectedItem) => selectedItem.href === item.href)) continue;
+
+    const refreshedScore = scoreProductCandidate(item, result, selfConcerns, selected);
+    if (refreshedScore < 22) continue;
+
+    selected.push({
+      ...item,
+      suitabilityScore: refreshedScore,
+    });
+  }
+
+  // 3) Weekly / optional support only when it makes sense.
+  const weeklyCandidate = scored
+    .filter((item) => item.role === "weekly")
+    .sort((a, b) => scoreProductCandidate(b, result, selfConcerns, selected) - scoreProductCandidate(a, result, selfConcerns, selected))[0];
+
+  if (weeklyCandidate && selected.length < 8) {
+    const weeklyScore = scoreProductCandidate(weeklyCandidate, result, selfConcerns, selected);
+    if (weeklyScore >= 26) {
+      selected.push({
+        ...weeklyCandidate,
+        suitabilityScore: weeklyScore,
+      });
     }
   }
 
-  if (primary === "redness" || (result.redness || 0) >= 58 || selfConcerns.includes("redness")) {
-    selected.push(
-      ...firstItems("redness", [0, 1]).map((i) => withReason(i, "Redness/barrier-stress signal: simplify and reduce irritation.", "泛红或屏障压力信号下，建议精简并降低刺激。")),
-      ...firstItems("redness", [2]).map((i) => withReason(i, "Gentler sunscreen direction for sensitivity-prone routines.", "敏感倾向下更适合温和防晒方向。"))
-    );
-    if ((result.redness || 0) >= 65 && (result.dryness || 0) < 70) {
-      selected.push(...firstItems("redness", [4]).map((i) => withReason(i, "Calming support for visible redness tendency.", "用于支持泛红倾向下的舒缓护理。")));
-    }
+  // 4) Fill remaining slots with high scoring but diverse products.
+  for (const candidate of scored) {
+    if (selected.length >= 8) break;
+    if (selected.some((item) => item.href === candidate.href)) continue;
+
+    const refreshedScore = scoreProductCandidate(candidate, result, selfConcerns, selected);
+    if (refreshedScore < 20) continue;
+
+    selected.push({
+      ...candidate,
+      suitabilityScore: refreshedScore,
+    });
   }
 
-  if (primary === "acne" || (result.acne || 0) >= 55 || selfConcerns.includes("acne")) {
-    selected.push(
-      ...firstItems("acne", [3, 4]).map((i) => withReason(i, "Blemish-prone routines still need moisturiser and sunscreen.", "瑕疵倾向也需要保湿和防晒作为基础。"))
-    );
-
-    if ((result.dryness || 0) >= 62 || (result.redness || 0) >= 62) {
-      selected.push(...firstItems("acne", [2]).map((i) => withReason(i, "Blemish + redness/dryness: azelaic acid direction may be gentler than stacking strong actives.", "瑕疵伴随泛红/干燥时，壬二酸方向比叠加强功效更温和。")));
-    } else if ((result.acne || 0) >= 72) {
-      selected.push(
-        ...firstItems("acne", [0]).map((i) => withReason(i, "Higher clogged-pore/blemish score: low-frequency BHA direction.", "闭口/瑕疵评分较高，可低频考虑 BHA 方向。")),
-        ...firstItems("acne", [1]).map((i) => withReason(i, "More visible blemish signal: optional benzoyl peroxide wash, introduced slowly.", "瑕疵信号较明显时，可选低频过氧化苯甲酰洁面。"))
-      );
-    } else {
-      selected.push(...firstItems("acne", [0]).map((i) => withReason(i, "Mild clogged-pore signal: start with low-frequency salicylic acid direction.", "轻中度闭口信号，可低频从水杨酸方向开始。")));
-    }
-  }
-
-  if (primary === "shine" || (result.shine || 0) >= 55 || selfConcerns.includes("shine")) {
-    selected.push(
-      ...firstItems("shine", [0, 2, 3]).map((i) => withReason(i, "Shine/T-zone signal: cleanse gently, hydrate lightly, protect daily.", "油光/T 区信号下，温和清洁、轻盈保湿和日常防晒更合适。"))
-    );
-    if ((result.pores || 0) >= 55 || selfConcerns.includes("pores")) {
-      selected.push(...firstItems("shine", [1]).map((i) => withReason(i, "Shine + pores: niacinamide direction for oil balance support.", "油光伴随毛孔时，可考虑烟酰胺方向支持油脂平衡。")));
-    }
-    if ((result.shine || 0) >= 72) {
-      selected.push(...firstItems("shine", [4]).map((i) => withReason(i, "High shine score: occasional clay mask, not daily.", "油光评分较高时，可低频使用泥膜，不建议每天用。")));
-    }
-  }
-
-  if (primary === "pores" || (result.pores || 0) >= 58 || selfConcerns.includes("pores")) {
-    selected.push(
-      ...firstItems("pores", [3]).map((i) => withReason(i, "Pore/detail visibility: start with gentle daily cleansing.", "毛孔/细节可见度下，先从温和日常清洁开始。")),
-      ...firstItems("pores", [2]).map((i) => withReason(i, "Pores + oil balance support.", "用于毛孔和油脂平衡支持。"))
-    );
-    if ((result.dryness || 0) < 58 && (result.redness || 0) < 58) {
-      selected.push(...firstItems("pores", [0]).map((i) => withReason(i, "Pore score without strong dryness/redness: low-frequency 2% BHA direction.", "毛孔评分较高且干燥/泛红不明显时，可低频考虑 2% BHA。")));
-    }
-    if ((result.shine || 0) >= 65) {
-      selected.push(...firstItems("pores", [4]).map((i) => withReason(i, "Pores + shine: occasional T-zone clay mask.", "毛孔伴随油光时，可低频 T 区泥膜。")));
-    }
-  }
-
-  if (primary === "texture" || (result.texture || 0) >= 58 || selfConcerns.includes("texture")) {
-    selected.push(
-      ...firstItems("texture", [3, 4]).map((i) => withReason(i, "Texture/fine-line visibility: hydration and sunscreen first.", "纹理/细纹可见度下，先保湿和防晒。"))
-    );
-    if ((result.dryness || 0) < 60 && (result.redness || 0) < 60) {
-      selected.push(...firstItems("texture", [0]).map((i) => withReason(i, "Stable skin + texture: beginner retinol direction, introduced slowly.", "皮肤较稳定且关注纹理时，可低频考虑新手视黄醇。")));
-    } else {
-      selected.push(...firstItems("dryness", [0]).map((i) => withReason(i, "Texture with dryness/redness: repair first before retinol.", "纹理伴随干燥/泛红时，先修护再考虑视黄醇。")));
-    }
-  }
-
-  if (primary === "pigmentation" || (result.pigmentation || 0) >= 55 || selfConcerns.includes("pigmentation")) {
-    selected.push(
-      ...firstItems("pigmentation", [0]).map((i) => withReason(i, "Uneven tone/dark-spot-like contrast: sunscreen is the first priority.", "肤色不均/色沉样色差下，防晒是第一优先级。"))
-    );
-    if ((result.redness || 0) >= 55) {
-      selected.push(...firstItems("pigmentation", [2]).map((i) => withReason(i, "Uneven tone + redness: azelaic acid direction may be suitable.", "肤色不均伴泛红时，可考虑壬二酸方向。")));
-    } else {
-      selected.push(
-        ...firstItems("pigmentation", [1]).map((i) => withReason(i, "Uneven tone support: niacinamide direction.", "肤色不均支持：烟酰胺方向。")),
-        ...firstItems("pigmentation", [3]).map((i) => withReason(i, "Brightening support option; patch test if sensitive.", "提亮辅助选择；敏感皮需先局部测试。"))
-      );
-    }
-  }
-
-  if (!selected.length) {
-    selected.push(
-      ...firstItems("maintenance", [0, 1, 2]).map((i) => withReason(i, "No single dominant concern: maintain a simple basic routine.", "没有单一明显问题时，保持基础护理即可。"))
-    );
-  }
-
-  // Keep results varied but not overwhelming.
-  return uniqueByHref(selected).slice(0, 7);
+  return uniqueByHref(selected)
+    .sort((a, b) => {
+      const roleOrder = { foundation: 0, repair: 1, treatment: 2, weekly: 3 };
+      const roleDiff = (roleOrder[a.role] ?? 9) - (roleOrder[b.role] ?? 9);
+      if (roleDiff !== 0) return roleDiff;
+      return (b.suitabilityScore || 0) - (a.suitabilityScore || 0);
+    })
+    .map((item) => ({
+      ...item,
+      reasonEn: reasonForCandidate(item, result, "en"),
+      reasonZh: reasonForCandidate(item, result, "zh"),
+    }));
 }
+
+
 
 
 function buildRoutineProtocol(main, result, selfConcerns, lang) {
@@ -1864,7 +2754,6 @@ function productText(item, lang) {
 
 function findProductForStep(productPlan, stepId, lang) {
   const text = (item) => `${item.en || ""} ${item.zh || ""}`.toLowerCase();
-  const findOne = (patterns) => productPlan.find((item) => patterns.some((pattern) => text(item).includes(pattern)));
   const findMany = (patterns, limit = 2) =>
     productPlan.filter((item) => patterns.some((pattern) => text(item).includes(pattern))).slice(0, limit);
 
@@ -2027,6 +2916,9 @@ function RoutineProtocolPanel({ result, report, lang, t, selfConcerns, isDiaryIt
   return (
     <div className="routineProtocolBox">
       <p className="kicker">{t.routineProtocol}</p>
+      <div className="protocolIntensityNote">
+        <strong>{t.routineIntensity}:</strong> {routineIntensityText(lang, result?.routineLevel)}
+      </div>
 
       <div className="protocolColumns">
         <section>
@@ -2063,6 +2955,55 @@ function RoutineProtocolPanel({ result, report, lang, t, selfConcerns, isDiaryIt
   );
 }
 
+
+function metricLabelFromKey(t, key) {
+  const map = {
+    acne: t.metrics.acne,
+    dryness: t.metrics.dryness,
+    redness: t.metrics.redness,
+    shine: t.metrics.shine,
+    texture: t.metrics.texture,
+    pores: t.metrics.pores,
+    pigmentation: t.metrics.pigmentation,
+  };
+  return map[key] || key;
+}
+
+function routineIntensityText(lang, level) {
+  const zh = lang === "zh";
+  return {
+    repair: zh ? "Level 1 — 修护优先，暂不叠加强活性" : "Level 1 — barrier-first; avoid stacking strong actives",
+    maintenance: zh ? "Level 1 — 稳定维持，基础护理为主" : "Level 1 — maintenance; keep the routine simple",
+    balanced: zh ? "Level 2 — 谨慎加入活性，观察耐受" : "Level 2 — cautious actives; monitor tolerance",
+    active: zh ? "Level 3 — 屏障稳定时可加强功效" : "Level 3 — stronger active pathway if barrier is stable",
+  }[level || "maintenance"];
+}
+
+function RegionEvidencePanel({ result, t, lang }) {
+  const evidence = result?.regionEvidence || [];
+  if (!evidence.length) return null;
+
+  return (
+    <div className="regionEvidenceBox">
+      <p className="kicker">{t.regionEvidence}</p>
+      <p>{t.regionEvidenceIntro}</p>
+      <div className="regionEvidenceGrid">
+        {evidence.map((item) => (
+          <div className="regionEvidenceCard" key={`${item.id}-${item.dominant}`}>
+            {item.zoomImage && <img src={item.zoomImage} alt={lang === "en" ? item.en : item.zh} />}
+            <div>
+              <h4>{lang === "en" ? item.en : item.zh}</h4>
+              <span>{metricLabelFromKey(t, item.dominant)}</span>
+              <strong>{item.score}/100</strong>
+              {item.skinRatio !== undefined && <em>{lang === "en" ? "skin area" : "皮肤区域"} {item.skinRatio}%</em>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ReportPanel({ title, result, report, t, lang, selfConcerns = [], isDiaryItemDone, toggleDiaryItem, compact = false }) {
   if (!result || !report) return null;
   const recommendedProducts = report.productIds.map(getProductById);
@@ -2072,8 +3013,13 @@ function ReportPanel({ title, result, report, t, lang, selfConcerns = [], isDiar
     <div className={compact ? "compactReport" : "fullReport"}>
       <div className="reportHeader">
         <p className="kicker">{title}</p>
-        <h3>{t.confidence}: {result.confidence}/100</h3>
-        {result.confidence < 55 && <span className="retakeBadge">{t.retakeAdvice}</span>}
+        <h3>{t.skinQualityScore}: {result.skinQuality ?? result.confidence}/100</h3>
+        <p className="snapshotNote">{t.skinSnapshotNote}</p>
+        <div className="routineIntensityBadge">
+          <span>{t.routineIntensity}</span>
+          <strong>{routineIntensityText(lang, result.routineLevel)}</strong>
+        </div>
+        {result.visualQuality < 55 && <span className="retakeBadge">{t.retakeAdvice}</span>}
       </div>
 
       <div className="metricGrid">
@@ -2088,6 +3034,8 @@ function ReportPanel({ title, result, report, t, lang, selfConcerns = [], isDiar
         <MetricCard label={t.metrics.pigmentation} score={result.pigmentation} t={t} />
         <MetricCard label={t.metrics.evenness} score={100 - result.evenness} t={t} inverse />
       </div>
+
+      <RegionEvidencePanel result={result} t={t} lang={lang} />
 
       <div className="expertBox">
         <p className="kicker">{t.expertAdvice}</p>
@@ -2186,13 +3134,25 @@ function App() {
   const [overallAnalysis, setOverallAnalysis] = useState(null);
   const [localAnalysis, setLocalAnalysis] = useState(null);
   const [zoneComparisons, setZoneComparisons] = useState(null);
-  const [zoom, setZoom] = useState(2);
+  const setZoom = () => {};
   const [selectedZone, setSelectedZone] = useState("customCentre");
   const [analysisMode, setAnalysisMode] = useState("overview");
   const [selectedCaptureStep, setSelectedCaptureStep] = useState("front");
   const [selfConcerns, setSelfConcerns] = useState([]);
   const [photoSet, setPhotoSet] = useState({});
   const [photoSetAnalysis, setPhotoSetAnalysis] = useState(null);
+  const [scanActive, setScanActive] = useState(false);
+  const [scanStepIndex, setScanStepIndex] = useState(0);
+  const [scanProgress, setScanProgress] = useState(0);
+  const [scanQuality, setScanQuality] = useState(null);
+  const [scanFinished, setScanFinished] = useState(false);
+  const [scanPhase, setScanPhase] = useState("idle");
+  const [scanCountdown, setScanCountdown] = useState(0);
+  const [scanFlash, setScanFlash] = useState(false);
+  const [faceBox, setFaceBox] = useState(null);
+  const [faceDetectStatus, setFaceDetectStatus] = useState("idle");
+  const [faceEngineStatus, setFaceEngineStatus] = useState("idle");
+  const [meshPoints, setMeshPoints] = useState([]);
   const [routineDiary, setRoutineDiary] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("glowSkinRoutineDiary") || "{}");
@@ -2204,8 +3164,10 @@ function App() {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
   const canvasRef = useRef(null);
+  const faceLandmarkerRef = useRef(null);
   const t = copy[lang];
   const currentCaptureStep = captureSteps.find((step) => step.id === selectedCaptureStep) || captureSteps[0];
+  const currentScanStep = scanSteps[scanStepIndex] || scanSteps[0];
 
   const toggleSelfConcern = (concernId) => {
     setSelfConcerns((current) =>
@@ -2225,6 +3187,307 @@ function App() {
     } else {
       setPhoto("");
     }
+  };
+
+  const sleep = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
+
+  const waitForVideoReady = () =>
+    new Promise((resolve) => {
+      const video = videoRef.current;
+      if (!video) {
+        resolve();
+        return;
+      }
+      if (video.readyState >= 2 && video.videoWidth) {
+        resolve();
+        return;
+      }
+      video.onloadedmetadata = () => resolve();
+      window.setTimeout(resolve, 1200);
+    });
+
+  const ensureFaceLandmarker = async () => {
+    if (faceLandmarkerRef.current) {
+      setFaceEngineStatus("mesh");
+      return faceLandmarkerRef.current;
+    }
+
+    setFaceEngineStatus("loading");
+
+    try {
+      const vision = await FilesetResolver.forVisionTasks(
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.22/wasm"
+      );
+
+      const faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+        baseOptions: {
+          modelAssetPath:
+            "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/latest/face_landmarker.task",
+          delegate: "GPU",
+        },
+        runningMode: "IMAGE",
+        numFaces: 1,
+        outputFaceBlendshapes: false,
+        outputFacialTransformationMatrixes: false,
+      });
+
+      faceLandmarkerRef.current = faceLandmarker;
+      setFaceEngineStatus("mesh");
+      return faceLandmarker;
+    } catch (error) {
+      console.warn("MediaPipe FaceMesh could not be loaded. Falling back to browser/skin-pixel detection.", error);
+      setFaceEngineStatus("fallback");
+      return null;
+    }
+  };
+
+  const updateLiveFaceDetection = async () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas || !video.videoWidth) return null;
+
+    const ctx = canvas.getContext("2d");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const faceLandmarker = await ensureFaceLandmarker();
+    const detection = await detectFaceBoxFromCanvas(canvas, faceLandmarker);
+    const detectedFaceBox = detection?.faceBox || null;
+    setFaceBox(detectedFaceBox);
+    setMeshPoints(detection?.meshPoints || []);
+    setFaceEngineStatus(detection?.source === "mediapipe" ? "mesh" : "fallback");
+    setFaceDetectStatus(detectedFaceBox ? "found" : "not-found");
+    return detectedFaceBox;
+  };
+
+  const evaluateFrameQuality = (canvas) => {
+    const ctx = canvas.getContext("2d");
+    const sampleSize = 72;
+    const smallCanvas = document.createElement("canvas");
+    smallCanvas.width = sampleSize;
+    smallCanvas.height = sampleSize;
+    const smallCtx = smallCanvas.getContext("2d");
+    smallCtx.drawImage(canvas, 0, 0, sampleSize, sampleSize);
+    const data = smallCtx.getImageData(0, 0, sampleSize, sampleSize).data;
+
+    let brightness = 0;
+    let contrast = 0;
+    const values = [];
+
+    for (let i = 0; i < data.length; i += 4) {
+      const value = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+      values.push(value);
+      brightness += value;
+    }
+
+    brightness /= values.length;
+    values.forEach((value) => {
+      contrast += Math.abs(value - brightness);
+    });
+    contrast /= values.length;
+
+    const lightingGood = brightness > 72 && brightness < 220;
+    const resolutionGood = canvas.width >= 960 && canvas.height >= 720;
+
+    return {
+      lighting: lightingGood ? t.scanGood : t.scanImproveLight,
+      resolution: `${canvas.width} × ${canvas.height}`,
+      stability: contrast > 8 ? t.scanGood : t.scanHoldStill,
+      score: Math.round((lightingGood ? 40 : 22) + (resolutionGood ? 35 : 20) + Math.min(25, contrast)),
+    };
+  };
+
+  const captureFrameForStep = async (stepId) => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return null;
+
+    const videoWidth = video.videoWidth || 1920;
+    const videoHeight = video.videoHeight || 2560;
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = videoWidth;
+    canvas.height = videoHeight;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const faceLandmarker = await ensureFaceLandmarker();
+    const detection = await detectFaceBoxFromCanvas(canvas, faceLandmarker);
+    const detectedFaceBox = detection?.faceBox || null;
+    setFaceBox(detectedFaceBox);
+    setMeshPoints(detection?.meshPoints || []);
+    setFaceEngineStatus(detection?.source === "mediapipe" ? "mesh" : "fallback");
+    setFaceDetectStatus(detectedFaceBox ? "found" : "not-found");
+
+    const quality = evaluateFrameQuality(canvas);
+    setScanQuality(quality);
+
+    return {
+      image: canvas.toDataURL("image/png"),
+      mode: "scan",
+      zone: stepId,
+      faceBox: detectedFaceBox,
+      faceEngine: detection?.source || "fallback",
+      meshPoints: detection?.meshPoints || [],
+      quality,
+      capturedAt: new Date().toISOString(),
+    };
+  };
+
+  const analysePhotoEntries = (entries) => {
+    if (!entries.length) {
+      setCameraError(t.noPhoto);
+      return;
+    }
+
+    let completed = 0;
+    const results = [];
+    const allRegionItems = [];
+
+    entries.forEach(([stepId, item]) => {
+      const image = new Image();
+      image.onload = () => {
+        const canvas = canvasRef.current;
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(image, 0, 0);
+
+        const regionItems = analyseFrameRegions(canvas, stepId, item.faceBox || null);
+        const frameResult = combineRegionResults(regionItems);
+        regionItems.forEach((regionItem) => allRegionItems.push({ ...regionItem, stepId }));
+
+        results.push({
+          stepId,
+          result: frameResult,
+          regionItems,
+        });
+
+        completed += 1;
+
+        if (completed === entries.length) {
+          const combined = combineRegionResults(allRegionItems);
+          // Make frame-level visible extremes count, but do not let one noisy frame dominate everything.
+          ["acne", "dryness", "redness", "shine", "texture", "pores", "pigmentation"].forEach((key) => {
+            const frameMax = Math.max(...results.map((item) => item.result[key] || 0));
+            combined[key] = Math.round(clamp(combined[key] * 0.72 + frameMax * 0.28, 0, 100));
+          });
+          combined.priorityScores = [
+            { key: "acne", score: combined.acne },
+            { key: "dryness", score: combined.dryness },
+            { key: "redness", score: combined.redness },
+            { key: "shine", score: combined.shine },
+            { key: "pores", score: combined.pores },
+            { key: "texture", score: combined.texture },
+            { key: "pigmentation", score: combined.pigmentation },
+          ].sort((a, b) => b.score - a.score);
+          combined.routineLevel = determineRoutineLevel(combined);
+          combined.confidence = combined.visualQuality;
+
+          setPhotoSetAnalysis({
+            combined,
+            results,
+            count: results.length,
+            regionEvidence: combined.regionEvidence,
+          });
+          setOverallAnalysis(combined);
+          setCameraError("");
+          setScanFinished(true);
+        }
+      };
+      image.src = item.image;
+    });
+  };
+
+
+  const runScanCountdown = async (milliseconds, phaseLabel) => {
+    setScanPhase(phaseLabel);
+    const seconds = Math.max(1, Math.ceil(milliseconds / 1000));
+
+    for (let remaining = seconds; remaining > 0; remaining -= 1) {
+      setScanCountdown(remaining);
+      await sleep(1000);
+    }
+
+    setScanCountdown(0);
+  };
+
+  const startGuidedScan = async () => {
+    setCameraError("");
+    setScanFinished(false);
+    setScanActive(true);
+    setScanProgress(0);
+    setScanQuality(null);
+    setScanPhase("idle");
+    setScanCountdown(0);
+    setScanFlash(false);
+    setFaceBox(null);
+    setMeshPoints([]);
+    setFaceDetectStatus("idle");
+    setPhoto("");
+    setPhotoSet({});
+    setOverallAnalysis(null);
+    setLocalAnalysis(null);
+    setZoneComparisons(null);
+    setPhotoSetAnalysis(null);
+
+    await startCamera();
+    await waitForVideoReady();
+
+    if (!streamRef.current) {
+      setScanActive(false);
+      return;
+    }
+
+    const captured = {};
+
+    for (let i = 0; i < scanSteps.length; i += 1) {
+      const step = scanSteps[i];
+      setScanStepIndex(i);
+      setSelectedCaptureStep(step.id);
+      setScanProgress(Math.round((i / scanSteps.length) * 100));
+
+      await updateLiveFaceDetection();
+      await runScanCountdown(step.prepare || 3200, "prepare");
+
+      setScanPhase("capturing");
+      await updateLiveFaceDetection();
+      await sleep(step.capture || 1200);
+
+      const frame = await captureFrameForStep(step.id);
+      if (frame) {
+        captured[step.id] = frame;
+        setPhotoSet({ ...captured });
+        setScanFlash(true);
+        window.setTimeout(() => setScanFlash(false), 260);
+      }
+
+      setScanPhase("next");
+      await sleep(800);
+    }
+
+    setScanProgress(100);
+    setScanPhase("complete");
+    setScanCountdown(0);
+    setScanActive(false);
+    const capturedEntries = Object.entries(captured);
+    const lastCaptured = capturedEntries[capturedEntries.length - 1]?.[1];
+    if (lastCaptured?.image) {
+      setPhoto(lastCaptured.image);
+    }
+    stopCamera();
+    analysePhotoEntries(capturedEntries);
+  };
+
+  const stopGuidedScan = () => {
+    setScanActive(false);
+    setScanPhase("idle");
+    setScanCountdown(0);
+    setScanFlash(false);
+    setFaceBox(null);
+    setMeshPoints([]);
+    setFaceDetectStatus("idle");
+    stopCamera();
   };
 
   const toggleDiaryItem = (itemId) => {
@@ -2373,6 +3636,7 @@ function App() {
     setLocalAnalysis(null);
     setZoneComparisons(null);
     setPhotoSetAnalysis(null);
+    setScanFinished(false);
   };
 
   const loadPhotoToCanvas = (callback) => {
@@ -2406,73 +3670,8 @@ function App() {
   };
 
   const analysePhotoSet = () => {
-    const entries = Object.entries(photoSet);
-    if (!entries.length) {
-      setCameraError(t.noPhoto);
-      return;
-    }
-
-    let completed = 0;
-    const results = [];
-
-    entries.forEach(([stepId, item]) => {
-      const image = new Image();
-      image.onload = () => {
-        const canvas = canvasRef.current;
-        canvas.width = image.width;
-        canvas.height = image.height;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(image, 0, 0);
-        results.push({
-          stepId,
-          result: analyseCanvas(canvas),
-        });
-        completed += 1;
-
-        if (completed === entries.length) {
-          const combined = results.reduce((acc, item) => {
-            Object.entries(item.result).forEach(([key, value]) => {
-              acc[key] = Math.max(acc[key] || 0, value);
-            });
-            return acc;
-          }, {});
-
-          const avgConfidence = Math.round(
-            results.reduce((sum, item) => sum + (item.result.confidence || 0), 0) / results.length
-          );
-
-          combined.confidence = avgConfidence;
-          setPhotoSetAnalysis({
-            combined,
-            results,
-            count: results.length,
-          });
-          setOverallAnalysis(combined);
-          setCameraError("");
-        }
-      };
-      image.src = item.image;
-    });
+    analysePhotoEntries(Object.entries(photoSet));
   };
-
-  const runLocalAnalysis = () => {
-    loadPhotoToCanvas((canvas) => {
-      const result = analysisMode === "magnifier"
-        ? analyseCanvas(canvas)
-        : analyseCanvas(canvas, zoneDefs[selectedZone]);
-      setLocalAnalysis({ result, zone: selectedZone, zoneLabel: t[selectedZone] });
-      setCameraError("");
-    });
-  };
-
-  const clearPhoto = () => {
-    setPhoto("");
-    setOverallAnalysis(null);
-    setLocalAnalysis(null);
-    setZoneComparisons(null);
-  };
-
-  const crop = zoneDefs[selectedZone];
 
   return (
     <div className="site">
@@ -2550,20 +3749,22 @@ function App() {
               <p className="visiaDisclaimer">{t.visiaDisclaimer}</p>
             </div>
 
-            <div className="captureStepsBox">
-              <p className="kicker">{t.captureProtocol}</p>
-              <div className="captureStepGrid">
-                {captureSteps.map((step) => (
-                  <button
-                    type="button"
+            <div className="scanIntroBox">
+              <p className="kicker">{t.scanKicker}</p>
+              <h3>{t.scanTitle}</h3>
+              <p>{t.scanIntro}</p>
+              <p className="scanManualNote">{t.scanInsteadManual}</p>
+              <p className="scanFaceNote">{t.autoFaceCropNote}</p>
+
+              <div className="scanStepFlow">
+                {scanSteps.map((step, index) => (
+                  <div
+                    className={`scanFlowStep ${scanStepIndex === index && scanActive ? "active" : ""} ${Object.keys(photoSet).includes(step.id) ? "done" : ""}`}
                     key={step.id}
-                    className={`${selectedCaptureStep === step.id ? "active" : ""} ${photoSet[step.id] ? "captured" : ""}`}
-                    onClick={() => setCaptureStep(step.id)}
                   >
+                    <span>{index + 1}</span>
                     <strong>{lang === "en" ? step.en : step.zh}</strong>
-                    <span>{lang === "en" ? step.enTip : step.zhTip}</span>
-                    {photoSet[step.id] && <em>✓ {t.capturedPhotos}</em>}
-                  </button>
+                  </div>
                 ))}
               </div>
             </div>
@@ -2585,36 +3786,91 @@ function App() {
               </div>
             </div>
 
-            <div className="photoSetBox">
-              <div>
-                <p className="kicker">{t.capturedPhotos}</p>
-                <p>{t.requiredPhotosHint}</p>
+            <div className="scanStatusBox">
+              <div className="scanStatusHeader">
+                <div>
+                  <p className="kicker">{t.scanProgress}</p>
+                  <h3>{scanFinished ? t.scanComplete : scanActive ? (lang === "en" ? currentScanStep.en : currentScanStep.zh) : t.scanReady}</h3>
+                  <p>{scanActive ? (lang === "en" ? currentScanStep.enInstruction : currentScanStep.zhInstruction) : t.cameraUpgradeTip}</p>
+                  {scanActive && <p className="scanSlowTip">{t.scanSlowTip}</p>}
+                </div>
+                <div className="scanRightStatus">
+                  <div className="scanPercent">{scanProgress}%</div>
+                  {scanActive && (
+                    <div className={`scanCountdown ${scanPhase}`}>
+                      <strong>
+                        {scanPhase === "prepare"
+                          ? t.scanPrepare
+                          : scanPhase === "capturing"
+                            ? t.scanCapturing
+                            : t.scanNext}
+                      </strong>
+                      {scanCountdown > 0 && <span>{scanCountdown} {t.scanCountdown}</span>}
+                    </div>
+                  )}
+                </div>
               </div>
 
-              <div className="photoSetGrid">
-                {captureSteps.map((step) => {
-                  const item = photoSet[step.id];
-                  return (
-                    <button
-                      type="button"
-                      className={item ? "hasPhoto" : ""}
-                      key={`photo-${step.id}`}
-                      onClick={() => setCaptureStep(step.id)}
-                    >
-                      {item ? <img src={item.image} alt={lang === "en" ? step.en : step.zh} /> : <span>+</span>}
-                      <strong>{lang === "en" ? step.en : step.zh}</strong>
-                    </button>
-                  );
-                })}
+              <div className="scanProgressTrack">
+                <span style={{ width: `${scanProgress}%` }} />
               </div>
 
-              {Object.keys(photoSet).length < 4 && (
-                <div className="photoSetWarning">{t.photoSetIncomplete}</div>
+              {scanActive && <div className="scanMeshHint">{t.meshNote}</div>}
+
+              <div className="scanQualityGrid">
+                <div>
+                  <strong>{t.scanLighting}</strong>
+                  <span>{scanQuality?.lighting || "—"}</span>
+                </div>
+                <div>
+                  <strong>{t.scanResolution}</strong>
+                  <span>{scanQuality?.resolution || (cameraInfo?.width ? `${cameraInfo.width} × ${cameraInfo.height}` : "—")}</span>
+                </div>
+                <div>
+                  <strong>{t.scanStability}</strong>
+                  <span>{scanQuality?.stability || "—"}</span>
+                </div>
+                <div>
+                  <strong>{t.faceDetectStatus}</strong>
+                  <span>
+                    {faceDetectStatus === "found"
+                      ? t.faceDetected
+                      : faceDetectStatus === "not-found"
+                        ? t.faceNotDetected
+                        : "—"}
+                  </span>
+                </div>
+                <div>
+                  <strong>{t.faceEngineStatus}</strong>
+                  <span>
+                    {faceEngineStatus === "loading"
+                      ? t.faceEngineLoading
+                      : faceEngineStatus === "mesh"
+                        ? t.faceEngineMesh
+                        : faceEngineStatus === "fallback"
+                          ? t.faceEngineFallback
+                          : "—"}
+                  </span>
+                </div>
+              </div>
+
+              {Object.keys(photoSet).length > 0 && (
+                <div className="scanFrameTray">
+                  <p className="kicker">{t.scanAutoCaptured}</p>
+                  <div>
+                    {scanSteps.map((step) => {
+                      const item = photoSet[step.id];
+                      if (!item) return null;
+                      return (
+                        <button type="button" key={`scan-${step.id}`} onClick={() => setPhoto(item.image)}>
+                          <img src={item.image} alt={lang === "en" ? step.en : step.zh} />
+                          <span>{lang === "en" ? step.en : step.zh}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               )}
-
-              <button className="button dark analyseSetButton" type="button" onClick={analysePhotoSet}>
-                {t.analysePhotoSet}
-              </button>
             </div>
           </div>
 
@@ -2642,7 +3898,9 @@ function App() {
               </div>
 
               <div className="cameraFrame">
-                {photo ? (
+                {scanActive ? (
+                  <video ref={videoRef} autoPlay playsInline muted className="cameraVideo" />
+                ) : photo ? (
                   <img
                     className="capturedPreview"
                     src={photo}
@@ -2657,33 +3915,94 @@ function App() {
                     {lang === "en" ? "Photo guide" : "拍摄提示"}
                   </div>
                   <h3 className="cameraOverlayTitle">
-                    {lang === "en" ? currentCaptureStep.en : currentCaptureStep.zh}
+                    {scanActive
+                      ? (lang === "en" ? currentScanStep.en : currentScanStep.zh)
+                      : (lang === "en" ? currentCaptureStep.en : currentCaptureStep.zh)}
                   </h3>
                   <p className="cameraOverlayDesc">
-                    {lang === "en"
-                      ? currentCaptureStep.enInstruction
-                      : currentCaptureStep.zhInstruction}
+                    {scanActive
+                      ? (lang === "en" ? currentScanStep.enInstruction : currentScanStep.zhInstruction)
+                      : (lang === "en" ? currentCaptureStep.enInstruction : currentCaptureStep.zhInstruction)}
                   </p>
+                  {scanActive && scanCountdown > 0 && (
+                    <div className="cameraOverlayCountdown">
+                      {scanPhase === "prepare" ? scanCountdown : "✓"}
+                    </div>
+                  )}
                 </div>
+
+                
+                {scanActive && faceBox && (
+                  <div
+                    className="faceDetectBox"
+                    aria-hidden="true"
+                    style={{
+                      left: `${faceBox.x * 100}%`,
+                      top: `${faceBox.y * 100}%`,
+                      width: `${faceBox.w * 100}%`,
+                      height: `${faceBox.h * 100}%`,
+                    }}
+                  />
+                )}
+
+                {scanActive && meshPoints.length > 0 && (
+                  <div className="mediaPipeMeshPoints" aria-hidden="true">
+                    {meshPoints.map((point, index) => (
+                      <span
+                        key={`mesh-${index}`}
+                        style={{
+                          left: `${point.x * 100}%`,
+                          top: `${point.y * 100}%`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {scanFlash && <div className="scanCaptureFlash" aria-hidden="true" />}
+
+                {scanActive && (
+                  <div className="faceMeshOverlay" aria-hidden="true">
+                    <svg viewBox="0 0 320 420" preserveAspectRatio="xMidYMid meet">
+                      <ellipse className="meshOutline" cx="160" cy="208" rx="104" ry="140" />
+                      <polyline points="74,144 118,104 160,88 202,104 246,144 250,236 216,320 160,358 104,320 70,236 74,144" />
+                      <polyline points="118,104 122,176 160,210 198,176 202,104" />
+                      <polyline points="70,236 122,176 160,210 198,176 250,236" />
+                      <polyline points="104,320 138,262 160,210 182,262 216,320" />
+                      <polyline points="118,104 104,320 216,320 202,104" />
+                      <polyline points="74,144 160,88 246,144" />
+                      <polyline points="70,236 160,358 250,236" />
+                      <line x1="160" y1="88" x2="160" y2="358" />
+                      <line x1="74" y1="144" x2="246" y2="144" />
+                      <line x1="70" y1="236" x2="250" y2="236" />
+                      <line x1="104" y1="320" x2="216" y2="320" />
+                      <circle cx="122" cy="176" r="5" />
+                      <circle cx="198" cy="176" r="5" />
+                      <circle cx="160" cy="210" r="5" />
+                      <circle cx="138" cy="262" r="4" />
+                      <circle cx="182" cy="262" r="4" />
+                      <circle cx="160" cy="306" r="4" />
+                    </svg>
+                  </div>
+                )}
 
                 <canvas ref={canvasRef} className="hiddenCanvas" />
               </div>
 
-              <div className="cameraButtons simpleCameraButtons">
-                <button className="button dark primaryShootButton" type="button" onClick={handleShootButton}>
-                  {t.captureThisStep}
+              <div className="cameraButtons simpleCameraButtons scanButtons">
+                <button className="button dark primaryShootButton" type="button" onClick={startGuidedScan} disabled={scanActive}>
+                  {t.startScan}
                 </button>
-                {photoSet[selectedCaptureStep] && (
-                  <button className="button light primaryShootButton" type="button" onClick={handleRetakeButton}>
-                    {t.retakeCurrentStep}
+                {scanActive && (
+                  <button className="button light primaryShootButton" type="button" onClick={stopGuidedScan}>
+                    {t.stopScan}
                   </button>
                 )}
-              </div>
-
-              <div className="cameraButtons">
-                <button className="button dark wideButton" type="button" onClick={runOverallAnalysis}>
-                  {t.runAnalysis}
-                </button>
+                {!scanActive && Object.keys(photoSet).length > 0 && (
+                  <button className="button light primaryShootButton" type="button" onClick={analysePhotoSet}>
+                    {t.analysePhotoSet}
+                  </button>
+                )}
               </div>
 
               {cameraError && <div className="cameraError">{cameraError}</div>}
@@ -2697,7 +4016,7 @@ function App() {
               {!overallAnalysis && !localAnalysis ? (
                 <div className="emptyReport">
                   <p className="kicker">{t.reportTitle}</p>
-                  <h3>{lang === "en" ? "Capture, magnify and analyse." : "拍摄、放大并分析。"}</h3>
+                  <h3>{lang === "en" ? "Start a guided skin scan." : "开始引导式肤况扫描。"}</h3>
                   <p>{t.medicalDisclaimer}</p>
                 </div>
               ) : (

@@ -1535,3 +1535,640 @@ html:lang(zh) .hero h1,
     padding: 8px;
   }
 }
+
+
+/* Guided skin scan replaces manual multi-photo capture */
+.scanIntroBox,
+.scanStatusBox {
+  background: #fff;
+  border: 1px solid rgba(24, 21, 19, 0.14);
+  padding: clamp(20px, 3vw, 34px);
+}
+
+.scanIntroBox h3,
+.scanStatusBox h3 {
+  margin: 8px 0 10px;
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  font-size: clamp(1.7rem, 3vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.scanIntroBox p:not(.kicker),
+.scanStatusBox p:not(.kicker) {
+  color: #5a5049;
+  line-height: 1.7;
+}
+
+.scanManualNote {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: #f8f3ed;
+  border-left: 3px solid #8b6a55;
+  font-weight: 800;
+}
+
+.scanStepFlow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.scanFlowStep {
+  min-height: 112px;
+  border: 1px solid rgba(24, 21, 19, 0.16);
+  background: #f8f3ed;
+  padding: 14px;
+  display: grid;
+  align-content: space-between;
+}
+
+.scanFlowStep span {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: #181513;
+  color: #fff;
+  font-weight: 900;
+}
+
+.scanFlowStep strong {
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.scanFlowStep.active {
+  border-color: #181513;
+  background: #181513;
+  color: #fff;
+}
+
+.scanFlowStep.active span {
+  background: #fff;
+  color: #181513;
+}
+
+.scanFlowStep.done {
+  border-color: #8b6a55;
+}
+
+.scanStatusHeader {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: start;
+}
+
+.scanPercent {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.2rem, 5vw, 4.8rem);
+  line-height: 1;
+  color: #8b6a55;
+}
+
+.scanProgressTrack {
+  height: 12px;
+  background: #eee7df;
+  margin: 16px 0 20px;
+  overflow: hidden;
+}
+
+.scanProgressTrack span {
+  display: block;
+  height: 100%;
+  background: #181513;
+  transition: width 0.4s ease;
+}
+
+.scanQualityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid rgba(24, 21, 19, 0.12);
+}
+
+.scanQualityGrid div {
+  padding: 14px;
+  border-right: 1px solid rgba(24, 21, 19, 0.12);
+}
+
+.scanQualityGrid div:last-child {
+  border-right: 0;
+}
+
+.scanQualityGrid strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b6a55;
+}
+
+.scanQualityGrid span {
+  font-weight: 900;
+  color: #181513;
+}
+
+.scanFrameTray {
+  margin-top: 22px;
+}
+
+.scanFrameTray > div {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.scanFrameTray button {
+  border: 1px solid rgba(24, 21, 19, 0.16);
+  background: #f8f3ed;
+  padding: 8px;
+  cursor: pointer;
+  display: grid;
+  gap: 8px;
+}
+
+.scanFrameTray img {
+  width: 100%;
+  height: 92px;
+  object-fit: cover;
+  background: #181513;
+}
+
+.scanFrameTray span {
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.scanButtons button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Hide old manual photo boxes if any remain */
+.photoSetBox,
+.captureStepsBox {
+  display: none !important;
+}
+
+@media (max-width: 980px) {
+  .scanStepFlow,
+  .scanFrameTray > div {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .scanQualityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .scanQualityGrid div {
+    border-right: 0;
+    border-bottom: 1px solid rgba(24, 21, 19, 0.12);
+  }
+
+  .scanQualityGrid div:last-child {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .scanStatusHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .scanStepFlow,
+  .scanFrameTray > div {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Face mesh scan overlay: visual guide during scanning */
+.faceMeshOverlay {
+  position: absolute;
+  inset: 8% 12%;
+  z-index: 4;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  opacity: 0.78;
+  mix-blend-mode: screen;
+  animation: meshPulse 1.8s ease-in-out infinite;
+}
+
+.faceMeshOverlay svg {
+  width: min(76%, 320px);
+  height: auto;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.42));
+}
+
+.faceMeshOverlay polyline,
+.faceMeshOverlay line,
+.faceMeshOverlay ellipse {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.72);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.faceMeshOverlay circle {
+  fill: rgba(255, 255, 255, 0.88);
+  stroke: rgba(139, 106, 85, 0.7);
+  stroke-width: 1;
+}
+
+.faceMeshOverlay .meshOutline {
+  stroke: rgba(255, 255, 255, 0.92);
+  stroke-width: 1.8;
+}
+
+.scanMeshHint {
+  display: inline-flex;
+  margin: 4px 0 16px;
+  padding: 8px 11px;
+  background: #181513;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@keyframes meshPulse {
+  0%, 100% {
+    opacity: 0.58;
+    transform: scale(0.995);
+  }
+  50% {
+    opacity: 0.86;
+    transform: scale(1.01);
+  }
+}
+
+@media (max-width: 740px) {
+  .faceMeshOverlay {
+    inset: 10% 9%;
+  }
+
+  .faceMeshOverlay svg {
+    width: 82%;
+  }
+}
+
+
+/* Slower scan timing + countdown feedback */
+.scanRightStatus {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+}
+
+.scanSlowTip {
+  margin-top: 12px !important;
+  padding: 10px 12px;
+  background: #f8f3ed;
+  border-left: 3px solid #8b6a55;
+  font-weight: 900;
+  color: #181513 !important;
+}
+
+.scanCountdown {
+  min-width: 150px;
+  padding: 12px 14px;
+  border: 1px solid rgba(24, 21, 19, 0.16);
+  background: #f8f3ed;
+  text-align: right;
+}
+
+.scanCountdown strong {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b6a55;
+}
+
+.scanCountdown span {
+  display: block;
+  margin-top: 6px;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #181513;
+}
+
+.scanCountdown.capturing {
+  background: #181513;
+  color: #fff;
+}
+
+.scanCountdown.capturing strong,
+.scanCountdown.capturing span {
+  color: #fff;
+}
+
+.cameraOverlayCountdown {
+  margin-top: 8px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #181513;
+  font-weight: 900;
+  font-size: 1.3rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+@media (max-width: 640px) {
+  .scanRightStatus {
+    justify-items: start;
+  }
+
+  .scanCountdown {
+    text-align: left;
+  }
+}
+
+
+/* Keep live camera moving during scan; flash only when a frame is captured */
+.scanCaptureFlash {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.38);
+  animation: scanFlashFade 260ms ease-out forwards;
+}
+
+@keyframes scanFlashFade {
+  from {
+    opacity: 0.75;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
+/* Advanced skin-condition scan report */
+.snapshotNote {
+  margin: 8px 0 0;
+  max-width: 760px;
+  color: #6a5b51;
+  line-height: 1.6;
+}
+
+.routineIntensityBadge {
+  display: inline-grid;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(24, 21, 19, 0.16);
+  background: #f8f3ed;
+}
+
+.routineIntensityBadge span {
+  color: #8b6a55;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.routineIntensityBadge strong {
+  color: #181513;
+  line-height: 1.35;
+}
+
+.regionEvidenceBox {
+  margin-top: 18px;
+  padding: clamp(18px, 3vw, 28px);
+  background: #fff;
+  border: 1px solid rgba(24, 21, 19, 0.14);
+}
+
+.regionEvidenceBox > p:not(.kicker) {
+  margin: 0 0 18px;
+  color: #5a5049;
+  line-height: 1.65;
+}
+
+.regionEvidenceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.regionEvidenceCard {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(24, 21, 19, 0.12);
+  background: #f8f3ed;
+}
+
+.regionEvidenceCard img {
+  width: 112px;
+  height: 112px;
+  object-fit: cover;
+  background: #181513;
+}
+
+.regionEvidenceCard h4 {
+  margin: 0 0 7px;
+  font-size: 1rem;
+}
+
+.regionEvidenceCard span {
+  display: block;
+  color: #8b6a55;
+  font-size: 0.8rem;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.regionEvidenceCard strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.15rem;
+  color: #181513;
+}
+
+.protocolIntensityNote {
+  margin: 8px 0 18px;
+  padding: 12px 14px;
+  background: #181513;
+  color: #fff;
+  line-height: 1.5;
+}
+
+@media (max-width: 980px) {
+  .regionEvidenceGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .regionEvidenceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .regionEvidenceCard {
+    grid-template-columns: 92px 1fr;
+  }
+
+  .regionEvidenceCard img {
+    width: 92px;
+    height: 92px;
+  }
+}
+
+
+/* Auto face-detection visual guidance */
+.faceDetectBox {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(24, 21, 19, 0.35),
+    0 0 24px rgba(255, 255, 255, 0.28);
+  border-radius: 42% 42% 36% 36%;
+  animation: faceBoxPulse 1.4s ease-in-out infinite;
+}
+
+.faceDetectBox::after {
+  content: "AUTO FACE AREA";
+  position: absolute;
+  left: 50%;
+  bottom: -30px;
+  transform: translateX(-50%);
+  padding: 4px 7px;
+  background: rgba(24, 21, 19, 0.78);
+  color: #fff;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.scanFaceNote {
+  margin-top: 12px !important;
+  color: #5a5049;
+  font-size: 0.92rem;
+}
+
+@keyframes faceBoxPulse {
+  0%, 100% {
+    opacity: 0.72;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.015);
+  }
+}
+
+/* Four columns now that face detection is included */
+.scanQualityGrid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 980px) {
+  .scanQualityGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Fix region evidence crops: larger preview and clearer skin-area indicator */
+.regionEvidenceCard {
+  grid-template-columns: 148px 1fr;
+}
+
+.regionEvidenceCard img {
+  width: 148px;
+  height: 148px;
+}
+
+.regionEvidenceCard em {
+  display: block;
+  margin-top: 6px;
+  font-style: normal;
+  font-size: 0.72rem;
+  color: #6a5b51;
+}
+
+@media (max-width: 640px) {
+  .regionEvidenceCard {
+    grid-template-columns: 112px 1fr;
+  }
+
+  .regionEvidenceCard img {
+    width: 112px;
+    height: 112px;
+  }
+}
+
+
+/* MediaPipe FaceMesh integration */
+.mediaPipeMeshPoints {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.mediaPipeMeshPoints span {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+}
+
+.scanQualityGrid {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+@media (max-width: 1100px) {
+  .scanQualityGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* Personalised product scoring engine */
+.personalisationNote {
+  margin: 6px 0 18px;
+  color: #5a5049;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.personalisedProductMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 8px 0 10px;
+}
+
+.personalisedProductMeta span {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 8px;
+  background: #181513;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
