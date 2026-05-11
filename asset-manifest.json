@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/my-landing-page/static/css/main.d03e7b67.css",
-    "main.js": "/my-landing-page/static/js/main.b7d11ad4.js",
+    "main.css": "/my-landing-page/static/css/main.25e07581.css",
+    "main.js": "/my-landing-page/static/js/main.b1caece8.js",
     "static/js/453.e888f9cc.chunk.js": "/my-landing-page/static/js/453.e888f9cc.chunk.js",
     "static/media/glow-skin-promo.mp4": "/my-landing-page/static/media/glow-skin-promo.3fd7c50b87e83897cc74.mp4",
     "static/media/travel-toiletry-bag.jpg": "/my-landing-page/static/media/travel-toiletry-bag.a41dfebfba38e8f4c5ca.jpg",
@@ -40,7 +40,6 @@
     "static/media/vitamin-c-sensitive-dark-spots.jpg": "/my-landing-page/static/media/vitamin-c-sensitive-dark-spots.574a1ba6d8edbcd56133.jpg",
     "static/media/gentle-cleanser.jpg": "/my-landing-page/static/media/gentle-cleanser.c3b35fc6cbb8605092a8.jpg",
     "static/media/clay-mask-pores-tzone.jpg": "/my-landing-page/static/media/clay-mask-pores-tzone.f9ae21c3c8efb1e147f9.jpg",
-    "static/media/fragrance-free-gentle-cleanser.jpg": "/my-landing-page/static/media/fragrance-free-gentle-cleanser.58b561441a465a96588b.jpg",
     "static/media/hydrating-cleanser-dry-sensitive.jpg": "/my-landing-page/static/media/hydrating-cleanser-dry-sensitive.58b561441a465a96588b.jpg",
     "static/media/ceramide-moisturising-cream.jpg": "/my-landing-page/static/media/ceramide-moisturising-cream.0d0e0c3b04300c7abd73.jpg",
     "static/media/lightweight-moisturiser.jpg": "/my-landing-page/static/media/lightweight-moisturiser.97cc754804e997329fd4.jpg",
@@ -49,12 +48,12 @@
     "static/media/foaming-cleanser-oily-skin.jpg": "/my-landing-page/static/media/foaming-cleanser-oily-skin.d47c71e22dee9d770849.jpg",
     "static/media/centella-calming-serum.webp": "/my-landing-page/static/media/centella-calming-serum.dd6adc22f685bb9ae28f.webp",
     "index.html": "/my-landing-page/index.html",
-    "main.d03e7b67.css.map": "/my-landing-page/static/css/main.d03e7b67.css.map",
-    "main.b7d11ad4.js.map": "/my-landing-page/static/js/main.b7d11ad4.js.map",
+    "main.25e07581.css.map": "/my-landing-page/static/css/main.25e07581.css.map",
+    "main.b1caece8.js.map": "/my-landing-page/static/js/main.b1caece8.js.map",
     "453.e888f9cc.chunk.js.map": "/my-landing-page/static/js/453.e888f9cc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d03e7b67.css",
-    "static/js/main.b7d11ad4.js"
+    "static/css/main.25e07581.css",
+    "static/js/main.b1caece8.js"
   ]
 }
