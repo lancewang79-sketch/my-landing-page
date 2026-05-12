@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/my-landing-page/static/css/main.25e07581.css",
-    "main.js": "/my-landing-page/static/js/main.b1caece8.js",
+    "main.js": "/my-landing-page/static/js/main.749287d2.js",
     "static/js/453.e888f9cc.chunk.js": "/my-landing-page/static/js/453.e888f9cc.chunk.js",
     "static/media/glow-skin-promo.mp4": "/my-landing-page/static/media/glow-skin-promo.3fd7c50b87e83897cc74.mp4",
     "static/media/travel-toiletry-bag.jpg": "/my-landing-page/static/media/travel-toiletry-bag.a41dfebfba38e8f4c5ca.jpg",
@@ -49,11 +49,11 @@
     "static/media/centella-calming-serum.webp": "/my-landing-page/static/media/centella-calming-serum.dd6adc22f685bb9ae28f.webp",
     "index.html": "/my-landing-page/index.html",
     "main.25e07581.css.map": "/my-landing-page/static/css/main.25e07581.css.map",
-    "main.b1caece8.js.map": "/my-landing-page/static/js/main.b1caece8.js.map",
+    "main.749287d2.js.map": "/my-landing-page/static/js/main.749287d2.js.map",
     "453.e888f9cc.chunk.js.map": "/my-landing-page/static/js/453.e888f9cc.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.25e07581.css",
-    "static/js/main.b1caece8.js"
+    "static/js/main.749287d2.js"
   ]
 }
