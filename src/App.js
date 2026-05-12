@@ -594,29 +594,44 @@ const guides = [
   {
     id: "skincare-basics",
     en: "Best Skincare Basics for Beginners",
-    zh: "新手护肤基础好物指南",
-    summaryEn:
-      "Start with a simple routine: a gentle cleanser, a comfortable moisturiser, daily sunscreen and one or two practical extras.",
-    summaryZh:
-      "新手护肤可以从简单流程开始：温和洁面、舒适保湿、日常防晒，再加一两个实用小物。",
+    zh: "新手护肤完整指南",
+    summaryEn: "Build a sensible starter routine, avoid common mistakes and understand what each step actually does.",
+    summaryZh: "建立真正合理的新手护肤流程，理解每一步的作用，并避免常见误区。",
   },
   {
     id: "sunscreen-guide",
     en: "Everyday Sunscreen Guide",
-    zh: "日常防晒选择指南",
-    summaryEn:
-      "When comparing sunscreen, consider texture, finish, comfort under makeup and whether you are likely to use it consistently.",
-    summaryZh:
-      "选择防晒时，可以关注质地、肤感、妆前舒适度，以及自己是否愿意每天坚持使用。",
+    zh: "防晒完整使用指南",
+    summaryEn: "How much sunscreen to use, how often to reapply and how to choose based on skin type.",
+    summaryZh: "不同肤质如何选择防晒、正确用量与补涂方法。",
+  },
+  {
+    id: "acne-guide",
+    en: "Acne, Clogged Pores and Breakout Guide",
+    zh: "痘痘与毛孔堵塞指南",
+    summaryEn: "Understand acne-like signals, congestion and how active ingredients should be introduced safely.",
+    summaryZh: "了解痘痘样问题、闭口堵塞，以及如何安全加入功效成分。",
+  },
+  {
+    id: "sensitive-guide",
+    en: "Sensitive Skin & Barrier Repair Guide",
+    zh: "敏感肌与屏障修护指南",
+    summaryEn: "Recognise irritation, redness and barrier stress, then recover skin without over-treating.",
+    summaryZh: "识别泛红、刺痛与屏障压力，避免过度护肤。",
+  },
+  {
+    id: "antiaging-guide",
+    en: "Fine Lines, Texture and Ageing Guide",
+    zh: "细纹与抗老护理指南",
+    summaryEn: "What helps texture and fine lines, what takes time and what expectations are realistic.",
+    summaryZh: "哪些方法对细纹纹理有效，以及合理的预期。",
   },
   {
     id: "beauty-tools",
     en: "Beauty Tools That Are Actually Useful",
-    zh: "真正实用的美妆工具",
-    summaryEn:
-      "Useful beauty tools should make your routine easier, cleaner or more organised.",
-    summaryZh:
-      "实用的美妆工具应该让流程更方便、更干净或更有条理。",
+    zh: "真正值得买的护理工具",
+    summaryEn: "Tools that genuinely improve hygiene, organisation or routine consistency.",
+    summaryZh: "真正提升卫生、整理与坚持度的护理工具。",
   },
 ];
 
@@ -4241,47 +4256,60 @@ function App() {
 
         <section className="section guideDetails">
           <div className="sectionIntro">
-            <p className="kicker">{lang === "en" ? "In-depth guides" : "详细指南"}</p>
-            <h2>{lang === "en" ? "Beauty advice with product direction" : "带有产品方向的美妆护肤建议"}</h2>
+            <p className="kicker">{lang === "en" ? "In-depth skincare library" : "深度护肤内容库"}</p>
+            <h2>{lang === "en" ? "Professional educational content for readers" : "真正可阅读的专业护肤内容"}</h2>
           </div>
 
           <article id="guide-skincare-basics" className="guideDetailCard">
-            <div className="guideVisual"><img src={ceraveCleanserImg} alt="Gentle cleanser guide" /></div>
             <div>
-              <p className="kicker">{lang === "en" ? "Beginner skincare" : "新手护肤"}</p>
-              <h3>{lang === "en" ? "Best Skincare Basics for Beginners" : "新手护肤基础好物指南"}</h3>
-              <p>{lang === "en" ? "A beginner routine does not need to be complicated. Start with a gentle cleanser, a comfortable moisturiser and a daily sunscreen. After these basics feel stable, you can slowly add lip care, beauty tools or travel-friendly storage." : "新手护肤不需要一开始就很复杂。可以先从温和洁面、舒适保湿和日常防晒开始。等基础流程稳定之后，再慢慢加入唇部护理、美妆工具或旅行收纳类好物。"}</p>
-              <a href="https://amzn.to/48T3EVJ" className="button dark" target="_blank" rel="noreferrer">{t.amazon}</a>
+              <p className="kicker">{lang === "en" ? "Starter routine" : "新手入门"}</p>
+              <h3>{lang === "en" ? "Best Skincare Basics for Beginners" : "新手护肤完整指南"}</h3>
+              <p>{lang === "en" ? "A strong beginner routine is simple: gentle cleanse, moisturise, protect. Morning: cleanser (20–30 seconds), moisturiser, sunscreen (two finger lengths). Evening: cleanser, moisturiser, optional targeted treatment only after 2–3 stable weeks." : "真正适合新手的护肤流程应该简单清晰：清洁、保湿、防护。早上：洁面 20–30 秒、保湿、防晒（约两指长度）。晚上：洁面、保湿，待皮肤稳定 2–3 周后再加入针对性功效产品。"} </p>
+              <p>{lang === "en" ? "Common mistakes include over-cleansing, starting multiple actives at once and changing products too quickly. Skin usually needs several weeks to show direction." : "常见错误包括过度清洁、一次上太多功效产品、频繁换产品。皮肤通常需要数周才能看到方向。"} </p>
             </div>
           </article>
 
-          <article id="guide-sunscreen-guide" className="guideDetailCard reverse">
-            <div className="guideVisual"><img src={everydaySunscreenImg} alt="Everyday sunscreen guide" /></div>
+          <article id="guide-sunscreen-guide" className="guideDetailCard">
             <div>
-              <p className="kicker">{lang === "en" ? "Daily protection" : "日常防护"}</p>
-              <h3>{lang === "en" ? "Everyday Sunscreen Guide" : "日常防晒选择指南"}</h3>
-              <p>{lang === "en" ? "Sunscreen is one of the most useful daily skincare categories. When comparing products, focus on texture, finish, comfort and whether you would actually use it every morning." : "防晒是最值得重视的日常护肤类别之一。选择时可以关注质地、肤感、妆前舒适度，以及自己是否愿意每天使用。"}</p>
-              <a href="https://amzn.to/4nmIqpe" className="button dark" target="_blank" rel="noreferrer">{t.amazon}</a>
+              <p className="kicker">{lang === "en" ? "Sun protection" : "防晒科普"}</p>
+              <h3>{lang === "en" ? "Everyday Sunscreen Guide" : "防晒完整使用指南"}</h3>
+              <p>{lang === "en" ? "For face and neck, most adults need roughly two finger lengths. SPF50 generally provides more margin than SPF30, especially with imperfect application. Reapply after heavy sweating or prolonged outdoor exposure." : "面部与颈部多数成年人约需两指长度。SPF50 通常比 SPF30 留有更大安全余量，尤其在实际涂抹不够标准时。大量出汗或长时间户外需补涂。"} </p>
+              <p>{lang === "en" ? "Sensitive skin may prefer mineral directions; oily skin may prefer lighter textures. The best sunscreen is the one you will actually use consistently." : "敏感肌可优先考虑矿物方向，偏油肌可选择轻薄肤感。真正最好的防晒，是你愿意每天坚持使用的那一款。"} </p>
+            </div>
+          </article>
+
+          <article id="guide-acne-guide" className="guideDetailCard">
+            <div>
+              <p className="kicker">{lang === "en" ? "Blemish education" : "痘痘护理"}</p>
+              <h3>{lang === "en" ? "Acne, Clogged Pores and Breakout Guide" : "痘痘与毛孔堵塞指南"}</h3>
+              <p>{lang === "en" ? "Clogged pores, oil imbalance and inflammatory blemishes are related but not identical. Salicylic acid may help congestion; benzoyl peroxide can be stronger; azelaic acid may suit mixed redness + blemish concerns." : "闭口堵塞、油脂失衡与炎症性痘痘有关，但并不完全相同。水杨酸偏向堵塞管理；过氧化苯甲酰更强；壬二酸更适合泛红与瑕疵并存的情况。"} </p>
+              <p>{lang === "en" ? "Introduce only one active at a time, starting 2–3 times weekly if tolerated." : "一次只加入一种功效产品，初期每周 2–3 次更稳妥。"} </p>
+            </div>
+          </article>
+
+          <article id="guide-sensitive-guide" className="guideDetailCard">
+            <div>
+              <p className="kicker">{lang === "en" ? "Barrier health" : "屏障修护"}</p>
+              <h3>{lang === "en" ? "Sensitive Skin & Barrier Repair Guide" : "敏感肌与屏障修护指南"}</h3>
+              <p>{lang === "en" ? "Redness, stinging, tightness and flaking often suggest barrier stress. In these phases, less is usually more: gentle cleanse, barrier moisturiser, sunscreen, pause aggressive actives." : "泛红、刺痛、紧绷与脱皮常提示屏障压力。这时通常越简单越好：温和清洁、修护保湿、防晒，并暂停刺激性功效产品。"} </p>
+            </div>
+          </article>
+
+          <article id="guide-antiaging-guide" className="guideDetailCard">
+            <div>
+              <p className="kicker">{lang === "en" ? "Ageing support" : "抗老护理"}</p>
+              <h3>{lang === "en" ? "Fine Lines, Texture and Ageing Guide" : "细纹与抗老护理指南"}</h3>
+              <p>{lang === "en" ? "Texture improvement is gradual. Sunscreen consistency matters more than most people expect. Retinoid directions can help some users, but barrier stability comes first." : "纹理改善通常是渐进的。长期坚持防晒的重要性往往被低估。视黄醇方向可能帮助部分用户，但前提是屏障稳定。"} </p>
             </div>
           </article>
 
           <article id="guide-beauty-tools" className="guideDetailCard">
-            <div className="guideVisual"><img src={makeupSpongeImg} alt="Useful beauty tools" /></div>
             <div>
-              <p className="kicker">{lang === "en" ? "Useful tools" : "实用工具"}</p>
-              <h3>{lang === "en" ? "Beauty Tools That Are Actually Useful" : "真正实用的美妆工具"}</h3>
-              <p>{lang === "en" ? "Good beauty tools should make your routine cleaner, faster or easier. Makeup sponges, soft towels and organisers are helpful because they support daily habits rather than adding unnecessary complexity." : "好的美妆工具应该让流程更干净、更快速或更方便。美妆蛋、柔软洁面巾和收纳工具比较实用，因为它们能辅助日常习惯，而不是增加复杂度。"}</p>
-              <a href="https://amzn.to/4dfi5ot" className="button dark" target="_blank" rel="noreferrer">{t.amazon}</a>
+              <p className="kicker">{lang === "en" ? "Useful tools" : "工具推荐"}</p>
+              <h3>{lang === "en" ? "Beauty Tools That Are Actually Useful" : "真正值得买的护理工具"}</h3>
+              <p>{lang === "en" ? "Choose tools that improve hygiene, organisation and consistency rather than gimmicks. Soft disposable towels, organisers and travel storage can genuinely help routines." : "真正有价值的工具应提升卫生、收纳与坚持度，而不是噱头。一次性洁面巾、收纳工具和旅行分装往往更实用。"} </p>
             </div>
           </article>
-        </section>
-
-        <section id="disclosure" className="disclosure">
-          <div>
-            <p className="kicker">{t.disclosureKicker}</p>
-            <h2>{t.disclosureTitle}</h2>
-          </div>
-          <p>{t.disclosureText}</p>
         </section>
       </main>
 
